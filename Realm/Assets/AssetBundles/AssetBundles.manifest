@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3528011494
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: sprites/characters/fox1
+      Dependencies: {}
