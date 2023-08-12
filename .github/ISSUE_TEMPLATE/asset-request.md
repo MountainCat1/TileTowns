@@ -1,7 +1,7 @@
 ---
 name: Asset Request
 about: What asset is needed
-title: ''
+title: "[Asset Request] "
 labels: assets
 assignees: ''
 
