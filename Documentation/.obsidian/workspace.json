@@ -8,14 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f4a0b65e72c56366",
+            "id": "83a9b9f1eb1437fe",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Planning/Resources.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "296ef10276084874",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Planning 2/General Idea.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -81,6 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Planning 2/General Idea.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Planning 2/General Idea.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +137,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Planning 2/General Idea.md"
+              }
             }
           }
         ]
@@ -138,6 +159,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f4a0b65e72c56366",
-  "lastOpenFiles": []
+  "active": "296ef10276084874",
+  "lastOpenFiles": [
+    "Needed Assets/Untitled.md",
+    "Planning 2/General Idea.md",
+    "Planning/Resources.md",
+    "Planning/Population.md",
+    "Planning/Buildings.md",
+    "Planning 2",
+    "Planning/Untitled",
+    "Planning",
+    "Needed Assets",
+    "Untitled.md"
+  ]
 }
