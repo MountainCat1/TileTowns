@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Sprite-0001
+  m_Name: Woodmill
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 6a36beb3cec9ab44c82160c542701332, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b0e67a15d1c3dc459e43775d86ff845, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
