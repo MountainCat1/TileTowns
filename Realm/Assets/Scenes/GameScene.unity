@@ -156,10 +156,10 @@ RectTransform:
   m_Father: {fileID: 1321646746}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 134.55, y: -32.53645}
-  m_SizeDelta: {x: 20.7, y: 65.0729}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 65.0729}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &47564479
 MonoBehaviour:
@@ -2193,10 +2193,10 @@ RectTransform:
   m_Father: {fileID: 1321646746}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 31.05, y: -32.53645}
-  m_SizeDelta: {x: 62.1, y: 65.0729}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 65.0729}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &755219001
 MonoBehaviour:
@@ -2898,10 +2898,10 @@ RectTransform:
   m_Father: {fileID: 1321646746}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 93.149994, y: -32.53645}
-  m_SizeDelta: {x: 62.1, y: 65.0729}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 65.0729}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1153335841
 MonoBehaviour:
@@ -3663,8 +3663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SelectedTile>k__BackingField: {fileID: 0}
-  tilemap: {fileID: 0}
-  grid: {fileID: 0}
+  levelManager: {fileID: 545678440}
+  grid: {fileID: 1883418741}
 --- !u!1 &1523624522
 GameObject:
   m_ObjectHideFlags: 0
