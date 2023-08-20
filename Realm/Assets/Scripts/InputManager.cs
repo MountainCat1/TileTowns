@@ -14,31 +14,39 @@ public class InputManager : MonoBehaviour
     public event Action PlayerNotMoved;
     
     public event Action<Vector2> PointerMoved;
+    public event Action<Vector2> PointerClicked;
 
     // Dependencies
     
     private InputActions _inputActions;
-
-    // Private Fields
-
-    private Vector2 _lastMousePosition;
     
+    // Cache
+
+    private Vector2 _cachedPointerPosition;
+
+
     // Start is called before the first frame update
     void Awake()
     {
         _inputActions = new InputActions();
         _inputActions.Player.Enable();
+
+        
+        _inputActions.Player.PointerPosition.performed += context =>
+        {
+            var pointerPosition = context.ReadValue<Vector2>();
+            _cachedPointerPosition = pointerPosition;
+            PointerMoved?.Invoke(pointerPosition);
+        };
+        _inputActions.Player.Fire.performed += context =>
+        {
+            PointerClicked?.Invoke(_cachedPointerPosition);
+        };
     }
 
     private void OnEnable()
     {
         _inputActions.Player.Enable();
-
-        _inputActions.Player.PointerPosition.performed += context =>
-        {
-            PointerMoved?.Invoke(context.ReadValue<Vector2>());
-        };
-
     }
     
     private void OnDisable()
