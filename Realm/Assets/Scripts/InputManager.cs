@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class InputManager : MonoBehaviour
@@ -11,11 +12,17 @@ public class InputManager : MonoBehaviour
 
     public event Action<Vector2> PlayerMoved;
     public event Action PlayerNotMoved;
+    
+    public event Action<Vector2> PointerMoved;
 
-    // Private fields
+    // Dependencies
     
     private InputActions _inputActions;
 
+    // Private Fields
+
+    private Vector2 _lastMousePosition;
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -26,6 +33,12 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         _inputActions.Player.Enable();
+
+        _inputActions.Player.PointerPosition.performed += context =>
+        {
+            PointerMoved?.Invoke(context.ReadValue<Vector2>());
+        };
+
     }
     
     private void OnDisable()

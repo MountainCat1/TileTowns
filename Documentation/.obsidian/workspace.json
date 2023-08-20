@@ -42,7 +42,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -169,7 +169,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1ceb6eee2284def5",
+  "active": "296ef10276084874",
   "lastOpenFiles": [
     "Needed Assets/Untitled.md",
     "Planning 2/General Idea.md",

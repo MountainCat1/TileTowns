@@ -1,12 +1,19 @@
-﻿using Unity.VisualScripting;
+﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour
 {
-    public Level LevelConfig { get; set; } 
+    // Events
+
+    public event Action LevelLoaded;
     
+    //
+    
+    [field: SerializeField] public Level LevelConfig { get; set; }
+
     [SerializeField] private Grid tilemapContainer;
 
     private void Start()
@@ -17,6 +24,12 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(Level config)
     {
         Debug.Log("Instantiating level map...");
-        var tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, tilemapContainer.transform, true);
+        var tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, tilemapContainer.transform, false);
+
+        var tile =  tilemap.GetTile(new Vector3Int(0, 0, 0));
+        Debug.Log(tile.name);
+        
+        
+        LevelLoaded?.Invoke();
     }
 }
