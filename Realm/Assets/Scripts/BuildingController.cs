@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
@@ -32,7 +34,7 @@ public class BuildingController : MonoBehaviour
         tileSelector.TilePointerEntered -= TileSelectorOnTilePointerEntered;
     }
 
-    private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, TileBase tile)
+    private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, CellData cellData)
     {
     }
 
@@ -41,29 +43,27 @@ public class BuildingController : MonoBehaviour
         _buildingToBuild = buildingPrefab;
     } 
 
-    private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, TileBase tile)
+    private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, CellData cellData)
     {
-        BuildBuilding(cellPosition, _buildingToBuild);
+        BuildBuilding(cellData, _buildingToBuild);
     }
     
 
 
     // ReSharper disable once SuggestBaseTypeForParameter
-    private void BuildBuilding(Vector3Int cellPosition, Building buildingPrefab)
+    private void BuildBuilding(CellData cellData, Building buildingPrefab)
     {
-        var cellData = tilemapData.GetData(cellPosition);
-
         if(!CanBuildOnTile(cellData))
             return;
         
-        var worlPosition = grid.GetCellCenterWorld(cellPosition);
+        var worlPosition = grid.GetCellCenterWorld(cellData.Position);
 
         var building = Instantiate(buildingPrefab.gameObject, worlPosition, Quaternion.identity)
             .GetComponent<Building>();
         
         cellData.Building = building;
         
-        tilemapData.SetData(cellPosition, cellData);
+        tilemapData.SetData(cellData.Position, cellData);
     }
 
     private bool CanBuildOnTile(CellData cellData)

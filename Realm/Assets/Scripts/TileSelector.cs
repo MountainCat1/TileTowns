@@ -11,12 +11,13 @@ public class TileSelector : MonoBehaviour
     
     // Events
 
-    public event Action<Vector3Int, TileBase> TilePointerEntered;
-    public event Action<Vector3Int, TileBase> TilePointerClicked;
+    public event Action<Vector3Int, CellData> TilePointerEntered;
+    public event Action<Vector3Int, CellData> TilePointerClicked;
     
     //
     
     [SerializeField] private LevelManager levelManager;
+    [SerializeField] private TilemapData tilemapData;
     [SerializeField] private Grid grid;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Transform tileHighlight;
@@ -53,7 +54,12 @@ public class TileSelector : MonoBehaviour
 
         var tile = _tilemap.GetTile(cell);
         
-        TilePointerClicked?.Invoke(cell, tile);
+        if(tile is null)
+            return;
+
+        var cellData = tilemapData.GetData(cell);
+        
+        TilePointerClicked?.Invoke(cell, cellData);
     }
 
     private void InputManagerOnPointerMoved(Vector2 pointerPosition)
@@ -71,6 +77,11 @@ public class TileSelector : MonoBehaviour
         
         var tile = _tilemap.GetTile(cell);
         
-        TilePointerEntered?.Invoke(cell, tile);
+        if(tile is null)
+            return;
+        
+        var cellData = tilemapData.GetData(cell);
+        
+        TilePointerEntered?.Invoke(cell, cellData);
     }
 }

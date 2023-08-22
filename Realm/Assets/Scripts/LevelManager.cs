@@ -11,9 +11,10 @@ public class LevelManager : MonoBehaviour
     public event Action LevelLoaded;
     
     //
-    
-    [field: SerializeField] public Level LevelConfig { get; set; }
 
+    public Tilemap Tilemap { get; private set; }
+    
+    [field: SerializeField] public LevelConfig LevelConfig { get; set; }
     [SerializeField] private Grid tilemapContainer;
 
     private void Start()
@@ -21,15 +22,11 @@ public class LevelManager : MonoBehaviour
         LoadLevel(LevelConfig);
     }
 
-    public void LoadLevel(Level config)
+    public void LoadLevel(LevelConfig config)
     {
         Debug.Log("Instantiating level map...");
-        var tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, tilemapContainer.transform, false);
+        Tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, tilemapContainer.transform, false);
 
-        var tile =  tilemap.GetTile(new Vector3Int(0, 0, 0));
-        Debug.Log(tile.name);
-        
-        
         LevelLoaded?.Invoke();
     }
 }
