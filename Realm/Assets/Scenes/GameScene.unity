@@ -3750,6 +3750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 545678440}
+  tilemapData: {fileID: 1713243140}
   grid: {fileID: 1883418741}
   inputManager: {fileID: 1595275239}
   tileHighlight: {fileID: 755491770}
@@ -4394,6 +4395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cb357834bfa394481a8cc8772a62c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 545678440}
 --- !u!1 &1866100888
 GameObject:
   m_ObjectHideFlags: 0
