@@ -18,9 +18,11 @@ public class TileSelector : MonoBehaviour
     
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private Grid grid;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private Transform tileHighlight;
     
-
-    private InputManager _inputManager;
+    [SerializeField] private Vector2 mouseOffset;
+    
     private Tilemap _tilemap;
     private Camera _camera;
 
@@ -29,7 +31,7 @@ public class TileSelector : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = FindObjectsOfType<InputManager>().Single();
+        inputManager = FindObjectsOfType<InputManager>().Single();
         _camera = Camera.main;
         levelManager.LevelLoaded += () =>
         {
@@ -39,15 +41,15 @@ public class TileSelector : MonoBehaviour
 
     private void Start()
     {
-        _inputManager.PointerMoved += InputManagerOnPointerMoved;
-        _inputManager.PointerClicked += InputManagerOnPointerClicked;
+        inputManager.PointerMoved += InputManagerOnPointerMoved;
+        inputManager.PointerClicked += InputManagerOnPointerClicked;
     }
 
     private void InputManagerOnPointerClicked(Vector2 pointerPosition)
     {
         var mousePosition = _camera.ScreenToWorldPoint(pointerPosition);
         
-        var cell = grid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
+        var cell = grid.WorldToCell(new Vector3(mousePosition.x + mouseOffset.x, mousePosition.y +  + mouseOffset.y, 0));
 
         var tile = _tilemap.GetTile(cell);
         
@@ -57,13 +59,15 @@ public class TileSelector : MonoBehaviour
     private void InputManagerOnPointerMoved(Vector2 pointerPosition)
     {
         var mousePosition = _camera.ScreenToWorldPoint(pointerPosition);
-        
-        var cell = grid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
+
+        var cell = grid.WorldToCell(new Vector3(mousePosition.x + mouseOffset.x, mousePosition.y +  + mouseOffset.y, 0));
 
         if(cell == _lastCellSelected)
             return;
 
         _lastCellSelected = cell;
+
+        tileHighlight.position = grid.GetCellCenterWorld(cell);
         
         var tile = _tilemap.GetTile(cell);
         
