@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class Building : CellEntity
+﻿public class Building : CellEntity
 {
           
 }
