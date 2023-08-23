@@ -16,5 +16,5 @@ jobs:
           # to the issue
           project-url: https://github.com/users/MountainCat1/projects/2
           github-token: ${{ secrets.PROJECT_TOKEN }}
-          labeled: bug, needs-triage
+          # labeled: bug, needs-triage
           label-operator: OR
