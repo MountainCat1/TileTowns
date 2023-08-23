@@ -23,14 +23,6 @@ public class TilemapData : MonoBehaviour
         InstantiateData(levelManager.Tilemap);
     }
 
-    public void SetData(Vector3Int position, CellData data)
-    {
-        if(!Data.TryGetValue(position, out _))
-            throw new IndexOutOfRangeException();
-            
-        Data[position] = data;
-    }
-
     public CellData GetData(Vector3Int position)
     {
         Data.TryGetValue(position, out var data);
