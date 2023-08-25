@@ -1,4 +1,4 @@
-# The-Greatest-Hero-Of-This-Run
+# Tile Towns
 Turn-based, stratedy, pixelart rouglike
 
 ![Open Issues](https://img.shields.io/github/issues-raw/MountainCat1/The-Greatest-Hero-Of-This-Run.svg)
