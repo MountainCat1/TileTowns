@@ -1,20 +1,20 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class TileSelector : MonoBehaviour
 {
-    
     // Events
 
-    public event Action<Vector3Int, CellData> TilePointerEntered;
-    public event Action<Vector3Int, CellData> TilePointerClicked;
+    public event Action<Vector3Int, SliceData> TilePointerEntered;
+    public event Action<Vector3Int, SliceData> TilePointerClicked;
     
     //
     
     [SerializeField] private LevelManager levelManager;
-    [SerializeField] private TilemapData tilemapData;
+    [SerializeField] private SliceMapData sliceMapData;
     [SerializeField] private Grid grid;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Transform tileHighlight;
@@ -54,7 +54,7 @@ public class TileSelector : MonoBehaviour
         if(tile is null)
             return;
 
-        var cellData = tilemapData.GetData(cell);
+        var cellData = sliceMapData.GetData(cell);
         
         TilePointerClicked?.Invoke(cell, cellData);
     }
@@ -77,7 +77,7 @@ public class TileSelector : MonoBehaviour
         if(tile is null)
             return;
         
-        var cellData = tilemapData.GetData(cell);
+        var cellData = sliceMapData.GetData(cell);
         
         TilePointerEntered?.Invoke(cell, cellData);
     }

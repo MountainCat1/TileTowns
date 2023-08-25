@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 
@@ -9,7 +10,7 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private TileSelector tileSelector;
-    [SerializeField] private TilemapData tilemapData;
+    [FormerlySerializedAs("tilemapData")] [SerializeField] private SliceMapData sliceMapData;
     [SerializeField] private Grid grid;
 
     [SerializeField] private Building _buildingToBuild;
@@ -44,7 +45,7 @@ public class BuildingController : MonoBehaviour
         _tilemap = levelManager.Tilemap;
     }
 
-    private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, CellData cellData)
+    private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, SliceData sliceData)
     {
     }
 
@@ -53,51 +54,51 @@ public class BuildingController : MonoBehaviour
         _buildingToBuild = buildingPrefab;
     } 
 
-    private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, CellData cellData)
+    private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, SliceData sliceData)
     {
-        BuildBuilding(cellData, _buildingToBuild);
+        BuildBuilding(sliceData, _buildingToBuild);
     }
     
 
 
     // ReSharper disable once SuggestBaseTypeForParameter
-    private void BuildBuilding(CellData cellData, Building building)
+    private void BuildBuilding(SliceData sliceData, Building building)
     {
-        if(!CanBuildOnTile(cellData))
+        if(!CanBuildOnTile(sliceData))
             return;
 
-        var buildingCellPosition = new Vector3Int(cellData.Position.x, cellData.Position.y, BuildingZIndex);
+        var buildingCellPosition = new Vector3Int(sliceData.Position.x, sliceData.Position.y, BuildingZIndex);
         
         _tilemap.SetTile(buildingCellPosition , building);
         _tilemap.RefreshAllTiles();
 
-        cellData.Building = building;
+        sliceData.Building = building;
     }
     
-    // private void BuildBuildingAsAnOject(CellData cellData, Building building)
+    // private void BuildBuildingAsAnOject(SliceData sliceData, Building building)
     // {
-    //     if(!CanBuildOnTile(cellData))
+    //     if(!CanBuildOnTile(sliceData))
     //         return;
     //     
-    //     var worlPosition = grid.GetCellCenterWorld(cellData.Position);
+    //     var worlPosition = grid.GetCellCenterWorld(sliceData.Position);
     //
     //     
     //     
     //     var building = Instantiate(building.gameObject, worlPosition, Quaternion.identity)
     //         .GetComponent<Building>();
     //     
-    //     cellData.Building = building;
+    //     sliceData.Building = building;
     //     
-    //     tilemapData.SetData(cellData.Position, cellData);
+    //     sliceMapData.SetData(sliceData.Position, sliceData);
     // }
 
 
-    private bool CanBuildOnTile(CellData cellData)
+    private bool CanBuildOnTile(SliceData sliceData)
     {
-        if (cellData.Building is not null)
+        if (sliceData.Building is not null)
             return false;
 
-        if (cellData.CellFeature is not null)
+        if (sliceData.CellFeature is not null)
             return false;
 
         return true;

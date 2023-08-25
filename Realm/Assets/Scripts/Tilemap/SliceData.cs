@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class CellData
+public class SliceData
 {
-    public CellData(Vector3Int position)
+    public SliceData(Vector3Int position)
     {
         Position = position;
     }
