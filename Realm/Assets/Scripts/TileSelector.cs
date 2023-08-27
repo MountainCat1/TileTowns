@@ -8,13 +8,13 @@ public class TileSelector : MonoBehaviour
 {
     // Events
 
-    public event Action<Vector3Int, SliceData> TilePointerEntered;
-    public event Action<Vector3Int, SliceData> TilePointerClicked;
+    public event Action<Vector3Int, TileData> TilePointerEntered;
+    public event Action<Vector3Int, TileData> TilePointerClicked;
     
     //
     
     [SerializeField] private LevelManager levelManager;
-    [SerializeField] private SliceMapData sliceMapData;
+    [FormerlySerializedAs("sliceMapData")] [SerializeField] private TileMapData tileMapData;
     [SerializeField] private Grid grid;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Transform tileHighlight;
@@ -54,7 +54,7 @@ public class TileSelector : MonoBehaviour
         if(tile is null)
             return;
 
-        var cellData = sliceMapData.GetData(cell);
+        var cellData = tileMapData.GetData(cell);
         
         TilePointerClicked?.Invoke(cell, cellData);
     }
@@ -77,7 +77,7 @@ public class TileSelector : MonoBehaviour
         if(tile is null)
             return;
         
-        var cellData = sliceMapData.GetData(cell);
+        var cellData = tileMapData.GetData(cell);
         
         TilePointerEntered?.Invoke(cell, cellData);
     }

@@ -4,10 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class SliceMapData : MonoBehaviour
+public class TileMapData : MonoBehaviour
 {
     [SerializeField] private LevelManager levelManager; 
-    public Dictionary<Vector3Int, SliceData> Data { get; set; } = new();
+    public Dictionary<Vector3Int, TileData> Data { get; set; } = new();
 
     private Tilemap _tilemap;
 
@@ -21,7 +21,7 @@ public class SliceMapData : MonoBehaviour
         InstantiateData(levelManager.Tilemap);
     }
 
-    public SliceData GetData(Vector3Int position)
+    public TileData GetData(Vector3Int position)
     {
         Data.TryGetValue(position, out var data);
 
@@ -60,8 +60,8 @@ public class SliceMapData : MonoBehaviour
         }
     }
     
-    private SliceData GetInitialCellData(Vector3Int cellPosition, TileBase tileBase)
+    private TileData GetInitialCellData(Vector3Int cellPosition, TileBase tileBase)
     {
-        return new SliceData(cellPosition);
+        return new TileData(cellPosition);
     }
 }
