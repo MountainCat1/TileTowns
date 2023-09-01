@@ -18,12 +18,12 @@ namespace Data.Editor
             {
                 string directoryPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(buildingSet));
 
-                string[] buildingScriptGuids = AssetDatabase.FindAssets($"t:{nameof(BuildingMetadata)}", new string[] { directoryPath });
+                string[] buildingScriptGuids = AssetDatabase.FindAssets($"t:{nameof(BuildingData)}", new string[] { directoryPath });
 
                 buildingSet.Buildings = buildingScriptGuids
                     .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
                     .Where(path => Path.GetFileNameWithoutExtension(path) != "BuildingMetadata")
-                    .Select(path => AssetDatabase.LoadAssetAtPath<BuildingMetadata>(path))
+                    .Select(path => AssetDatabase.LoadAssetAtPath<BuildingData>(path))
                     .Where(x => x is not null)
                     .ToArray();
             }

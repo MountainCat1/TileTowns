@@ -2,8 +2,8 @@
 
 namespace Data
 {
-    [CreateAssetMenu(menuName = "Data/Building Metadata", fileName = nameof(BuildingMetadata))]
-    public class BuildingMetadata : ScriptableObject
+    [CreateAssetMenu(menuName = "Data/Building Metadata", fileName = nameof(BuildingData))]
+    public class BuildingData : ScriptableObject
     {
         [field: SerializeField] public Building BuildingPrefab { get; set; }
 
