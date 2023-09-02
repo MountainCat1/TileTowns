@@ -44,22 +44,22 @@ namespace UI
             }
         }
 
-        private BuildingEntryUI CreateBuildingEntries(BuildingData buildingData)
+        private BuildingEntryUI CreateBuildingEntries(Building building)
         {
             var createdButton = Instantiate(buildingEntryPrefab, buildingChoiceContainer);
 
-            createdButton.Initialize(buildingData);
-            createdButton.Selected += () => CreatedButtonOnSelected(createdButton, buildingData);
+            createdButton.Initialize(building);
+            createdButton.Selected += () => CreatedButtonOnSelected(createdButton, building);
             
             return createdButton;
         }
 
-        private void CreatedButtonOnSelected(BuildingEntryUI buildingEntry, BuildingData buildingData)
+        private void CreatedButtonOnSelected(BuildingEntryUI buildingEntry, Building building)
         {
             foreach (var buildingEntryUI in _buildingEntries)
                 buildingEntryUI.ShowAsDeselected();
             
-            _buildingController.SelectBuilding(buildingData);
+            _buildingController.SelectBuilding(building);
             buildingEntry.ShowAsSelected();
         }
     }

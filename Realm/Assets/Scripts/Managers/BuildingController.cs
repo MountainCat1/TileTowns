@@ -6,8 +6,8 @@ using Zenject;
 
 public interface IBuildingController
 {
-    void SelectBuilding(BuildingData buildingData);
-    void BuildBuilding(TileData tileData, BuildingData building);
+    void SelectBuilding(Building building);
+    void BuildBuilding(TileData tileData, Building building);
 }
 
 public class BuildingController : MonoBehaviour, IBuildingController
@@ -20,7 +20,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
     [SerializeField] private Grid grid;
 
-    private BuildingData _selectedBuilding;
+    private Building _selectedBuilding;
     private Tilemap _tilemap;
 
 
@@ -49,7 +49,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
         foreach (var building in buildings)
         {
-            _container.Inject(building.BuildingBehaviourPrefab);
+            _container.Inject(building);
         }
     }
 
@@ -57,9 +57,9 @@ public class BuildingController : MonoBehaviour, IBuildingController
     {
     }
 
-    public void SelectBuilding(BuildingData buildingData)
+    public void SelectBuilding(Building building)
     {
-        _selectedBuilding = buildingData;
+        _selectedBuilding = building;
     }
 
     private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, TileData tileData)
@@ -70,7 +70,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
 
     // ReSharper disable once SuggestBaseTypeForParameter
-    public void BuildBuilding(TileData tileData, BuildingData building)
+    public void BuildBuilding(TileData tileData, Building building)
     {
         if (!CanBuildOnTile(tileData))
             return;

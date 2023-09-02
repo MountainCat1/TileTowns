@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour, IGameManager
     //
 
     public Tilemap Tilemap { get; private set; }
-    
+
     [field: SerializeField] public LevelConfig LevelConfig { get; set; }
     [SerializeField] private Grid tilemapContainer;
 

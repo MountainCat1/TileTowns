@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -9,12 +10,22 @@ public interface ITurnHandler
 
 public interface ITurnManager
 {
+    // Events
+    public event Action TurnCalculated;
+    //
     void RegisterTurnHandler(ITurnHandler turnHandler);
     void EndTurn();
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
 {
+    // Events
+
+    public event Action TurnCalculated;
+    
+    //
+    
+    
     [Inject] private IInputManager _inputManager;
     
     private List<ITurnHandler> _turnHandlers;
@@ -42,6 +53,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
     public void EndTurn()
     {
         RunTurnHandlers();
+        
+        TurnCalculated?.Invoke();
     }
 
     private void RunTurnHandlers()

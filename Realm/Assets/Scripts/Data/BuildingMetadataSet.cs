@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Data
 {
     [CreateAssetMenu(menuName = "Data/Building Set", fileName = nameof(BuildingMetadataSet))]
-    public class BuildingMetadataSet : ScriptableObject, IEnumerable<BuildingData>
+    public class BuildingMetadataSet : ScriptableObject, IEnumerable<Building>
     {
-        [field: SerializeField] public BuildingData[] Buildings { get; set; }
-        public IEnumerator<BuildingData> GetEnumerator()
+        [field: SerializeField] public Building[] Buildings { get; set; }
+        public IEnumerator<Building> GetEnumerator()
         {
             if (Buildings == null) yield break;
 

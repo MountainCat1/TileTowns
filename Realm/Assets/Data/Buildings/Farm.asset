@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12c6a65519a24b019ffd9501a2a83863, type: 3}
   m_Name: Farm
   m_EditorClassIdentifier: 
+  <Tile>k__BackingField: {fileID: 11400000, guid: 2944ed8f9f40662458250b5c151ee8e4, type: 2}
+  <Price>k__BackingField: 0

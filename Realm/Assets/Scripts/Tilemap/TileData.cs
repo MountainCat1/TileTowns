@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Data;
+using JetBrains.Annotations;
+using UnityEngine;
 
 public class TileData
 {
@@ -7,13 +9,13 @@ public class TileData
         Position = position;
     }
 
-    public BuildingBehaviour BuildingBehaviour { get; set; }
+    [CanBeNull] public Building BuildingBehaviour { get; set; }
 
     public Vector3Int Position { get; private set; }
 
     public void OnTurn(Vector3Int position)
     {
-        if (BuildingBehaviour)
+        if (BuildingBehaviour != null) 
             BuildingBehaviour.OnTurn(position);
     }
 }

@@ -1,20 +1,19 @@
-﻿using UnityEngine;
+﻿using Data;
+using UnityEngine;
 using Zenject;
 
 namespace Buildings
 {
-    public class Farm : BuildingBehaviour
+    public class Farm : Building
     {
-        [Inject]
-        private void Construct(IGameManager gameManager)
+        public override void OnTurn(Vector3Int position)
         {
-            Debug.Log(gameManager.LevelConfig.Name);
+            base.OnTurn(position);
         }
-        
 
-        private void Awake()
+        private decimal CalculateIncome()
         {
-            Debug.Log("Awwake!");
+            return new decimal(5.0);
         }
     }
 }

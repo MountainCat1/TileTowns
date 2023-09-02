@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Building Set
   m_EditorClassIdentifier: 
   <Buildings>k__BackingField:
-  - {fileID: 11400000, guid: 7895eb7bbdd62fb42818668532cfd29c, type: 2}
-  - {fileID: 11400000, guid: 17459302c2515ce4593953f15ed6f721, type: 2}
+  - {fileID: 11400000, guid: 72fa274245a07c844a0d9ba17fba4d8c, type: 2}
+  - {fileID: 11400000, guid: 72fa274245a07c844a0d9ba17fba4d8c, type: 2}
