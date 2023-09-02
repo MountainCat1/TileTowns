@@ -10,7 +10,7 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private TileSelector tileSelector;
-    [FormerlySerializedAs("sliceMapData")] [SerializeField] private TileMapData tileMapData;
+    [SerializeField] private TileMapData tileMapData;
     [SerializeField] private Grid grid;
 
     [SerializeField] private Building _buildingToBuild;
