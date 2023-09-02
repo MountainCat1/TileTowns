@@ -1,4 +1,5 @@
 using Data;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,6 +19,12 @@ namespace UI
             levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
         }
 
+        private void OnDisable()
+        {
+            levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
+        }
+        
+
         private void LevelManagerOnLevelLoaded()
         {
             LoadBuildingData();
@@ -36,6 +43,14 @@ namespace UI
             var createdButton = Instantiate(buildingButtonPrefab, buildingChoiceContainer);
             
             createdButton.Initialize(buildingData);
+            createdButton.Selected += CreatedButtonOnSelected;
+        }
+
+        private void CreatedButtonOnSelected(BuildingData buildingData)
+        {
+            buildingController.SelectBuilding(buildingData.BuildingPrefab);
         }
     }
 }
+
+
