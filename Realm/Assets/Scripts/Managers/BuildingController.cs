@@ -14,7 +14,8 @@ public class BuildingController : MonoBehaviour, IBuildingController
 {
     private const int BuildingZIndex = 1;
 
-    [Inject] private ILevelManager _levelManager;
+    [Inject] private DiContainer _container;
+    [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
 
     [SerializeField] private Grid grid;
@@ -28,7 +29,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tileSelector.TilePointerClicked += TileSelectorOnTilePointerClicked;
         _tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
 
-        _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+        _gameManager.LevelLoaded += GameManagerOnGameLoaded;
     }
 
 
@@ -37,12 +38,19 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tileSelector.TilePointerClicked -= TileSelectorOnTilePointerClicked;
         _tileSelector.TilePointerEntered -= TileSelectorOnTilePointerEntered;
 
-        _levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
+        _gameManager.LevelLoaded -= GameManagerOnGameLoaded;
     }
 
-    private void LevelManagerOnLevelLoaded()
+    private void GameManagerOnGameLoaded()
     {
-        _tilemap = _levelManager.Tilemap;
+        _tilemap = _gameManager.Tilemap;
+
+        var buildings = _gameManager.LevelConfig.BuildingSet;
+
+        foreach (var building in buildings)
+        {
+            _container.Inject(building.BuildingBehaviourPrefab);
+        }
     }
 
     private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, TileData tileData)
@@ -69,10 +77,10 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
         var buildingCellPosition = new Vector3Int(tileData.Position.x, tileData.Position.y, BuildingZIndex);
 
-        _tilemap.SetTile(buildingCellPosition, building.BuildingPrefab);
+        _tilemap.SetTile(buildingCellPosition, building.Tile);
         _tilemap.RefreshAllTiles();
 
-        tileData.Building = building.BuildingPrefab;
+        // tileData.BuildingBehaviour = building.; // TODO
     }
 
     // private void BuildBuildingAsAnOject(TileData tileData, Building building)
@@ -95,10 +103,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
     private bool CanBuildOnTile(TileData tileData)
     {
-        if (tileData.Building is not null)
-            return false;
-
-        if (tileData.TileFeature is not null)
+        if (tileData.BuildingBehaviour is not null)
             return false;
 
         return true;

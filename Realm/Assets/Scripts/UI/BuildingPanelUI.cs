@@ -8,7 +8,7 @@ namespace UI
     public class BuildingPanelUI : MonoBehaviour
     {
         [Inject] private IBuildingController _buildingController;
-        [Inject] private ILevelManager _levelManager;
+        [Inject] private IGameManager _gameManager;
 
         [SerializeField] private Transform buildingChoiceContainer;
 
@@ -18,16 +18,16 @@ namespace UI
 
         private void OnEnable()
         {
-            _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+            _gameManager.LevelLoaded += GameManagerOnGameLoaded;
         }
 
         private void OnDisable()
         {
-            _levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
+            _gameManager.LevelLoaded -= GameManagerOnGameLoaded;
         }
 
 
-        private void LevelManagerOnLevelLoaded()
+        private void GameManagerOnGameLoaded()
         {
             LoadBuildingData();
         }
@@ -36,7 +36,7 @@ namespace UI
         {
             _buildingEntries = new List<BuildingEntryUI>();
             
-            foreach (var buildingData in _levelManager.LevelConfig.BuildingSet)
+            foreach (var buildingData in _gameManager.LevelConfig.BuildingSet)
             {
                 var buildingEntry = CreateBuildingEntries(buildingData);
                 

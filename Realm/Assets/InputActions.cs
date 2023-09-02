@@ -80,6 +80,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SpaceBar"",
+                    ""type"": ""Button"",
+                    ""id"": ""1349dc2c-fde9-4b2d-857f-5087d3206995"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -333,6 +342,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""196c06ba-75a0-4d5d-a16c-068ca96c1603"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SpaceBar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -926,6 +946,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_PointerDelta = m_Player.FindAction("PointerDelta", throwIfNotFound: true);
         m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
         m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
+        m_Player_SpaceBar = m_Player.FindAction("SpaceBar", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1003,6 +1024,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PointerDelta;
     private readonly InputAction m_Player_PointerPosition;
     private readonly InputAction m_Player_Scroll;
+    private readonly InputAction m_Player_SpaceBar;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -1013,6 +1035,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @PointerDelta => m_Wrapper.m_Player_PointerDelta;
         public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
         public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
+        public InputAction @SpaceBar => m_Wrapper.m_Player_SpaceBar;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1040,6 +1063,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Scroll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                 @Scroll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
+                @SpaceBar.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpaceBar;
+                @SpaceBar.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpaceBar;
+                @SpaceBar.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSpaceBar;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1062,6 +1088,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @SpaceBar.started += instance.OnSpaceBar;
+                @SpaceBar.performed += instance.OnSpaceBar;
+                @SpaceBar.canceled += instance.OnSpaceBar;
             }
         }
     }
@@ -1224,6 +1253,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnPointerDelta(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void OnSpaceBar(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

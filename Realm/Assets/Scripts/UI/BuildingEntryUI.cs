@@ -34,7 +34,7 @@ namespace UI
             priceDisplay.text = $"{buildingData.Price}$";
 
             _buildingData = buildingData;
-            buildingImage.sprite = buildingData.BuildingPrefab.sprite;
+            buildingImage.sprite = buildingData.Tile.sprite;
             
             ShowAsDeselected();
         }

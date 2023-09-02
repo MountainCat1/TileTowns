@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Buildings;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -33,16 +34,19 @@ public class CustomTileAssetGenerator : MonoBehaviour
 
     public static void CreateBuildingTiles()
     {
-        CreateCustomTiles<Building>("Buildings");
+        CreateCustomTiles<BuildingBehaviour>("Buildings");
     }
-    
+    /// <summary>
+    /// This method instantiates an object per class that derives from <typeparamref name="T"/>
+    /// </summary>
+    /// <param name="assetPath">Where create assets should be stored</param>
+    /// <typeparam name="T">Partent Class</typeparam>
     public static void CreateCustomTiles<T>(string assetPath) where T : ScriptableObject
     {
         Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
         Type tileBaseType = typeof(TileBase);
 
         var types = assemblies.SelectMany(x => x.GetTypes());
-
         foreach (var type in types)
         {
             if (tileBaseType.IsAssignableFrom(type) && type != tileBaseType
