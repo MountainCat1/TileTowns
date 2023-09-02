@@ -19,9 +19,9 @@ public class TileSelector : MonoBehaviour, ITileSelector
     
     //
     
-    [Inject] private LevelManager _levelManager;
-    [Inject] private InputManager _inputManager;
-    [Inject] private TileMapData _tileMapData;
+    [Inject] private ILevelManager _levelManager;
+    [Inject] private IInputManager _inputManager;
+    [Inject] private ITileMapData _tileMapData;
     
     [SerializeField] private Grid grid;
     [SerializeField] private Transform tileHighlight;

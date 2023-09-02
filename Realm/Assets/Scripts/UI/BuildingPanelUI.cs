@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Data;
 using UnityEngine;
 using Zenject;
@@ -7,11 +8,13 @@ namespace UI
     public class BuildingPanelUI : MonoBehaviour
     {
         [Inject] private IBuildingController _buildingController;
-        [Inject] private LevelManager _levelManager;
+        [Inject] private ILevelManager _levelManager;
 
         [SerializeField] private Transform buildingChoiceContainer;
 
-        [SerializeField] private BuildingButtonUI buildingButtonPrefab;
+        [SerializeField] private BuildingEntryUI buildingEntryPrefab;
+
+        private List<BuildingEntryUI> _buildingEntries; 
 
         private void OnEnable()
         {
@@ -31,23 +34,33 @@ namespace UI
 
         private void LoadBuildingData()
         {
+            _buildingEntries = new List<BuildingEntryUI>();
+            
             foreach (var buildingData in _levelManager.LevelConfig.BuildingSet)
             {
-                CreateBuildingButton(buildingData);
+                var buildingEntry = CreateBuildingEntries(buildingData);
+                
+                _buildingEntries.Add(buildingEntry);
             }
         }
 
-        private void CreateBuildingButton(BuildingData buildingData)
+        private BuildingEntryUI CreateBuildingEntries(BuildingData buildingData)
         {
-            var createdButton = Instantiate(buildingButtonPrefab, buildingChoiceContainer);
+            var createdButton = Instantiate(buildingEntryPrefab, buildingChoiceContainer);
 
             createdButton.Initialize(buildingData);
-            createdButton.Selected += CreatedButtonOnSelected;
+            createdButton.Selected += () => CreatedButtonOnSelected(createdButton, buildingData);
+            
+            return createdButton;
         }
 
-        private void CreatedButtonOnSelected(BuildingData buildingData)
+        private void CreatedButtonOnSelected(BuildingEntryUI buildingEntry, BuildingData buildingData)
         {
+            foreach (var buildingEntryUI in _buildingEntries)
+                buildingEntryUI.ShowAsDeselected();
+            
             _buildingController.SelectBuilding(buildingData.BuildingPrefab);
+            buildingEntry.ShowAsSelected();
         }
     }
 }

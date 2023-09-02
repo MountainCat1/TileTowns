@@ -13,8 +13,8 @@ public class BuildingController : MonoBehaviour, IBuildingController
 {
     private const int BuildingZIndex = 1;
     
-    [Inject] private LevelManager _levelManager;
-    [Inject] private InputManager _inputManager;
+    [Inject] private ILevelManager _levelManager;
+    [Inject] private IInputManager _inputManager;
     [Inject] private ITileSelector _tileSelector;
     [Inject] private ITileMapData _tileMapData;
     

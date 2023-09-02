@@ -6,6 +6,7 @@ public interface ILevelManager
 {
     event Action LevelLoaded;
     Tilemap Tilemap { get; }
+    LevelConfig LevelConfig { get; set; }
 }
 
 public class LevelManager : MonoBehaviour, ILevelManager

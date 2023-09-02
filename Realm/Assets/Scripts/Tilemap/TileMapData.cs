@@ -8,6 +8,7 @@ using Zenject;
 public interface ITileMapData
 {
     Dictionary<Vector3Int, TileData> Data { get; }
+    TileData GetData(Vector3Int cell);
 }
 
 public class TileMapData : MonoBehaviour, ITileMapData
