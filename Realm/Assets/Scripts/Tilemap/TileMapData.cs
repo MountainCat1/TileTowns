@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 
-public class TileMapData : MonoBehaviour
+public interface ITileMapData
 {
-    [SerializeField] private LevelManager levelManager; 
-    public Dictionary<Vector3Int, TileData> Data { get; set; } = new();
+    Dictionary<Vector3Int, TileData> Data { get; }
+    TileData GetData(Vector3Int cell);
+}
+
+public class TileMapData : MonoBehaviour, ITileMapData
+{
+    [Inject] private ILevelManager _levelManager; 
+    
+    public Dictionary<Vector3Int, TileData> Data { get; } = new();
 
     private Tilemap _tilemap;
 
     private void OnEnable()
     {
-        levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+        _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
     }
 
     private void LevelManagerOnLevelLoaded()
     {
-        InstantiateData(levelManager.Tilemap);
+        InstantiateData(_levelManager.Tilemap);
     }
 
     public TileData GetData(Vector3Int position)
