@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Buildings;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -56,7 +55,7 @@ public class CustomTileAssetGenerator : MonoBehaviour
                                                     && !type.IsSubclassOf(typeof(RuleTile))
                                                     && type.IsSubclassOf(typeof(T)))
             {
-                string fullAssetPath = Path.Combine( "Assets", "CustomTiles", assetPath, type.Name + ".asset");
+                string fullAssetPath = Path.Combine( "Assets", "Data", assetPath, type.Name + ".asset");
 
                 // Check if an asset already exists at the specified path
                 if (AssetDatabase.LoadAssetAtPath<ScriptableObject>(fullAssetPath))
