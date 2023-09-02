@@ -9,6 +9,7 @@ public interface IInputManager
     event Action PlayerNotMoved;
     event Action<Vector2> PointerMoved;
     event Action<Vector2> PointerClicked;
+    event Action<float> OnScroll;
 }
 
 public class InputManager : MonoBehaviour, IInputManager
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour, IInputManager
     public event Action<Vector2> PointerMoved;
     public event Action<Vector2> PointerClicked;
 
+    public event Action<float> OnScroll;
     // Dependencies
     
     private InputActions _inputActions;
@@ -49,6 +51,7 @@ public class InputManager : MonoBehaviour, IInputManager
         {
             PointerClicked?.Invoke(_cachedPointerPosition);
         };
+
     }
 
     private void OnEnable()
@@ -68,6 +71,10 @@ public class InputManager : MonoBehaviour, IInputManager
             PlayerMoved?.Invoke(move);
         else
             PlayerNotMoved?.Invoke();
+        
+        var scrollDelta = _inputActions.Player.Scroll.ReadValue<float>();
+        if(scrollDelta != 0)
+            OnScroll?.Invoke(scrollDelta);
     }
 
     private void FixedUpdate()

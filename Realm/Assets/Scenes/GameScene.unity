@@ -288,6 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
+  zoomSensitivity: 0.005
+  minZoom: 3
+  maxZoom: 20
 --- !u!4 &49912099
 Transform:
   m_ObjectHideFlags: 0
@@ -2848,10 +2851,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f3cb6b9248c864bbbde39ba9f58662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingController: {fileID: 1899354667}
-  levelManager: {fileID: 545678440}
   buildingChoiceContainer: {fileID: 936805090}
-  buildingButtonPrefab: {fileID: -1078913224450223853, guid: 8bb731e90839a3047aa8ffa4aa40dab7, type: 3}
+  buildingEntryPrefab: {fileID: -1078913224450223853, guid: 8bb731e90839a3047aa8ffa4aa40dab7, type: 3}
 --- !u!1 &1274627031
 GameObject:
   m_ObjectHideFlags: 0
@@ -3219,7 +3220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b62bd7d926d1841a28d49f1163f0f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMapData: {fileID: 1713243140}
   grid: {fileID: 1883418741}
   tileHighlight: {fileID: 755491770}
   mouseOffset: {x: 0, y: 0}

@@ -59,7 +59,7 @@ namespace UI
             foreach (var buildingEntryUI in _buildingEntries)
                 buildingEntryUI.ShowAsDeselected();
             
-            _buildingController.SelectBuilding(buildingData.BuildingPrefab);
+            _buildingController.SelectBuilding(buildingData);
             buildingEntry.ShowAsSelected();
         }
     }

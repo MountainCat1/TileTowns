@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b34d4e6b3a040dba307b6d19ff2646a, type: 3}
   m_Name: sdasd
   m_EditorClassIdentifier: 
-  <BuildingPrefab>k__BackingField: {fileID: 0}
+  <BuildingPrefab>k__BackingField: {fileID: 11400000, guid: 68380436445054745a724fca87ac7e96, type: 2}
   <Price>k__BackingField: 0

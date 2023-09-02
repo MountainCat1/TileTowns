@@ -1,47 +1,45 @@
-﻿using UnityEngine;
+﻿using Data;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
 
 public interface IBuildingController
 {
-    void SelectBuilding(Building buildingPrefab);
-    void BuildBuilding(TileData tileData, Building building);
+    void SelectBuilding(BuildingData buildingData);
+    void BuildBuilding(TileData tileData, BuildingData building);
 }
 
 public class BuildingController : MonoBehaviour, IBuildingController
 {
     private const int BuildingZIndex = 1;
-    
+
     [Inject] private ILevelManager _levelManager;
-    [Inject] private IInputManager _inputManager;
     [Inject] private ITileSelector _tileSelector;
-    [Inject] private ITileMapData _tileMapData;
-    
+
     [SerializeField] private Grid grid;
 
-    private Building _buildingToBuild;
+    private BuildingData _selectedBuilding;
     private Tilemap _tilemap;
-    
-    
+
+
     private void OnEnable()
     {
         _tileSelector.TilePointerClicked += TileSelectorOnTilePointerClicked;
         _tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
-        
+
         _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
     }
 
-    
 
     private void OnDisable()
     {
         _tileSelector.TilePointerClicked -= TileSelectorOnTilePointerClicked;
         _tileSelector.TilePointerEntered -= TileSelectorOnTilePointerEntered;
-        
+
         _levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
     }
-    
+
     private void LevelManagerOnLevelLoaded()
     {
         _tilemap = _levelManager.Tilemap;
@@ -51,32 +49,32 @@ public class BuildingController : MonoBehaviour, IBuildingController
     {
     }
 
-    public void SelectBuilding(Building buildingPrefab)
+    public void SelectBuilding(BuildingData buildingData)
     {
-        _buildingToBuild = buildingPrefab;
-    } 
+        _selectedBuilding = buildingData;
+    }
 
     private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, TileData tileData)
     {
-        BuildBuilding(tileData, _buildingToBuild);
+        if (_selectedBuilding is not null)
+            BuildBuilding(tileData, _selectedBuilding);
     }
-    
 
 
     // ReSharper disable once SuggestBaseTypeForParameter
-    public void BuildBuilding(TileData tileData, Building building)
+    public void BuildBuilding(TileData tileData, BuildingData building)
     {
-        if(!CanBuildOnTile(tileData))
+        if (!CanBuildOnTile(tileData))
             return;
 
         var buildingCellPosition = new Vector3Int(tileData.Position.x, tileData.Position.y, BuildingZIndex);
-        
-        _tilemap.SetTile(buildingCellPosition , building);
+
+        _tilemap.SetTile(buildingCellPosition, building.BuildingPrefab);
         _tilemap.RefreshAllTiles();
 
-        tileData.Building = building;
+        tileData.Building = building.BuildingPrefab;
     }
-    
+
     // private void BuildBuildingAsAnOject(TileData tileData, Building building)
     // {
     //     if(!CanBuildOnTile(tileData))
