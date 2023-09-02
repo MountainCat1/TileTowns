@@ -16,7 +16,7 @@ namespace UI
         [SerializeField] private GameObject selection;
         [SerializeField] private Button button;
 
-        private BuildingData _buildingData;
+        private Building _building;
 
         private void OnEnable()
         {
@@ -28,13 +28,13 @@ namespace UI
             button.onClick.RemoveListener(OnClicked);
         }
 
-        public void Initialize(BuildingData buildingData)
+        public void Initialize(Building building)
         {
-            buildingNameDisplay.text = buildingData.name;
-            priceDisplay.text = $"{buildingData.Price}$";
+            buildingNameDisplay.text = building.name;
+            priceDisplay.text = $"{building.Price}$";
 
-            _buildingData = buildingData;
-            buildingImage.sprite = buildingData.BuildingPrefab.sprite;
+            _building = building;
+            buildingImage.sprite = building.Tile.sprite;
             
             ShowAsDeselected();
         }

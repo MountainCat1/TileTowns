@@ -8,7 +8,7 @@ namespace UI
     public class BuildingPanelUI : MonoBehaviour
     {
         [Inject] private IBuildingController _buildingController;
-        [Inject] private ILevelManager _levelManager;
+        [Inject] private IGameManager _gameManager;
 
         [SerializeField] private Transform buildingChoiceContainer;
 
@@ -18,16 +18,16 @@ namespace UI
 
         private void OnEnable()
         {
-            _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+            _gameManager.LevelLoaded += GameManagerOnGameLoaded;
         }
 
         private void OnDisable()
         {
-            _levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
+            _gameManager.LevelLoaded -= GameManagerOnGameLoaded;
         }
 
 
-        private void LevelManagerOnLevelLoaded()
+        private void GameManagerOnGameLoaded()
         {
             LoadBuildingData();
         }
@@ -36,7 +36,7 @@ namespace UI
         {
             _buildingEntries = new List<BuildingEntryUI>();
             
-            foreach (var buildingData in _levelManager.LevelConfig.BuildingSet)
+            foreach (var buildingData in _gameManager.LevelConfig.BuildingSet)
             {
                 var buildingEntry = CreateBuildingEntries(buildingData);
                 
@@ -44,22 +44,22 @@ namespace UI
             }
         }
 
-        private BuildingEntryUI CreateBuildingEntries(BuildingData buildingData)
+        private BuildingEntryUI CreateBuildingEntries(Building building)
         {
             var createdButton = Instantiate(buildingEntryPrefab, buildingChoiceContainer);
 
-            createdButton.Initialize(buildingData);
-            createdButton.Selected += () => CreatedButtonOnSelected(createdButton, buildingData);
+            createdButton.Initialize(building);
+            createdButton.Selected += () => CreatedButtonOnSelected(createdButton, building);
             
             return createdButton;
         }
 
-        private void CreatedButtonOnSelected(BuildingEntryUI buildingEntry, BuildingData buildingData)
+        private void CreatedButtonOnSelected(BuildingEntryUI buildingEntry, Building building)
         {
             foreach (var buildingEntryUI in _buildingEntries)
                 buildingEntryUI.ShowAsDeselected();
             
-            _buildingController.SelectBuilding(buildingData);
+            _buildingController.SelectBuilding(building);
             buildingEntry.ShowAsSelected();
         }
     }

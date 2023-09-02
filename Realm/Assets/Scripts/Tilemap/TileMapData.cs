@@ -7,31 +7,32 @@ using Zenject;
 
 public interface ITileMapData
 {
-    Dictionary<Vector3Int, TileData> Data { get; }
+    IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
     TileData GetData(Vector3Int cell);
 }
 
 public class TileMapData : MonoBehaviour, ITileMapData
 {
-    [Inject] private ILevelManager _levelManager; 
+    [Inject] private IGameManager _gameManager; 
     
-    public Dictionary<Vector3Int, TileData> Data { get; } = new();
+    public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
+    private readonly Dictionary<Vector3Int, TileData> _data  = new();
 
     private Tilemap _tilemap;
 
     private void OnEnable()
     {
-        _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+        _gameManager.LevelLoaded += GameManagerOnGameLoaded;
     }
 
-    private void LevelManagerOnLevelLoaded()
+    private void GameManagerOnGameLoaded()
     {
-        InstantiateData(_levelManager.Tilemap);
+        InstantiateData(_gameManager.Tilemap);
     }
 
     public TileData GetData(Vector3Int position)
     {
-        Data.TryGetValue(position, out var data);
+        _data.TryGetValue(position, out var data);
 
         if (data is null)
             throw new IndexOutOfRangeException();
@@ -41,7 +42,7 @@ public class TileMapData : MonoBehaviour, ITileMapData
     
     public void InstantiateData(Tilemap tilemap)
     {
-        if (Data.Any())
+        if (_data.Any())
             throw new InvalidOperationException();
 
         _tilemap = tilemap;
@@ -61,7 +62,7 @@ public class TileMapData : MonoBehaviour, ITileMapData
                     if (tile != null)
                     {
                         var cellData = GetInitialCellData(cellPosition, tile);
-                        Data.Add(cellPosition, cellData);
+                        _data.Add(cellPosition, cellData);
                     }
                 }
             }

@@ -19,7 +19,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     
     //
     
-    [Inject] private ILevelManager _levelManager;
+    [Inject] private IGameManager _gameManager;
     [Inject] private IInputManager _inputManager;
     [Inject] private ITileMapData _tileMapData;
     
@@ -38,7 +38,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     {
         _inputManager = FindObjectsOfType<InputManager>().Single();
         _camera = Camera.main;
-        _levelManager.LevelLoaded += () =>
+        _gameManager.LevelLoaded += () =>
         {
             _tilemap = FindObjectsOfType<Tilemap>().Single();
         };

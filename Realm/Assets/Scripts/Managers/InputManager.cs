@@ -10,6 +10,7 @@ public interface IInputManager
     event Action<Vector2> PointerMoved;
     event Action<Vector2> PointerClicked;
     event Action<float> OnScroll;
+    event Action PlayerPressedSpaceBar;
 }
 
 public class InputManager : MonoBehaviour, IInputManager
@@ -26,6 +27,8 @@ public class InputManager : MonoBehaviour, IInputManager
     public event Action<Vector2> PointerClicked;
 
     public event Action<float> OnScroll;
+    public event Action PlayerPressedSpaceBar;
+    
     // Dependencies
     
     private InputActions _inputActions;
@@ -52,6 +55,7 @@ public class InputManager : MonoBehaviour, IInputManager
             PointerClicked?.Invoke(_cachedPointerPosition);
         };
 
+        _inputActions.Player.SpaceBar.performed += (_) => PlayerPressedSpaceBar?.Invoke();
     }
 
     private void OnEnable()

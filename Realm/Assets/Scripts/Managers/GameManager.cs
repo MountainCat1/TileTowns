@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public interface ILevelManager
+public interface IGameManager
 {
     event Action LevelLoaded;
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; set; }
 }
 
-public class LevelManager : MonoBehaviour, ILevelManager
+public class GameManager : MonoBehaviour, IGameManager
 {
     // Events
 
@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     //
 
     public Tilemap Tilemap { get; private set; }
-    
+
     [field: SerializeField] public LevelConfig LevelConfig { get; set; }
     [SerializeField] private Grid tilemapContainer;
 
