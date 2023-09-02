@@ -8,5 +8,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<ILevelManager>().To<LevelManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ITileMapData>().To<TileMapData>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ITileSelector>().To<TileSelector>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<IBuildingController>().To<BuildingController>().FromComponentInHierarchy().AsSingle();
     }      
 }

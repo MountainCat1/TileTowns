@@ -3,7 +3,13 @@ using UnityEngine.Tilemaps;
 using Zenject;
 
 
-public class BuildingController : MonoBehaviour
+public interface IBuildingController
+{
+    void SelectBuilding(Building buildingPrefab);
+    void BuildBuilding(TileData tileData, Building building);
+}
+
+public class BuildingController : MonoBehaviour, IBuildingController
 {
     private const int BuildingZIndex = 1;
     
@@ -17,10 +23,6 @@ public class BuildingController : MonoBehaviour
     private Building _buildingToBuild;
     private Tilemap _tilemap;
     
-    private void Awake()
-    {
-    }
-
     
     private void OnEnable()
     {
@@ -62,7 +64,7 @@ public class BuildingController : MonoBehaviour
 
 
     // ReSharper disable once SuggestBaseTypeForParameter
-    private void BuildBuilding(TileData tileData, Building building)
+    public void BuildBuilding(TileData tileData, Building building)
     {
         if(!CanBuildOnTile(tileData))
             return;

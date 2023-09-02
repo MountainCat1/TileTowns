@@ -1,27 +1,28 @@
 using Data;
 using UnityEngine;
+using Zenject;
 
 namespace UI
 {
     public class BuildingPanelUI : MonoBehaviour
     {
-        [SerializeField] private BuildingController buildingController;
-        [SerializeField] private LevelManager levelManager;
+        [Inject] private IBuildingController _buildingController;
+        [Inject] private LevelManager _levelManager;
 
         [SerializeField] private Transform buildingChoiceContainer;
-        
+
         [SerializeField] private BuildingButtonUI buildingButtonPrefab;
 
         private void OnEnable()
         {
-            levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+            _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
         }
 
         private void OnDisable()
         {
-            levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
+            _levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
         }
-        
+
 
         private void LevelManagerOnLevelLoaded()
         {
@@ -30,25 +31,23 @@ namespace UI
 
         private void LoadBuildingData()
         {
-            foreach (var buildingData in levelManager.LevelConfig.BuildingSet)
+            foreach (var buildingData in _levelManager.LevelConfig.BuildingSet)
             {
                 CreateBuildingButton(buildingData);
-            }   
+            }
         }
 
         private void CreateBuildingButton(BuildingData buildingData)
         {
             var createdButton = Instantiate(buildingButtonPrefab, buildingChoiceContainer);
-            
+
             createdButton.Initialize(buildingData);
             createdButton.Selected += CreatedButtonOnSelected;
         }
 
         private void CreatedButtonOnSelected(BuildingData buildingData)
         {
-            buildingController.SelectBuilding(buildingData.BuildingPrefab);
+            _buildingController.SelectBuilding(buildingData.BuildingPrefab);
         }
     }
 }
-
-
