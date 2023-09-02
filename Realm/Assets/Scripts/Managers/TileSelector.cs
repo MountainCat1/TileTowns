@@ -1,10 +1,16 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
+using Zenject;
 
-public class TileSelector : MonoBehaviour
+public interface ITileSelector
+{
+    event Action<Vector3Int, TileData> TilePointerEntered;
+    event Action<Vector3Int, TileData> TilePointerClicked;
+}
+
+public class TileSelector : MonoBehaviour, ITileSelector
 {
     // Events
 
@@ -13,10 +19,11 @@ public class TileSelector : MonoBehaviour
     
     //
     
-    [SerializeField] private LevelManager levelManager;
-    [FormerlySerializedAs("sliceMapData")] [SerializeField] private TileMapData tileMapData;
+    [Inject] private LevelManager _levelManager;
+    [Inject] private InputManager _inputManager;
+    [Inject] private TileMapData _tileMapData;
+    
     [SerializeField] private Grid grid;
-    [SerializeField] private InputManager inputManager;
     [SerializeField] private Transform tileHighlight;
     
     [SerializeField] private Vector2 mouseOffset;
@@ -29,9 +36,9 @@ public class TileSelector : MonoBehaviour
 
     private void Awake()
     {
-        inputManager = FindObjectsOfType<InputManager>().Single();
+        _inputManager = FindObjectsOfType<InputManager>().Single();
         _camera = Camera.main;
-        levelManager.LevelLoaded += () =>
+        _levelManager.LevelLoaded += () =>
         {
             _tilemap = FindObjectsOfType<Tilemap>().Single();
         };
@@ -39,8 +46,8 @@ public class TileSelector : MonoBehaviour
 
     private void Start()
     {
-        inputManager.PointerMoved += InputManagerOnPointerMoved;
-        inputManager.PointerClicked += InputManagerOnPointerClicked;
+        _inputManager.PointerMoved += InputManagerOnPointerMoved;
+        _inputManager.PointerClicked += InputManagerOnPointerClicked;
     }
 
     private void InputManagerOnPointerClicked(Vector2 pointerPosition)
@@ -54,7 +61,7 @@ public class TileSelector : MonoBehaviour
         if(tile is null)
             return;
 
-        var cellData = tileMapData.GetData(cell);
+        var cellData = _tileMapData.GetData(cell);
         
         TilePointerClicked?.Invoke(cell, cellData);
     }
@@ -77,7 +84,7 @@ public class TileSelector : MonoBehaviour
         if(tile is null)
             return;
         
-        var cellData = tileMapData.GetData(cell);
+        var cellData = _tileMapData.GetData(cell);
         
         TilePointerEntered?.Invoke(cell, cellData);
     }

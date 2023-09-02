@@ -1,7 +1,5 @@
 using Data;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI
 {

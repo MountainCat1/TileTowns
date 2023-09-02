@@ -1,8 +1,17 @@
 using System;
 using UnityEngine;
 
+public interface IInputManager
+{
+    event Action<Vector2> PlayerMovedFixed;
+    event Action PlayerNotMovedFixed;
+    event Action<Vector2> PlayerMoved;
+    event Action PlayerNotMoved;
+    event Action<Vector2> PointerMoved;
+    event Action<Vector2> PointerClicked;
+}
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IInputManager
 {
     // Events
 
@@ -30,7 +39,6 @@ public class InputManager : MonoBehaviour
         _inputActions = new InputActions();
         _inputActions.Player.Enable();
 
-        
         _inputActions.Player.PointerPosition.performed += context =>
         {
             var pointerPosition = context.ReadValue<Vector2>();

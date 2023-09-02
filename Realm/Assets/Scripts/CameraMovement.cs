@@ -1,19 +1,21 @@
 using UnityEngine;
+using Zenject;
 
 
 public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     
-    private InputManager _inputManager;
+    private IInputManager _inputManager;
     private Transform _transform;
 
-    private void Awake()
+    [Inject]
+    public void Construct(IInputManager inputManager)
     {
-        _inputManager = FindObjectOfType<InputManager>();
+        _inputManager = inputManager;
         _transform = transform;
     }
-
+    
     private void OnEnable()
     {
         _inputManager.PlayerMoved += InputManagerOnPlayerMoved;

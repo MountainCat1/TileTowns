@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 
 public class BuildingController : MonoBehaviour
 {
     private const int BuildingZIndex = 1;
     
-    [SerializeField] private LevelManager levelManager;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private TileSelector tileSelector;
-    [SerializeField] private TileMapData tileMapData;
+    [Inject] private LevelManager _levelManager;
+    [Inject] private InputManager _inputManager;
+    [Inject] private ITileSelector _tileSelector;
+    [Inject] private ITileMapData _tileMapData;
+    
     [SerializeField] private Grid grid;
 
-    [SerializeField] private Building _buildingToBuild;
-
+    private Building _buildingToBuild;
     private Tilemap _tilemap;
     
     private void Awake()
@@ -24,25 +24,25 @@ public class BuildingController : MonoBehaviour
     
     private void OnEnable()
     {
-        tileSelector.TilePointerClicked += TileSelectorOnTilePointerClicked;
-        tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
+        _tileSelector.TilePointerClicked += TileSelectorOnTilePointerClicked;
+        _tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
         
-        levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
+        _levelManager.LevelLoaded += LevelManagerOnLevelLoaded;
     }
 
     
 
     private void OnDisable()
     {
-        tileSelector.TilePointerClicked -= TileSelectorOnTilePointerClicked;
-        tileSelector.TilePointerEntered -= TileSelectorOnTilePointerEntered;
+        _tileSelector.TilePointerClicked -= TileSelectorOnTilePointerClicked;
+        _tileSelector.TilePointerEntered -= TileSelectorOnTilePointerEntered;
         
-        levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
+        _levelManager.LevelLoaded -= LevelManagerOnLevelLoaded;
     }
     
     private void LevelManagerOnLevelLoaded()
     {
-        _tilemap = levelManager.Tilemap;
+        _tilemap = _levelManager.Tilemap;
     }
 
     private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, TileData tileData)

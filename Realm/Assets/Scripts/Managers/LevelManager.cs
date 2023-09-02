@@ -2,7 +2,13 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class LevelManager : MonoBehaviour
+public interface ILevelManager
+{
+    event Action LevelLoaded;
+    Tilemap Tilemap { get; }
+}
+
+public class LevelManager : MonoBehaviour, ILevelManager
 {
     // Events
 
