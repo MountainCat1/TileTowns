@@ -14,40 +14,32 @@ public interface ITurnManager
     public event Action TurnCalculated;
     //
     void RegisterTurnHandler(ITurnHandler turnHandler);
-    void EndTurn();
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
 {
     // Events
-
     public event Action TurnCalculated;
-    
     //
-    
-    
+
     [Inject] private IInputManager _inputManager;
-    
+
     private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
 
-    private void Awake()
+    private void OnEnable()
     {
         _inputManager.PlayerPressedSpaceBar += InputManagerOnPlayerPressedSpaceBar;
     }
 
     private void InputManagerOnPlayerPressedSpaceBar()
     {
-        Debug.Log("New turn! :D");
-
         EndTurn();
     }
-    
 
     public void RegisterTurnHandler(ITurnHandler turnHandler)
     {
         _turnHandlers.Add(turnHandler);
     }
-
 
     public void EndTurn()
     {
