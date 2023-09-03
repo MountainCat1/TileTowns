@@ -10,17 +10,43 @@ public class TileMapController : MonoBehaviour, ITurnHandler
     private void Awake()
     {
         _turnManager.RegisterTurnHandler(this);
+        
+        _tileMapData.TileAdded += OnTileAdded;
+        
+        _turnManager.TurnStarted += OnTurnStarted;
     }
-    
+
+    private void OnTurnStarted()
+    {
+        foreach (var (_, data) in _tileMapData.Data)
+        {
+            RefreshTileData(data);
+        }
+    }
+
+    private void OnTileAdded(TileData tileData)
+    {
+        _tileMapData.TileAdded += (data =>
+        {
+            data.Changed += () =>
+            {
+                RefreshTileData(data);
+            };
+        });
+    }
+
     public void OnTurn()
     {
-        foreach (var (position, data) in _tileMapData.Data)
+        foreach (var (_, data) in _tileMapData.Data)
         {
-            var change = new GameStateChange();
-            
-            data.OnTurn(position, change);
-
-            _gameState.AddChage(change);
+            RefreshTileData(data);
         }
+    }
+
+    private void RefreshTileData(TileData tileData)
+    {
+        var change = tileData.GetChange();
+
+        _gameState.SetChange(change);
     }
 }

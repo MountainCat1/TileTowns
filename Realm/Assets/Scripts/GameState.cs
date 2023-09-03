@@ -5,8 +5,9 @@ using Zenject;
 public interface IGameState
 {
     decimal Money { get; set; }
+    IEnumerable<GameStateChange> Changes { get; }
     event Action Changed;
-    void AddChage(GameStateChange change);
+    void SetChange(GameStateChange change);
 }
 
 public class GameState : IGameState
@@ -17,32 +18,33 @@ public class GameState : IGameState
     
     public decimal Money { get; set; }
 
-    private List<GameStateChange> _changes;
+    public IEnumerable<GameStateChange> Changes => _changes.Values;
+    private Dictionary<object, GameStateChange> _changes;
 
     [Inject]
     public GameState(ITurnManager turnManager)
     {
-        _changes = new List<GameStateChange>();
+        _changes = new Dictionary<object, GameStateChange>();
         
         turnManager.TurnCalculated += TurnManagerOnTurnCalculated;
     }
 
     private void TurnManagerOnTurnCalculated()
     {
-        ApplyChanges(_changes);
+        ApplyChanges();
 
-        _changes = new List<GameStateChange>();
+        _changes.Clear();
     }
 
 
-    public void AddChage(GameStateChange change)
+    public void SetChange(GameStateChange change)
     {
-        _changes.Add(change);
+        _changes[change.Mutator] = change;
     }
     
-    private void ApplyChanges(IEnumerable<GameStateChange> changes)
+    private void ApplyChanges()
     {
-        foreach (var change in changes)
+        foreach (var change in Changes)
         {
             ApplyChange(change);
         }
@@ -52,6 +54,6 @@ public class GameState : IGameState
     
     private void ApplyChange(GameStateChange change)
     {
-        Money += change.Income;
+        Money += change.BuildingIncome;
     }
 }

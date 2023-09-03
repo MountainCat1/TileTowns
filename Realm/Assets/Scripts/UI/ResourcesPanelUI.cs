@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -20,6 +21,11 @@ namespace UI
         private void GameStateOnChanged()
         {
             moneyDisplay.text = $"{_gameState.Money}";
+        }
+
+        private void Update()
+        {
+            incomeDisplay.text = $"+{_gameState.Changes.Sum(x => x.BuildingIncome)}";
         }
     }
 }

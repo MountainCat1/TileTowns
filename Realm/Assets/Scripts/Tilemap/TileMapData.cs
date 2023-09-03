@@ -9,10 +9,17 @@ public interface ITileMapData
 {
     IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
     TileData GetData(Vector3Int cell);
+    event Action<TileData> TileAdded;
 }
 
 public class TileMapData : MonoBehaviour, ITileMapData
 {
+    // Events
+
+    public event Action<TileData> TileAdded; 
+
+    // 
+    
     [Inject] private IGameManager _gameManager; 
     
     public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
@@ -61,16 +68,21 @@ public class TileMapData : MonoBehaviour, ITileMapData
 
                     if (tile != null)
                     {
-                        var cellData = GetInitialCellData(cellPosition, tile);
-                        _data.Add(cellPosition, cellData);
+                        AddTileData(cellPosition, tile);
                     }
                 }
             }
         }
     }
     
-    private TileData GetInitialCellData(Vector3Int cellPosition, TileBase tileBase)
+    private TileData AddTileData(Vector3Int cellPosition, TileBase tileBase)
     {
-        return new TileData(cellPosition);
+        var tileData = new TileData(cellPosition);
+
+        _data.Add(cellPosition, tileData);
+        
+        TileAdded?.Invoke(tileData);
+
+        return tileData;
     }
 }

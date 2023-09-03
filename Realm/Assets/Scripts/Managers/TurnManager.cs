@@ -14,12 +14,14 @@ public interface ITurnManager
     public event Action TurnCalculated;
     //
     void RegisterTurnHandler(ITurnHandler turnHandler);
+    event Action TurnStarted;
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
 {
     // Events
     public event Action TurnCalculated;
+    public event Action TurnStarted;
     //
 
     [Inject] private IInputManager _inputManager;
@@ -46,6 +48,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
         RunTurnHandlers();
         
         TurnCalculated?.Invoke();
+        
+        TurnStarted?.Invoke();
     }
 
     private void RunTurnHandlers()

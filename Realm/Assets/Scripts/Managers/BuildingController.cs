@@ -1,5 +1,4 @@
-﻿using Data;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
@@ -80,7 +79,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tilemap.SetTile(buildingCellPosition, building.Tile);
         _tilemap.RefreshAllTiles();
 
-        tileData.BuildingBehaviour = building;
+        tileData.SetBuilding(building);
     }
 
     // private void BuildBuildingAsAnOject(TileData tileData, Building building)
@@ -103,7 +102,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
     private bool CanBuildOnTile(TileData tileData)
     {
-        if (tileData.BuildingBehaviour is not null)
+        if (tileData.Building is not null)
             return false;
 
         return true;
