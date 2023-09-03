@@ -17,11 +17,13 @@ public interface ITurnMutationHandler
 public interface ITurnManager
 {
     // Events
+    public event Action<ITurnMutationHandler> MutationHandlerRegistered;
+    public event Action TurnStarted;
     public event Action TurnEnded;
     //
-    void RegisterTurnHandler(ITurnHandler turnHandler);
-    void RegisterTurnHandler(ITurnMutationHandler turnMutationHandler);
-    event Action TurnStarted;
+    public void RegisterTurnHandler(ITurnHandler turnHandler);
+    public void RegisterTurnHandler(ITurnMutationHandler turnMutationHandler);
+    public IReadOnlyCollection<ITurnMutationHandler> MutationHandlers { get; }
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
@@ -29,6 +31,7 @@ public class TurnManager : MonoBehaviour, ITurnManager
     // Events
     public event Action TurnEnded;
     public event Action TurnStarted;
+    public event Action<ITurnMutationHandler> MutationHandlerRegistered;
     //
 
     [Inject] private IInputManager _inputManager;
@@ -36,6 +39,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
 
     private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
     private readonly List<ITurnMutationHandler> _turnMutationHandlers = new List<ITurnMutationHandler>();
+    
+    public IReadOnlyCollection<ITurnMutationHandler> MutationHandlers => _turnMutationHandlers;
 
     private void OnEnable()
     {

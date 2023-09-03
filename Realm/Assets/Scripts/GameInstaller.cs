@@ -12,5 +12,6 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<ITurnManager>().To<TurnManager>().FromComponentInHierarchy().AsSingle();
         
         Container.Bind<IGameState>().To<GameState>().AsSingle();
+        Container.Bind<IGameStateManager>().To<GameStateManager>().AsSingle();
     }      
 }

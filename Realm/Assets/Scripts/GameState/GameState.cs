@@ -8,6 +8,7 @@ public interface IGameState
     IEnumerable<GameStateChange> Changes { get; }
     event Action Changed;
     void SetChange(GameStateChange change);
+    void ApplyChanges();
 }
 
 public class GameState : GameStateData, IGameState
@@ -42,7 +43,7 @@ public class GameState : GameStateData, IGameState
         _changes[change.Mutator] = change;
     }
     
-    private void ApplyChanges()
+    public void ApplyChanges()
     {
         foreach (var change in Changes)
         {
@@ -51,8 +52,8 @@ public class GameState : GameStateData, IGameState
         
         Changed?.Invoke();
     }
-    
-    private void ApplyChange(GameStateChange change)
+
+    public void ApplyChange(GameStateChange change)
     {
         Money += change.BuildingIncome;
     }
