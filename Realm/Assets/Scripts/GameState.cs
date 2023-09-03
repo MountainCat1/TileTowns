@@ -46,7 +46,5 @@ public class GameState : IGameState
     private void ApplyChange(GameStateChange change)
     {
         Money += change.Income;
-
-        Debug.Log(Money);
     }
 }
