@@ -80,7 +80,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tilemap.SetTile(buildingCellPosition, building.Tile);
         _tilemap.RefreshAllTiles();
 
-        // tileData.BuildingBehaviour = building.; // TODO
+        tileData.BuildingBehaviour = building;
     }
 
     // private void BuildBuildingAsAnOject(TileData tileData, Building building)

@@ -1,28 +1,48 @@
-﻿public interface IGameState
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Zenject;
+
+public interface IGameState
 {
     decimal Money { get; set; }
+    void AddChage(GameStateChange change);
 }
 
 public class GameState : IGameState
 {
     public decimal Money { get; set; }
-    public GameStateChange GameStateChange { get; set; }
-    
+
+    private List<GameStateChange> _changes;
+
+    [Inject]
     public GameState(ITurnManager turnManager)
     {
-        GameStateChange = new GameStateChange();
+        _changes = new List<GameStateChange>();
         
         turnManager.TurnCalculated += TurnManagerOnTurnCalculated;
     }
 
     private void TurnManagerOnTurnCalculated()
     {
-        ApplyChange(GameStateChange);
+        ApplyChanges(_changes);
 
-        GameStateChange = new GameStateChange();
+        _changes = new List<GameStateChange>();
     }
 
 
+    public void AddChage(GameStateChange change)
+    {
+        _changes.Add(change);
+    }
+    
+    private void ApplyChanges(IEnumerable<GameStateChange> changes)
+    {
+        foreach (var change in changes)
+        {
+            ApplyChange(change);
+        }
+    }
+    
     private void ApplyChange(GameStateChange change)
     {
         Money += change.Income;

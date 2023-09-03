@@ -28,11 +28,10 @@ public class TurnManager : MonoBehaviour, ITurnManager
     
     [Inject] private IInputManager _inputManager;
     
-    private List<ITurnHandler> _turnHandlers;
+    private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
 
     private void Awake()
     {
-        _turnHandlers = new List<ITurnHandler>();
         _inputManager.PlayerPressedSpaceBar += InputManagerOnPlayerPressedSpaceBar;
     }
 
