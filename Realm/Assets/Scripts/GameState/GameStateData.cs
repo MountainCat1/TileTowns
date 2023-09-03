@@ -1,4 +1,7 @@
-﻿public class GameStateData
+﻿public interface IGameStateData
 {
-    public decimal BuildingIncome { get; set; }
+}
+
+public class GameStateData : IGameStateData
+{
 }

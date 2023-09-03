@@ -16,16 +16,16 @@ namespace UI
         private void OnEnable()
         {
             _gameState.Changed += GameStateOnChanged;
+            _gameState.MutationChanged += GameStateMutationChanged;
+        }
+
+        private void GameStateMutationChanged() {
+            incomeDisplay.text = $"+{_gameState.Mutations.Sum(x => x.BuildingIncome)}";
         }
 
         private void GameStateOnChanged()
         {
             moneyDisplay.text = $"{_gameState.Money}";
-        }
-
-        private void Update()
-        {
-            incomeDisplay.text = $"+{_gameState.Changes.Sum(x => x.BuildingIncome)}";
         }
     }
 }

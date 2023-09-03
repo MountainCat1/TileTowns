@@ -4,9 +4,9 @@ namespace Buildings
 {
     public class Farm : Building
     {
-        public override void UpdateState(Vector3Int position, GameStateChange change)
+        public override void UpdateState(Vector3Int position, GameStateMutation mutation)
         {
-            change.BuildingIncome = CalculateIncome();
+            mutation.BuildingIncome = CalculateIncome();
         }
 
         private decimal CalculateIncome()

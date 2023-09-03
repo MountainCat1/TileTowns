@@ -47,6 +47,6 @@ public class GameStateManager : IGameStateManager
     {
         var mutation = turnMutationHandler.HandleTurn();
         
-        _gameState.SetChange(mutation);
+        _gameState.SetMutation(mutation);
     }
 }

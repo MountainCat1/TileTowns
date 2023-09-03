@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using Zenject;
 
-public interface IGameState
+public interface IGameState : IGameStateData
 {
-    decimal Money { get; set; }
-    IEnumerable<GameStateChange> Changes { get; }
+    // Events
+    event Action MutationChanged;
     event Action Changed;
-    void SetChange(GameStateChange change);
+    //
+    // Data
+    public decimal Money { get; set; }
+    
+    //
+    IEnumerable<IGameStateMutation> Mutations { get; }
+    void SetMutation(GameStateMutation mutation);
     void ApplyChanges();
 }
 
@@ -15,17 +21,18 @@ public class GameState : GameStateData, IGameState
 {
     // Events
     public event Action Changed;
+    public event Action MutationChanged;
     //
     
     public decimal Money { get; set; }
 
-    public IEnumerable<GameStateChange> Changes => _changes.Values;
-    private Dictionary<object, GameStateChange> _changes;
+    public IEnumerable<IGameStateMutation> Mutations => _mutations.Values;
+    private Dictionary<object, IGameStateMutation> _mutations;
 
     [Inject]
     public GameState(ITurnManager turnManager)
     {
-        _changes = new Dictionary<object, GameStateChange>();
+        _mutations = new Dictionary<object, IGameStateMutation>();
         
         turnManager.TurnEnded += TurnManagerOnTurnCalculated;
     }
@@ -34,27 +41,28 @@ public class GameState : GameStateData, IGameState
     {
         ApplyChanges();
 
-        _changes.Clear();
+        _mutations.Clear();
     }
 
 
-    public void SetChange(GameStateChange change)
+    public void SetMutation(GameStateMutation mutation)
     {
-        _changes[change.Mutator] = change;
+        _mutations[mutation.Mutator] = mutation;
+        MutationChanged?.Invoke();
     }
     
     public void ApplyChanges()
     {
-        foreach (var change in Changes)
+        foreach (var mutation in Mutations)
         {
-            ApplyChange(change);
+            ApplyChange(mutation);
         }
         
         Changed?.Invoke();
     }
 
-    public void ApplyChange(GameStateChange change)
+    public void ApplyChange(IGameStateMutation mutation)
     {
-        Money += change.BuildingIncome;
+        Money += mutation.BuildingIncome;
     }
 }

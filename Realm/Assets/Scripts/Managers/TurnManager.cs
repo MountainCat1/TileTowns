@@ -10,7 +10,7 @@ public interface ITurnHandler
 
 public interface ITurnMutationHandler
 {
-    public GameStateChange HandleTurn();
+    public GameStateMutation HandleTurn();
     public event Action MutationChanged;
 }
 
@@ -93,8 +93,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
 
     private void RefreshHandler(ITurnMutationHandler handler)
     {
-        var change = handler.HandleTurn();
+        var mutation = handler.HandleTurn();
 
-        _gameState.SetChange(change);
+        _gameState.SetMutation(mutation);
     }
 }

@@ -7,7 +7,7 @@ public class Building : TileBase
     [field: SerializeField] public Tile Tile { get; set; }
     [field: SerializeField] public float Price { get; set; }
 
-    public virtual void UpdateState(Vector3Int position, GameStateChange change)
+    public virtual void UpdateState(Vector3Int position, GameStateMutation mutation)
     {
     }
 
