@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
-public class TileMapController : MonoBehaviour, ITurnHandler
+public class TileMapController : MonoBehaviour
 {
     [Inject] private ITileMapData _tileMapData;
     [Inject] private ITurnManager _turnManager;
@@ -9,18 +10,11 @@ public class TileMapController : MonoBehaviour, ITurnHandler
 
     private void Awake()
     {
-        _turnManager.RegisterTurnHandler(this);
+        _tileMapData.TileAdded += OnTileAdded;
     }
-    
-    public void OnTurn()
-    {
-        foreach (var (position, data) in _tileMapData.Data)
-        {
-            var change = new GameStateChange();
-            
-            data.OnTurn(position, change);
 
-            _gameState.AddChage(change);
-        }
+    private void OnTileAdded(TileData tileData)
+    {
+        _turnManager.RegisterTurnHandler(tileData);
     }
 }
