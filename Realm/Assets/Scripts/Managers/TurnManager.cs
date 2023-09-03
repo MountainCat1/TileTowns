@@ -8,22 +8,22 @@ public interface ITurnHandler
     public void OnTurn();
 }
 
-public interface ITurnMutationHandler
+public interface IMutator
 {
-    public GameStateMutation HandleTurn();
+    public GameStateMutation GetMutation();
     public event Action MutationChanged;
 }
 
 public interface ITurnManager
 {
     // Events
-    public event Action<ITurnMutationHandler> MutationHandlerRegistered;
+    public event Action<IMutator> MutationHandlerRegistered;
     public event Action TurnStarted;
     public event Action TurnEnded;
     //
     public void RegisterTurnHandler(ITurnHandler turnHandler);
-    public void RegisterTurnHandler(ITurnMutationHandler turnMutationHandler);
-    public IReadOnlyCollection<ITurnMutationHandler> MutationHandlers { get; }
+    public void RegisterTurnHandler(IMutator mutator);
+    public IReadOnlyCollection<IMutator> MutationHandlers { get; }
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
@@ -31,16 +31,16 @@ public class TurnManager : MonoBehaviour, ITurnManager
     // Events
     public event Action TurnEnded;
     public event Action TurnStarted;
-    public event Action<ITurnMutationHandler> MutationHandlerRegistered;
+    public event Action<IMutator> MutationHandlerRegistered;
     //
 
     [Inject] private IInputManager _inputManager;
     [Inject] private IGameState _gameState;
 
     private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
-    private readonly List<ITurnMutationHandler> _turnMutationHandlers = new List<ITurnMutationHandler>();
+    private readonly List<IMutator> _turnMutationHandlers = new List<IMutator>();
     
-    public IReadOnlyCollection<ITurnMutationHandler> MutationHandlers => _turnMutationHandlers;
+    public IReadOnlyCollection<IMutator> MutationHandlers => _turnMutationHandlers;
 
     private void OnEnable()
     {
@@ -56,12 +56,12 @@ public class TurnManager : MonoBehaviour, ITurnManager
     {
         _turnHandlers.Add(turnHandler);
     }
-    public void RegisterTurnHandler(ITurnMutationHandler turnMutationHandler)
+    public void RegisterTurnHandler(IMutator mutator)
     {
-        _turnMutationHandlers.Add(turnMutationHandler);
-        turnMutationHandler.MutationChanged += () =>
+        _turnMutationHandlers.Add(mutator);
+        mutator.MutationChanged += () =>
         {
-            RefreshHandler(turnMutationHandler);
+            RefreshHandler(mutator);
         };
     }
 
@@ -91,9 +91,9 @@ public class TurnManager : MonoBehaviour, ITurnManager
         }
     }
 
-    private void RefreshHandler(ITurnMutationHandler handler)
+    private void RefreshHandler(IMutator handler)
     {
-        var mutation = handler.HandleTurn();
+        var mutation = handler.GetMutation();
 
         _gameState.SetMutation(mutation);
     }

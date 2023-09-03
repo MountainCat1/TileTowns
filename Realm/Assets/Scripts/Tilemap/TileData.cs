@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class TileData : ITurnMutationHandler
+public class TileData : IMutator
 {
     // Events
 
@@ -20,12 +20,12 @@ public class TileData : ITurnMutationHandler
         Position = position;
     }
 
-    public GameStateMutation HandleTurn()
+    public GameStateMutation GetMutation()
     {
         var stateChange = GameStateMutation.New(this);
         
         if (Building != null) 
-            Building.UpdateState(Position, stateChange);
+            Building.ApplyMutation(Position, stateChange);
 
         return stateChange;
     }

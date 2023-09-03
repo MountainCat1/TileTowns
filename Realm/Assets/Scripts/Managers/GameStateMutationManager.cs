@@ -4,11 +4,10 @@ public interface IGameStateManager
 {
 }
 
-public class GameStateManager : IGameStateManager
+public class GameStateMutationManager : IGameStateManager
 {
     [Inject] private IGameState _gameState;
     [Inject] private ITurnManager _turnManager;
-
 
     [Inject]
     private void Construct()
@@ -18,11 +17,11 @@ public class GameStateManager : IGameStateManager
         _turnManager.MutationHandlerRegistered += OnMutationHandlerRegistered;
     }
 
-    private void OnMutationHandlerRegistered(ITurnMutationHandler turnMutationHandler)
+    private void OnMutationHandlerRegistered(IMutator mutator)
     {
-        turnMutationHandler.MutationChanged += () =>
+        mutator.MutationChanged += () =>
         {
-            RefreshMutator(turnMutationHandler);
+            RefreshMutator(mutator);
         };
     }
     
@@ -43,9 +42,9 @@ public class GameStateManager : IGameStateManager
             RefreshMutator(mutator);
         }
     }
-    private void RefreshMutator(ITurnMutationHandler turnMutationHandler)
+    private void RefreshMutator(IMutator mutator)
     {
-        var mutation = turnMutationHandler.HandleTurn();
+        var mutation = mutator.GetMutation();
         
         _gameState.SetMutation(mutation);
     }
