@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 using Zenject;
 
 public interface IGameState
 {
     decimal Money { get; set; }
+    event Action Changed;
     void AddChage(GameStateChange change);
 }
 
 public class GameState : IGameState
 {
+    // Events
+    public event Action Changed;
+    //
+    
     public decimal Money { get; set; }
 
     private List<GameStateChange> _changes;
@@ -41,6 +46,8 @@ public class GameState : IGameState
         {
             ApplyChange(change);
         }
+        
+        Changed?.Invoke();
     }
     
     private void ApplyChange(GameStateChange change)

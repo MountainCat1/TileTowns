@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 47564480}
   - component: {fileID: 47564479}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Money Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1682,7 +1682,7 @@ GameObject:
   - component: {fileID: 755219002}
   - component: {fileID: 755219001}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Money NOW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2477,7 +2477,7 @@ GameObject:
   - component: {fileID: 1153335842}
   - component: {fileID: 1153335841}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: INCOME
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3862,6 +3862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1653243347}
+  - component: {fileID: 1653243350}
   - component: {fileID: 1653243349}
   - component: {fileID: 1653243348}
   m_Layer: 5
@@ -3930,6 +3931,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653243346}
   m_CullTransparentMesh: 1
+--- !u!114 &1653243350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653243346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a01e2f13204285a7c5bf64cc5ad8a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyDisplay: {fileID: 755219001}
+  incomeDisplay: {fileID: 1153335841}
 --- !u!1 &1670579367
 GameObject:
   m_ObjectHideFlags: 0
