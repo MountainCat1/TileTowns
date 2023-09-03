@@ -5,7 +5,8 @@ public class TileMapController : MonoBehaviour, ITurnHandler
 {
     [Inject] private ITileMapData _tileMapData;
     [Inject] private ITurnManager _turnManager;
-    [Inject] private InputManager _inputManager;
+    [Inject] private IInputManager _inputManager;
+    [Inject] private IGameState _gameState;
 
     private void Awake()
     {
@@ -16,7 +17,11 @@ public class TileMapController : MonoBehaviour, ITurnHandler
     {
         foreach (var (position, data) in _tileMapData.Data)
         {
-            data.OnTurn(position);
+            var change = new GameStateChange();
+            
+            data.OnTurn(position, change);
+
+            _gameState.AddChage(change);
         }
     }
 }

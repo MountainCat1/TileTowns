@@ -9,7 +9,7 @@ namespace Data
         [field: SerializeField] public Tile Tile { get; set; }
         [field: SerializeField] public float Price { get; set; }
 
-        public virtual void OnTurn(Vector3Int position)
+        public virtual void OnTurn(Vector3Int position, GameStateChange change)
         {
             
         }

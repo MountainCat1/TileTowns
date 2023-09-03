@@ -13,9 +13,9 @@ public class TileData
 
     public Vector3Int Position { get; private set; }
 
-    public void OnTurn(Vector3Int position)
+    public void OnTurn(Vector3Int position, GameStateChange change)
     {
         if (BuildingBehaviour != null) 
-            BuildingBehaviour.OnTurn(position);
+            BuildingBehaviour.OnTurn(position, change);
     }
 }
