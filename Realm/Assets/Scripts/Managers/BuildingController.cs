@@ -16,6 +16,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private DiContainer _container;
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
+    [Inject] private IGameState _gameState;
 
     [SerializeField] private Grid grid;
 

@@ -10,7 +10,7 @@ public interface IGameState
     void SetChange(GameStateChange change);
 }
 
-public class GameState : IGameState
+public class GameState : GameStateData, IGameState
 {
     // Events
     public event Action Changed;
@@ -26,7 +26,7 @@ public class GameState : IGameState
     {
         _changes = new Dictionary<object, GameStateChange>();
         
-        turnManager.TurnCalculated += TurnManagerOnTurnCalculated;
+        turnManager.TurnEnded += TurnManagerOnTurnCalculated;
     }
 
     private void TurnManagerOnTurnCalculated()

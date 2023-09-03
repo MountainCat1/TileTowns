@@ -1,12 +1,10 @@
-﻿public class GameStateChange 
+﻿public class GameStateChange : GameStateData
 {
     /// <summary>
     /// Object that imposed a change
     /// </summary>
     public object Mutator { get; }
     
-    public decimal BuildingIncome { get; set; }
-
     private GameStateChange(object mutator)
     {
         Mutator = mutator;
