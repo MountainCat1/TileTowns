@@ -6,8 +6,13 @@ public interface IGameStateTurnMutation : IGameStateMutation
     /// Object that imposed a change
     /// </summary>
     public object Mutator { get; }
+
+    public decimal BuildingIncome { get; set; }
 }
 
+/// <summary>
+/// Mutation that is applied every "turn"
+/// </summary>
 public class GameStateTurnMutation :  IGameStateTurnMutation
 {
     /// <summary>
@@ -19,13 +24,8 @@ public class GameStateTurnMutation :  IGameStateTurnMutation
 
     public decimal BuildingIncome { get; set; }
 
-    protected GameStateTurnMutation(object mutator)
+    public GameStateTurnMutation(object mutator)
     {
         Mutator = mutator;
-    }
-
-    public static GameStateTurnMutation New(object mutator)
-    {
-        return new GameStateTurnMutation(mutator);
     }
 }
