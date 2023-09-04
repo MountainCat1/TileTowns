@@ -24,12 +24,19 @@ public class PlayerController : MonoBehaviour, IPlayerController
     //
     
     [Inject] private IInputManager _inputManager;
+    [Inject] private ITurnManager _turnManager;
 
     private PlayerMode _playerMode;
 
     private void OnEnable()
     {
         _inputManager.PlayerPressedTab += SwitchBetweenModes;
+        _inputManager.PlayerPressedSpaceBar += OnPlayerPressedSpaceBar;
+    }
+
+    private void OnPlayerPressedSpaceBar()
+    {
+        _turnManager.EndTurn();
     }
 
     public void SetPlayerMode(PlayerMode newPlayerMode)
