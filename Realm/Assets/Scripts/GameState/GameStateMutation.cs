@@ -1,29 +1,9 @@
 ﻿public interface IGameStateMutation
 {
-    /// <summary>
-    /// Object that imposed a change
-    /// </summary>
-    object Mutator { get; }
-
-    decimal BuildingIncome { get; set; }
+    decimal? MoneyChange { get; }
 }
 
-public class GameStateMutation : GameStateData, IGameStateMutation
+public class GameStateMutation : IGameStateMutation
 {
-    /// <summary>
-    /// Object that imposed a change
-    /// </summary>
-    public object Mutator { get; }
-    
-    public decimal BuildingIncome { get; set; }
-    
-    private GameStateMutation(object mutator)
-    {
-        Mutator = mutator;
-    }
-    
-    public static GameStateMutation New(object mutator)
-    {
-        return new GameStateMutation(mutator);
-    }
+    public decimal? MoneyChange { get; set; }
 }

@@ -10,7 +10,7 @@ public interface ITurnHandler
 
 public interface IMutator
 {
-    public GameStateMutation GetMutation();
+    public GameStateTurnMutation GetMutation();
     public event Action MutationChanged;
 }
 

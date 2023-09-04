@@ -1,7 +1,7 @@
 ﻿public interface IGameStateData
-{
+{    
 }
 
-public class GameStateData : IGameStateData
+public abstract class GameStateData : IGameStateData
 {
 }

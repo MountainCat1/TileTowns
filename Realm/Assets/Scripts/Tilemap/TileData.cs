@@ -20,9 +20,9 @@ public class TileData : IMutator
         Position = position;
     }
 
-    public GameStateMutation GetMutation()
+    public GameStateTurnMutation GetMutation()
     {
-        var stateChange = GameStateMutation.New(this);
+        var stateChange = GameStateTurnMutation.New(this);
         
         if (Building != null) 
             Building.ApplyMutation(Position, stateChange);

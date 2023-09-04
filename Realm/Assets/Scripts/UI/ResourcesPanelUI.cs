@@ -20,7 +20,7 @@ namespace UI
         }
 
         private void GameStateMutationChanged() {
-            incomeDisplay.text = $"+{_gameState.Mutations.Sum(x => x.BuildingIncome)}";
+            incomeDisplay.text = $"+{_gameState.Mutations.Sum(x => x.MoneyChange)}";
         }
 
         private void GameStateOnChanged()
