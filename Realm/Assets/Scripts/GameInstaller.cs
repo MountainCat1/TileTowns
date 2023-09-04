@@ -13,5 +13,6 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         
         Container.Bind<IGameState>().To<GameState>().AsSingle();
         Container.Bind<IGameStateManager>().To<GameStateMutationManager>().AsSingle();
+        Container.Bind<IPlayerController>().To<PlayerController>().AsSingle();
     }      
 }
