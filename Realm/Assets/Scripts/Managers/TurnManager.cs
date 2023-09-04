@@ -21,6 +21,7 @@ public interface ITurnManager
     public event Action TurnStarted;
     public event Action TurnEnded;
     //
+    public void EndTurn();
     public void RegisterTurnHandler(ITurnHandler turnHandler);
     public void RegisterTurnHandler(IMutator mutator);
     public IReadOnlyCollection<IMutator> MutationHandlers { get; }
@@ -33,24 +34,14 @@ public class TurnManager : MonoBehaviour, ITurnManager
     public event Action TurnStarted;
     public event Action<IMutator> MutationHandlerRegistered;
     //
-
-    [Inject] private IInputManager _inputManager;
+    
     [Inject] private IGameState _gameState;
 
     private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
     private readonly List<IMutator> _turnMutationHandlers = new List<IMutator>();
     
     public IReadOnlyCollection<IMutator> MutationHandlers => _turnMutationHandlers;
-
-    private void OnEnable()
-    {
-        _inputManager.PlayerPressedSpaceBar += InputManagerOnPlayerPressedSpaceBar;
-    }
-
-    private void InputManagerOnPlayerPressedSpaceBar()
-    {
-        EndTurn();
-    }
+    
 
     public void RegisterTurnHandler(ITurnHandler turnHandler)
     {

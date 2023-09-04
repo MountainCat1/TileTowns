@@ -2,11 +2,10 @@
 using UnityEngine;
 using Zenject;
 
-public class TileMapController : MonoBehaviour
+public class TileMapManager : MonoBehaviour
 {
     [Inject] private ITileMapData _tileMapData;
     [Inject] private ITurnManager _turnManager;
-    [Inject] private IGameState _gameState;
 
     private void Awake()
     {
