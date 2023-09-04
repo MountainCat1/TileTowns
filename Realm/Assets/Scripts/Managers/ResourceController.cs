@@ -3,7 +3,7 @@ using Zenject;
 
 public interface IResourceController
 {
-    bool SpendMoney(decimal amount);
+    public bool SpendMoney(decimal amount);
 }
 
 public class ResourceController : MonoBehaviour, IResourceController
