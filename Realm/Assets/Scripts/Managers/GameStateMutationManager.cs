@@ -46,6 +46,6 @@ public class GameStateMutationManager : IGameStateManager
     {
         var mutation = mutator.GetMutation();
         
-        _gameState.SetMutation(mutation);
+        _gameState.SetMutation(mutator, mutation);
     }
 }

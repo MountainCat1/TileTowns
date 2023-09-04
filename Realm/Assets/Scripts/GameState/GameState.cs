@@ -15,7 +15,7 @@ public interface IGameState
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
-    void SetMutation(IGameStateTurnMutation mutation);
+    void SetMutation(object mutator, IGameStateTurnMutation mutation);
     void ApplyMutations();
     void ForceApplyMutation(IGameStateMutation mutation);
 }
@@ -48,10 +48,10 @@ public class GameState : IGameState
         _mutations.Clear();
     }
 
-    public void SetMutation(IGameStateTurnMutation mutation)
+    public void SetMutation(object mutator, IGameStateTurnMutation mutation)
     {
         // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
-        _mutations[mutation.Mutator] = mutation;
+        _mutations[mutator] = mutation;
         MutationChanged?.Invoke();
     }
 
