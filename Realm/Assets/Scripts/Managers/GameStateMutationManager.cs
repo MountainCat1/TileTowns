@@ -32,7 +32,7 @@ public class GameStateMutationManager : IGameStateManager
 
     private void OnTurnEnded()
     {
-        _gameState.ApplyMutations();
+        _gameState.ApplyTurnMutations();
     }
 
     private void RefreshAllMutators()

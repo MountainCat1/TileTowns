@@ -16,8 +16,8 @@ public interface IGameState
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
     void SetMutation(object mutator, IGameStateTurnMutation mutation);
-    void ApplyMutations();
-    void ForceApplyMutation(IGameStateMutation mutation);
+    void ApplyTurnMutations();
+    void ApplyMutation(IGameStateMutation mutation);
 }
 
 public class GameState : IGameState
@@ -43,7 +43,7 @@ public class GameState : IGameState
 
     private void OnTurnEnded()
     {
-        ApplyMutations();
+        ApplyTurnMutations();
 
         _mutations.Clear();
     }
@@ -55,24 +55,24 @@ public class GameState : IGameState
         MutationChanged?.Invoke();
     }
 
-    public void ForceApplyMutation(IGameStateMutation mutation)
+    public void ApplyMutation(IGameStateMutation mutation)
     {
-        ApplyMutation(mutation);
+        ApplyMutationWithoutNotifying(mutation);
 
         Changed?.Invoke();
     }
 
-    public void ApplyMutations()
+    public void ApplyTurnMutations()
     {
         foreach (var mutation in Mutations)
         {
-            ApplyMutation(mutation);
+            ApplyMutationWithoutNotifying(mutation);
         }
 
         Changed?.Invoke();
     }
 
-    public void ApplyMutation(IGameStateMutation mutation)
+    public void ApplyMutationWithoutNotifying(IGameStateMutation mutation)
     {
         Money += mutation.MoneyChange ?? 0;
     }
