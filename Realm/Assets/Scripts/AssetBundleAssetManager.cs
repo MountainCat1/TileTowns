@@ -3,12 +3,12 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class AssetBundleResourceManager : IResourceManager
+public class AssetBundleAssetManager : IAssetManager
 {
     public const string AssetBundlesSubDirectory = "AssetBundles/";
     private readonly string assetDirectory;
 
-    public AssetBundleResourceManager()
+    public AssetBundleAssetManager()
     {
 #if UNITY_EDITOR
         assetDirectory = Application.dataPath;

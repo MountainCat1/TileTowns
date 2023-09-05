@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public interface IResourceController
+public interface IResourceManager
 {
     public bool SpendMoney(decimal amount);
 }
 
-public class ResourceController : MonoBehaviour, IResourceController
+public class ResourceManager : MonoBehaviour, IResourceManager
 {
     [Inject] private IGameState _gameState;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 
-public class EditorAssetsResourceManager : IResourceManager
+public class EditorAssetManager : IAssetManager
 {
     public const string AssetResourcesDirectory = "AssetResources/";
 

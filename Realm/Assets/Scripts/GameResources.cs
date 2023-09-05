@@ -3,35 +3,35 @@ using UnityEngine;
 
 public static class GameResources
 {
-    private static IResourceManager ResourceManager { get; }
+    private static IAssetManager AssetManager { get; }
 
     static GameResources()
     {
  #if UNITY_EDITOR
         // TODO: start using EditorAssetsResourceManager 
-        ResourceManager = new EditorAssetsResourceManager();
+        AssetManager = new EditorAssetManager();
 #else
-        ResourceManager = new AssetBundleResourceManager();
+        AssetManager = new AssetBundleAssetManager();
 #endif
     }
 
     public static IEnumerable<T> LoadAll<T>(string bundleName) where T : Object
     {
-        return ResourceManager.LoadAllAssets<T>(bundleName);
+        return AssetManager.LoadAllAssets<T>(bundleName);
     }
 
     public static T Load<T>(string bundleName, string assetName) where T : Object
     {
-        return ResourceManager.LoadAsset<T>(bundleName, assetName);
+        return AssetManager.LoadAsset<T>(bundleName, assetName);
     }
 
     public static T[] LoadSubAssets<T>(string bundleName, string assetName) where T : Object
     {
-        return ResourceManager.LoadSubAssets<T>(bundleName, assetName);
+        return AssetManager.LoadSubAssets<T>(bundleName, assetName);
     }
 
     public static string[] GetAssetNames(string bundleName)
     {
-        return ResourceManager.GetAssetsNamesInBundle(bundleName);
+        return AssetManager.GetAssetsNamesInBundle(bundleName);
     }
 }

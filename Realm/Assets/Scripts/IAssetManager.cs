@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public interface IResourceManager
+public interface IAssetManager
 {
     IEnumerable<T> LoadAllAssets<T>(string bundleName) where T : Object;
     T LoadAsset<T>(string bundleName, string assetName) where T : Object;
