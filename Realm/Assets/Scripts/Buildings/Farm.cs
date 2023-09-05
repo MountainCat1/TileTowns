@@ -9,10 +9,10 @@ namespace Buildings
             mutation.BuildingIncome = CalculateIncome();
         }
 
-        private decimal CalculateIncome()
+        private float CalculateIncome()
         {
             // TODO add farm income logic here pls 🐲
-            return new decimal(5.0);
+            return 5f;
         }
     }
 }

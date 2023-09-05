@@ -11,7 +11,7 @@ public interface IGameState
 
     //
     // Data
-    public decimal Money { get; }
+    public float Money { get; }
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
@@ -28,7 +28,7 @@ public class GameState : IGameState
     public event Action MutationChanged;
     //
 
-    public decimal Money { get; private set; }
+    public float Money { get; private set; }
 
     public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
     private Dictionary<object, IGameStateTurnMutation> _mutations;

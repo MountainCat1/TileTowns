@@ -1,6 +1,6 @@
 ﻿public interface IGameStateMutation
 {
-    decimal? MoneyChange { get; }
+    float? MoneyChange { get; }
 }
 
 /// <summary>
@@ -8,5 +8,5 @@
 /// </summary>
 public class GameStateMutation : IGameStateMutation
 {
-    public decimal? MoneyChange { get; set; }
+    public float? MoneyChange { get; set; }
 }

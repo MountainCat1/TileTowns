@@ -17,6 +17,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
     [Inject] private IGameState _gameState;
+    [Inject] private IResourceManager _resourceManager;
 
     [SerializeField] private Grid grid;
 
@@ -73,6 +74,9 @@ public class BuildingController : MonoBehaviour, IBuildingController
     public void BuildBuilding(TileData tileData, Building building)
     {
         if (!CanBuildOnTile(tileData))
+            return;
+        
+        if(!_resourceManager.SpendMoney(building.Price))
             return;
 
         var buildingCellPosition = new Vector3Int(tileData.Position.x, tileData.Position.y, BuildingZIndex);

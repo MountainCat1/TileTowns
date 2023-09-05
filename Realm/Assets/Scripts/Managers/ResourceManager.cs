@@ -3,14 +3,14 @@ using Zenject;
 
 public interface IResourceManager
 {
-    public bool SpendMoney(decimal amount);
+    public bool SpendMoney(float amount);
 }
 
 public class ResourceManager : MonoBehaviour, IResourceManager
 {
     [Inject] private IGameState _gameState;
 
-    public bool SpendMoney(decimal amount)
+    public bool SpendMoney(float amount)
     {
         if (_gameState.Money < amount)
             return false;
@@ -18,7 +18,7 @@ public class ResourceManager : MonoBehaviour, IResourceManager
 
         var mutation = new GameStateMutation
         {
-            MoneyChange = amount
+            MoneyChange = -amount
         };
 
         _gameState.ApplyMutation(mutation);
