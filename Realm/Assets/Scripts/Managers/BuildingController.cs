@@ -1,10 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
 
 public interface IBuildingController
 {
+    #region MyRegion
+
+    event Action PlaceBuildingFailed;
+    event Action<Building, TileData> PlacedBuilding;
+
+    #endregion
+    
     void SelectBuilding(Building building);
     void BuildBuilding(TileData tileData, Building building);
 }
@@ -12,6 +20,13 @@ public interface IBuildingController
 public class BuildingController : MonoBehaviour, IBuildingController
 {
     private const int BuildingZIndex = 1;
+
+    #region Events
+
+    public event Action PlaceBuildingFailed;
+    public event Action<Building, TileData> PlacedBuilding;
+
+    #endregion
 
     [Inject] private DiContainer _container;
     [Inject] private IGameManager _gameManager;
@@ -74,10 +89,16 @@ public class BuildingController : MonoBehaviour, IBuildingController
     public void BuildBuilding(TileData tileData, Building building)
     {
         if (!CanBuildOnTile(tileData))
+        {
+            PlaceBuildingFailed?.Invoke();
             return;
-        
-        if(!_resourceManager.SpendMoney(building.Price))
+        }
+
+        if (!_resourceManager.SpendMoney(building.Price))
+        {
+            PlaceBuildingFailed?.Invoke();
             return;
+        }
 
         var buildingCellPosition = new Vector3Int(tileData.Position.x, tileData.Position.y, BuildingZIndex);
 
@@ -85,6 +106,8 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tilemap.RefreshAllTiles();
 
         tileData.SetBuilding(building);
+        
+        PlacedBuilding?.Invoke(building, tileData);
     }
 
     // private void BuildBuildingAsAnOject(TileData tileData, Building building)
