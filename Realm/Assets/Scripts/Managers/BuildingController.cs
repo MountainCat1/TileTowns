@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
-
 public interface IBuildingController
 {
     #region MyRegion
@@ -84,7 +83,6 @@ public class BuildingController : MonoBehaviour, IBuildingController
             BuildBuilding(tileData, _selectedBuilding);
     }
 
-
     // ReSharper disable once SuggestBaseTypeForParameter
     public void BuildBuilding(TileData tileData, Building building)
     {
@@ -109,25 +107,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         
         PlacedBuilding?.Invoke(building, tileData);
     }
-
-    // private void BuildBuildingAsAnOject(TileData tileData, Building building)
-    // {
-    //     if(!CanBuildOnTile(tileData))
-    //         return;
-    //     
-    //     var worlPosition = grid.GetCellCenterWorld(tileData.Position);
-    //
-    //     
-    //     
-    //     var building = Instantiate(building.gameObject, worlPosition, Quaternion.identity)
-    //         .GetComponent<Building>();
-    //     
-    //     tileData.Building = building;
-    //     
-    //     tileMapData.SetData(tileData.Position, tileData);
-    // }
-
-
+    
     private bool CanBuildOnTile(TileData tileData)
     {
         if (tileData.Building is not null)
