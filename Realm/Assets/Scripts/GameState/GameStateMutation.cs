@@ -1,29 +1,12 @@
 ﻿public interface IGameStateMutation
 {
-    /// <summary>
-    /// Object that imposed a change
-    /// </summary>
-    object Mutator { get; }
-
-    decimal BuildingIncome { get; set; }
+    float? MoneyChange { get; }
 }
 
-public class GameStateMutation : GameStateData, IGameStateMutation
+/// <summary>
+/// Mutation to be applied immediately 
+/// </summary>
+public class GameStateMutation : IGameStateMutation
 {
-    /// <summary>
-    /// Object that imposed a change
-    /// </summary>
-    public object Mutator { get; }
-    
-    public decimal BuildingIncome { get; set; }
-    
-    private GameStateMutation(object mutator)
-    {
-        Mutator = mutator;
-    }
-    
-    public static GameStateMutation New(object mutator)
-    {
-        return new GameStateMutation(mutator);
-    }
+    public float? MoneyChange { get; set; }
 }

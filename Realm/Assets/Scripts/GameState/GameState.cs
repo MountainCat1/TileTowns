@@ -2,67 +2,78 @@
 using System.Collections.Generic;
 using Zenject;
 
-public interface IGameState : IGameStateData
+public interface IGameState
 {
     // Events
     event Action MutationChanged;
+
     event Action Changed;
+
     //
     // Data
-    public decimal Money { get; set; }
-    
+    public float Money { get; }
+
     //
-    IEnumerable<IGameStateMutation> Mutations { get; }
-    void SetMutation(GameStateMutation mutation);
-    void ApplyChanges();
+    IEnumerable<IGameStateTurnMutation> Mutations { get; }
+    void SetMutation(object mutator, IGameStateTurnMutation mutation);
+    void ApplyTurnMutations();
+    void ApplyMutation(IGameStateMutation mutation);
 }
 
-public class GameState : GameStateData, IGameState
+public class GameState : IGameState
 {
     // Events
     public event Action Changed;
+
     public event Action MutationChanged;
     //
-    
-    public decimal Money { get; set; }
 
-    public IEnumerable<IGameStateMutation> Mutations => _mutations.Values;
-    private Dictionary<object, IGameStateMutation> _mutations;
+    public float Money { get; private set; }
+
+    public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
+    private Dictionary<object, IGameStateTurnMutation> _mutations;
 
     [Inject]
     public GameState(ITurnManager turnManager)
     {
-        _mutations = new Dictionary<object, IGameStateMutation>();
-        
-        turnManager.TurnEnded += TurnManagerOnTurnCalculated;
+        _mutations = new Dictionary<object, IGameStateTurnMutation>();
+
+        turnManager.TurnEnded += OnTurnEnded;
     }
 
-    private void TurnManagerOnTurnCalculated()
+    private void OnTurnEnded()
     {
-        ApplyChanges();
+        ApplyTurnMutations();
 
         _mutations.Clear();
     }
 
-
-    public void SetMutation(GameStateMutation mutation)
+    public void SetMutation(object mutator, IGameStateTurnMutation mutation)
     {
-        _mutations[mutation.Mutator] = mutation;
+        // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
+        _mutations[mutator] = mutation;
         MutationChanged?.Invoke();
     }
-    
-    public void ApplyChanges()
+
+    public void ApplyMutation(IGameStateMutation mutation)
     {
-        foreach (var mutation in Mutations)
-        {
-            ApplyChange(mutation);
-        }
-        
+        ApplyMutationWithoutNotifying(mutation);
+
         Changed?.Invoke();
     }
 
-    public void ApplyChange(IGameStateMutation mutation)
+    public void ApplyTurnMutations()
     {
-        Money += mutation.BuildingIncome;
+        foreach (var mutation in Mutations)
+        {
+            ApplyMutationWithoutNotifying(mutation);
+        }
+
+        Changed?.Invoke();
+    }
+
+    public void ApplyMutationWithoutNotifying(IGameStateMutation mutation)
+    {
+        Money += mutation.MoneyChange ?? 0;
     }
 }

@@ -4,14 +4,15 @@ namespace Buildings
 {
     public class Farm : Building
     {
-        public override void ApplyMutation(Vector3Int position, GameStateMutation mutation)
+        public override void CreateMutation(Vector3Int position, IGameStateTurnMutation mutation)
         {
             mutation.BuildingIncome = CalculateIncome();
         }
 
-        private decimal CalculateIncome()
+        private float CalculateIncome()
         {
-            return new decimal(5.0);
+            // TODO add farm income logic here pls 🐲
+            return 5f;
         }
     }
 }

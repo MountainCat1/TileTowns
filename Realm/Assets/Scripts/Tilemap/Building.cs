@@ -7,7 +7,7 @@ public class Building : TileBase
     [field: SerializeField] public Tile Tile { get; set; }
     [field: SerializeField] public float Price { get; set; }
 
-    public virtual void ApplyMutation(Vector3Int position, GameStateMutation mutation)
+    public virtual void CreateMutation(Vector3Int position, IGameStateTurnMutation mutation)
     {
     }
 
