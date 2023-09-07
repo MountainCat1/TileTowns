@@ -30,7 +30,6 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private DiContainer _container;
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
-    [Inject] private IGameState _gameState;
     [Inject] private IResourceManager _resourceManager;
 
     [SerializeField] private Grid grid;
@@ -83,7 +82,6 @@ public class BuildingController : MonoBehaviour, IBuildingController
             BuildBuilding(tileData, _selectedBuilding);
     }
 
-    // ReSharper disable once SuggestBaseTypeForParameter
     public void BuildBuilding(TileData tileData, Building building)
     {
         if (!CanBuildOnTile(tileData))
@@ -108,7 +106,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         PlacedBuilding?.Invoke(building, tileData);
     }
     
-    private bool CanBuildOnTile(TileData tileData)
+    private static bool CanBuildOnTile(TileData tileData)
     {
         if (tileData.Building is not null)
             return false;
