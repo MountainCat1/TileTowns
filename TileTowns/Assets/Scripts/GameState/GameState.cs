@@ -11,10 +11,12 @@ public interface IGameState
 
     //
     // Data
-    public float Money { get; }
+    float Money { get; }
+    float Immigration { get; set; }
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
+    int Population { get; set; }
     void SetMutation(object mutator, IGameStateTurnMutation mutation);
     void ApplyTurnMutations();
     void ApplyMutation(IGameStateMutation mutation);
@@ -29,6 +31,9 @@ public class GameState : IGameState
     //
 
     public float Money { get; private set; }
+    public float Immigration { get; set; }
+    public int Population { get; set; }
+    
 
     public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
     private Dictionary<object, IGameStateTurnMutation> _mutations;
@@ -75,5 +80,7 @@ public class GameState : IGameState
     public void ApplyMutationWithoutNotifying(IGameStateMutation mutation)
     {
         Money += mutation.MoneyChange ?? 0;
+        Immigration += mutation.ImmigrationChange ?? 0;
+        Population += mutation.PopulationChange ?? 0;
     }
 }

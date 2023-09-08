@@ -16,6 +16,8 @@ public class GameStateTurnMutation :  IGameStateTurnMutation
     public object Mutator { get; }
 
     public float? MoneyChange => BuildingIncome;
+    public float? ImmigrationChange { get; set; }
+    public int? PopulationChange { get; set; }
 
     public float BuildingIncome { get; set; }
 
