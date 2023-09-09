@@ -7,6 +7,7 @@ namespace Buildings
         public override void CreateMutation(Vector3Int position, IGameStateTurnMutation mutation)
         {
             mutation.BuildingIncome = CalculateIncome();
+            mutation.ImmigrationChange = 5;
         }
 
         private float CalculateIncome()

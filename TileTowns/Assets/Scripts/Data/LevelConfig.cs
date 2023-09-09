@@ -1,7 +1,7 @@
 using Data;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "LevelConfig", menuName = "Game Configuration")]
+[CreateAssetMenu(fileName = "LevelConfig", menuName = "Level Config")]
 public class LevelConfig : ScriptableObject
 {
     [field: SerializeField] public string Name { get; set; }
