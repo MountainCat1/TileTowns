@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -77,11 +76,6 @@ public class TileSelector : MonoBehaviour, ITileSelector
 
         MoveTileHighlightTo(_lastCellSelected, cell);
         _lastCellSelected = cell;
-
-        var tile = _tilemap.GetTile(cell);
-
-        if (tile == null)
-            return;
 
         var cellData = _tileMapData.GetData(cell);
         TilePointerEntered?.Invoke(cell, cellData);
