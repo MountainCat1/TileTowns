@@ -41,9 +41,6 @@ public class TileMapData : MonoBehaviour, ITileMapData
     {
         _data.TryGetValue(position, out var data);
 
-        if (data is null)
-            throw new IndexOutOfRangeException();
-
         return data;
     }
     

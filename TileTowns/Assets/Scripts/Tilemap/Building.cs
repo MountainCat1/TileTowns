@@ -2,7 +2,7 @@
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "Data/Building Metadata", fileName = nameof(Building))]
-public class Building : TileBase
+public class Building : ScriptableObject
 {
     [field: SerializeField] public Tile Tile { get; set; }
     [field: SerializeField] public float Price { get; set; }
