@@ -24,9 +24,8 @@ public class TileSelector : MonoBehaviour, ITileSelector
     [Inject] private ITileMapData _tileMapData;
     
     [SerializeField] private Grid grid;
-    [SerializeField] private Transform tileHighlight;
-    
-    [SerializeField] private Vector2 mouseOffset;
+    [SerializeField] private TileBase highlightTile;
+    [SerializeField] private Tilemap highlightGrid;
     
     private Tilemap _tilemap;
     private Camera _camera;
@@ -40,7 +39,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
         _camera = Camera.main;
         _gameManager.LevelLoaded += () =>
         {
-            _tilemap = FindObjectsOfType<Tilemap>().Single();
+            _tilemap = _gameManager.Tilemap;
         };
     }
 
@@ -54,7 +53,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     {
         var mousePosition = _camera.ScreenToWorldPoint(pointerPosition);
         
-        var cell = grid.WorldToCell(new Vector3(mousePosition.x + mouseOffset.x, mousePosition.y +  + mouseOffset.y, 0));
+        var cell = grid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
 
         var tile = _tilemap.GetTile(cell);
         
@@ -70,14 +69,14 @@ public class TileSelector : MonoBehaviour, ITileSelector
     {
         var mousePosition = _camera.ScreenToWorldPoint(pointerPosition);
 
-        var cell = grid.WorldToCell(new Vector3(mousePosition.x + mouseOffset.x, mousePosition.y +  + mouseOffset.y, 0));
-
+        var cell = grid.WorldToCell(new Vector3(mousePosition.x, mousePosition.y, 0));
+        
         if(cell == _lastCellSelected)
             return;
 
+        MoveTileHighlightTo(_lastCellSelected, cell);
+        
         _lastCellSelected = cell;
-
-        tileHighlight.position = grid.GetCellCenterWorld(cell);
         
         var tile = _tilemap.GetTile(cell);
         
@@ -87,5 +86,11 @@ public class TileSelector : MonoBehaviour, ITileSelector
         var cellData = _tileMapData.GetData(cell);
         
         TilePointerEntered?.Invoke(cell, cellData);
+    }
+
+    private void MoveTileHighlightTo(Vector3Int lastHighlightedCell, Vector3Int cell)
+    {
+        highlightGrid.SetTile(lastHighlightedCell, null);
+        highlightGrid.SetTile(cell, highlightTile);
     }
 }
