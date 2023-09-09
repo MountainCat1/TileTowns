@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float zoomSensitivity = 1f;
-    [SerializeField] private float minZoom = 3;
+    [SerializeField] private float minZoom = 2;
     [SerializeField] private float maxZoom = 20;
 
     private IInputManager _inputManager;
