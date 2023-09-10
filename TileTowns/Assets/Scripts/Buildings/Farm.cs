@@ -4,7 +4,8 @@ namespace Buildings
 {
     public class Farm : Building
     {
-        public override int WorkSlots => 4;
+        public override int WorkSlots => 3;
+        public override int Housing => 2;
 
         public override void UpdateMutation(Vector3Int position, IGameStateTurnMutation mutation)
         {

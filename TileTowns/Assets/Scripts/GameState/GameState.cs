@@ -117,6 +117,6 @@ public class GameState : IGameState
     
     private int CalculateWorkSlots()
     {
-        return PersistentModifiers.Sum(x => WorkSlots);
+        return PersistentModifiers.Sum(x => x.WorkSlots);
     }
 }
