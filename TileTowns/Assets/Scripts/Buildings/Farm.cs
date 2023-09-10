@@ -8,6 +8,7 @@ namespace Buildings
         {
             mutation.BuildingIncome = CalculateIncome();
             mutation.ImmigrationChange = 5;
+            mutation.Housing = 1;
         }
 
         private float CalculateIncome()

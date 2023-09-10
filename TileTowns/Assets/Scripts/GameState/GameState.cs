@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,8 @@ public interface IGameState
     //
     // Data
     float Money { get; }
-    float Immigration { get; set; }
+    float Immigration { get; }
+    float Housing { get; }
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
@@ -33,6 +35,8 @@ public class GameState : IGameState
 
     public float Money { get; private set; }
     public float Immigration { get; set; }
+    public float Housing => CalculateHousing();
+
     public int Population { get; set; }
 
     [Inject] private IGameConfig _gameConfig;
@@ -91,5 +95,9 @@ public class GameState : IGameState
             Immigration %= _gameConfig.ImmigrationPerPopulation;
         }
     }
-
+    
+    private float CalculateHousing()
+    {
+        return Mutations.Sum(x => x.Housing);
+    }
 }
