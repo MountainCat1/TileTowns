@@ -9,11 +9,11 @@ public abstract class Building : ScriptableObject
     public virtual int WorkSlots => 0;
     public virtual int Housing => 0;
 
-    public virtual void UpdateMutation(Vector3Int position, IGameStateTurnMutation mutation)
+    public virtual void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
     {
     }
 
-    public virtual void UpdateModifier(Vector3Int cellPosition, IPersistentModifier persistentModifier)
+    public virtual void UpdateModifier(ITileData tileData, IPersistentModifier persistentModifier)
     {
         persistentModifier.Housing = Housing;
         persistentModifier.WorkSlots = WorkSlots;
