@@ -11,6 +11,7 @@ public interface ITurnHandler
 public interface IMutator
 {
     public IGameStateTurnMutation GetMutation();
+    public IPersistentModifier GetPersistentModifier();
     public event Action MutationChanged;
 }
 
@@ -42,7 +43,6 @@ public class TurnManager : MonoBehaviour, ITurnManager
     
     public IReadOnlyCollection<IMutator> MutationHandlers => _turnMutationHandlers;
     
-
     public void RegisterTurnHandler(ITurnHandler turnHandler)
     {
         _turnHandlers.Add(turnHandler);
@@ -87,5 +87,9 @@ public class TurnManager : MonoBehaviour, ITurnManager
         var mutation = mutator.GetMutation();
 
         _gameState.SetMutation(mutator, mutation);
+        
+        var persistentModifier = mutator.GetPersistentModifier();
+        
+        _gameState.SetPersistentModifier(mutator, persistentModifier);
     }
 }
