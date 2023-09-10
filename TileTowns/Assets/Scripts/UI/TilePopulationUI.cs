@@ -16,8 +16,15 @@ namespace UI
         public void Initialize(TileData tileData)
         {
             _tileData = tileData;
+
+            _tileData.MutationChanged += UpdateDisplay;
             
             UpdateDisplay();
+        }
+
+        private void OnDestroy()
+        {
+            _tileData.MutationChanged -= UpdateDisplay;
         }
 
         public void UpdateDisplay()

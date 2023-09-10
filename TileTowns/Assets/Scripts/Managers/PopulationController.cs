@@ -89,10 +89,5 @@ public class PopulationController : MonoBehaviour
         var position = _gameManager.Grid.GetCellCenterWorld(tileData.Position);
 
         script.transform.position = position;
-
-        tileData.MutationChanged += () =>
-        {
-            script.UpdateDisplay();
-        };
     }
 }
