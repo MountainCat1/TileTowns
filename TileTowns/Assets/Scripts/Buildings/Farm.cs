@@ -7,11 +7,10 @@ namespace Buildings
         public override int WorkSlots => 3;
         public override int Housing => 2;
 
-        public override void UpdateMutation(Vector3Int position, IGameStateTurnMutation mutation)
+        public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             mutation.BuildingIncome = CalculateIncome();
-            mutation.ImmigrationChange = 5;
-            mutation.Housing = 1;
+            mutation.ImmigrationChange = 5 * tileData.WorkersAssigned;
         }
 
         private float CalculateIncome()

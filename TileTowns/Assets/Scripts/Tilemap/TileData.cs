@@ -2,7 +2,13 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class TileData : IMutator
+public interface ITileData
+{
+    Vector3Int Position { get; }
+    int WorkersAssigned { get; set; }
+}
+
+public class TileData : IMutator, ITileData
 {
     // Events
 
@@ -10,11 +16,10 @@ public class TileData : IMutator
     
     //
     
-    
     [CanBeNull] 
     public Building Building { get; private set; }
     public Vector3Int Position { get; private set; }
-    
+
     public int WorkersAssigned { get; set; }
 
     public TileData(Vector3Int position)
@@ -27,7 +32,7 @@ public class TileData : IMutator
         var stateChange = new GameStateTurnMutation(this);
         
         if (Building != null) 
-            Building.UpdateMutation(Position, stateChange);
+            Building.UpdateMutation(this, stateChange);
 
         return stateChange;
     }
@@ -37,7 +42,7 @@ public class TileData : IMutator
         var persistentModifer = new PersistentModifier();
         
         if(Building != null)
-            Building.UpdateModifier(Position, persistentModifer);
+            Building.UpdateModifier(this, persistentModifer);
 
         return persistentModifer;
     }
