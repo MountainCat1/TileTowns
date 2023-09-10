@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Buildings
+﻿namespace Buildings
 {
     public class Farm : Building
     {

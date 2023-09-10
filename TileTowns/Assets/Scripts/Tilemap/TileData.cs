@@ -63,6 +63,22 @@ public class TileData : IMutator, ITileData
             return false;
 
         WorkersAssigned++;
+        
+        MutationChanged?.Invoke();
+        return true;
+    }
+
+    public bool RemoveWorker()
+    {
+        if (Building is null)
+            return false;
+
+        if (WorkersAssigned == 0)
+            return false;
+
+        WorkersAssigned--;
+        
+        MutationChanged?.Invoke();
         return true;
     }
 }

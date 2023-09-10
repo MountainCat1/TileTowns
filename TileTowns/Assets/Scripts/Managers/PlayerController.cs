@@ -13,6 +13,7 @@ public interface IPlayerController
 {
     event Action<PlayerMode> PlayerModeSet;
     void SetPlayerMode(PlayerMode newPlayerMode);
+    PlayerMode PlayerMode { get; }
 }
 
 public class PlayerController : MonoBehaviour, IPlayerController
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [Inject] private IInputManager _inputManager;
     [Inject] private ITurnManager _turnManager;
 
-    private PlayerMode _playerMode;
+    public PlayerMode PlayerMode { get; private set; }
 
     private void OnEnable()
     {
@@ -42,15 +43,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public void SetPlayerMode(PlayerMode newPlayerMode)
     {
         Debug.Log($"Switching to {newPlayerMode} mode...");
-        _playerMode = newPlayerMode;
+        PlayerMode = newPlayerMode;
         
-        PlayerModeSet?.Invoke(_playerMode);
+        PlayerModeSet?.Invoke(PlayerMode);
     }
 
 
     private void SwitchBetweenModes()
     {
-        if (_playerMode == PlayerMode.Default)
+        if (PlayerMode == PlayerMode.Default)
         {
             SetPlayerMode(PlayerMode.PopulationManaging);
             return;

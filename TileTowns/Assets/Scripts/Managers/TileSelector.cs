@@ -7,6 +7,7 @@ public interface ITileSelector
 {
     event Action<Vector3Int, TileData> TilePointerEntered;
     event Action<Vector3Int, TileData> TilePointerClicked;
+    event Action<Vector3Int, TileData> TilePointerSecondaryClicked;
 }
 
 public class TileSelector : MonoBehaviour, ITileSelector
@@ -14,6 +15,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     #region Events
     public event Action<Vector3Int, TileData> TilePointerEntered;
     public event Action<Vector3Int, TileData> TilePointerClicked;
+    public event Action<Vector3Int, TileData> TilePointerSecondaryClicked;
     #endregion
 
     [Inject] private IGameManager _gameManager;
@@ -47,6 +49,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     {
         _inputManager.PointerMoved += OnPointerMoved;
         _inputManager.PointerClicked += OnPointerClicked;
+        _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
     }
 
     private void OnLevelLoaded()
@@ -54,6 +57,19 @@ public class TileSelector : MonoBehaviour, ITileSelector
         _tilemap = _gameManager.Tilemap;
     }
 
+    private void OnPointerSecondaryClicked(Vector2 pointerPosition)
+    {
+        var cell = PointerPositionToCell(pointerPosition);
+
+        var tile = _tilemap.GetTile(cell);
+
+        if (tile == null)
+            return;
+
+        var cellData = _tileMapData.GetData(cell);
+        TilePointerSecondaryClicked?.Invoke(cell, cellData);
+    }
+    
     private void OnPointerClicked(Vector2 pointerPosition)
     {
         var cell = PointerPositionToCell(pointerPosition);
