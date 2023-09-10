@@ -35,6 +35,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
     [Inject] private IResourceManager _resourceManager;
+    [Inject] private IPlayerController _playerController;
 
     [SerializeField] private Grid grid;
 
@@ -48,6 +49,16 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
 
         _gameManager.LevelLoaded += GameManagerOnGameLoaded;
+        
+        _playerController.PlayerModeSet += OnPlayerModeSet;
+    }
+
+    private void OnPlayerModeSet(PlayerMode mode)
+    {
+        if (mode != PlayerMode.Building)
+        {
+            SelectedBuilding = null;
+        }
     }
 
 

@@ -7,9 +7,11 @@ using Zenject;
 
 public interface ITileMapData
 {
-    IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
-    TileData GetData(Vector3Int cell);
     event Action<TileData> TileAdded;
+    
+    IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
+    IEnumerable<TileData> TileData { get; }
+    TileData GetData(Vector3Int cell);
 }
 
 public class TileMapData : MonoBehaviour, ITileMapData
@@ -23,6 +25,7 @@ public class TileMapData : MonoBehaviour, ITileMapData
     [Inject] private IGameManager _gameManager; 
     
     public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
+    public IEnumerable<TileData> TileData => Data.Values;
     private readonly Dictionary<Vector3Int, TileData> _data  = new();
 
     private Tilemap _tilemap;
