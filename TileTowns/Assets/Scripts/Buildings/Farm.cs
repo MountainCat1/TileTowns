@@ -4,7 +4,9 @@ namespace Buildings
 {
     public class Farm : Building
     {
-        public override void CreateMutation(Vector3Int position, IGameStateTurnMutation mutation)
+        public override int WorkSlots => 4;
+
+        public override void UpdateMutation(Vector3Int position, IGameStateTurnMutation mutation)
         {
             mutation.BuildingIncome = CalculateIncome();
             mutation.ImmigrationChange = 5;

@@ -22,5 +22,7 @@ public class PopulationDisplayUI : MonoBehaviour
     private void UpdateDisplay()
     {
         housingDisplay.text = $"{_gameState.Housing}";
+        populationDisplay.text = $"{_gameState.Population}";
+        workslotsDisplay.text = $"{_gameState.WorkSlots}";
     }
 }

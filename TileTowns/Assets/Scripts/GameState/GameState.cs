@@ -15,12 +15,14 @@ public interface IGameState
     // Data
     float Money { get; }
     float Immigration { get; }
-    float Housing { get; }
+    int Housing { get; }
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
-    int Population { get; set; }
+    int Population { get; }
+    int WorkSlots { get; }
     void SetMutation(object mutator, IGameStateTurnMutation mutation);
+    void SetPersistentModifier(object modifierProvier, IPersistentModifier modifier);
     void ApplyTurnMutations();
     void ApplyMutation(IGameStateMutation mutation);
 }
@@ -35,7 +37,8 @@ public class GameState : IGameState
 
     public float Money { get; private set; }
     public float Immigration { get; set; }
-    public float Housing => CalculateHousing();
+    public int Housing => CalculateHousing();
+    public int WorkSlots => CalculateWorkSlots();
 
     public int Population { get; set; }
 
@@ -43,11 +46,15 @@ public class GameState : IGameState
     
     public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
     private Dictionary<object, IGameStateTurnMutation> _mutations;
+    
+    private IEnumerable<IPersistentModifier> PersistentModifiers => _persistentModifiers.Values;
+    private Dictionary<object, IPersistentModifier> _persistentModifiers;
 
     [Inject]
     public GameState(ITurnManager turnManager)
     {
         _mutations = new Dictionary<object, IGameStateTurnMutation>();
+        _persistentModifiers = new Dictionary<object, IPersistentModifier>();
 
         turnManager.TurnEnded += OnTurnEnded;
     }
@@ -63,6 +70,13 @@ public class GameState : IGameState
     {
         // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
         _mutations[mutator] = mutation;
+        MutationChanged?.Invoke();
+    }
+    
+    public void SetPersistentModifier(object modifierProvier, IPersistentModifier modifier)
+    {
+        // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
+        _persistentModifiers[modifierProvier] = modifier;
         MutationChanged?.Invoke();
     }
 
@@ -96,8 +110,13 @@ public class GameState : IGameState
         }
     }
     
-    private float CalculateHousing()
+    private int CalculateHousing()
     {
-        return Mutations.Sum(x => x.Housing);
+        return PersistentModifiers.Sum(x => x.Housing);
+    }
+    
+    private int CalculateWorkSlots()
+    {
+        return PersistentModifiers.Sum(x => WorkSlots);
     }
 }

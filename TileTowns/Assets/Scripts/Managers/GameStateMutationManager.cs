@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 public interface IGameStateManager
 {
@@ -47,5 +48,9 @@ public class GameStateMutationManager : IGameStateManager
         var mutation = mutator.GetMutation();
         
         _gameState.SetMutation(mutator, mutation);
+
+        var persistentModifier = mutator.GetPersistentModifier();
+        
+        _gameState.SetPersistentModifier(mutator, persistentModifier);
     }
 }

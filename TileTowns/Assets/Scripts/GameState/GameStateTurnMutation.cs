@@ -3,7 +3,7 @@
 public interface IGameStateTurnMutation : IGameStateMutation
 {
     public float BuildingIncome { get; set; }
-    public float Housing { get; set; }
+    public int Housing { get; set; }
 }
 
 /// <summary>
@@ -21,7 +21,7 @@ public class GameStateTurnMutation :  IGameStateTurnMutation
     public int? PopulationChange { get; set; }
 
     public float BuildingIncome { get; set; }
-    public float Housing { get; set; }
+    public int Housing { get; set; }
 
     public GameStateTurnMutation(object mutator)
     {

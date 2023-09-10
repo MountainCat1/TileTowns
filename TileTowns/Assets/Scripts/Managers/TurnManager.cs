@@ -11,6 +11,7 @@ public interface ITurnHandler
 public interface IMutator
 {
     public IGameStateTurnMutation GetMutation();
+    public IPersistentModifier GetPersistentModifier();
     public event Action MutationChanged;
 }
 
