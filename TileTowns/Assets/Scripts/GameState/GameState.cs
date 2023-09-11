@@ -82,6 +82,8 @@ public class GameState : IGameState
     {
         ApplyMutationWithoutNotifying(mutation);
 
+        RoundFloatValues();
+        
         Changed?.Invoke();
     }
 
@@ -92,6 +94,8 @@ public class GameState : IGameState
             ApplyMutationWithoutNotifying(mutation);
         }
 
+        RoundFloatValues();
+        
         Changed?.Invoke();
     }
 
@@ -106,6 +110,12 @@ public class GameState : IGameState
             Population += Mathf.FloorToInt(Immigration / _gameConfig.ImmigrationPerPopulation);
             Immigration %= _gameConfig.ImmigrationPerPopulation;
         }
+    }
+
+    private void RoundFloatValues()
+    {
+        Money = (float)Math.Round(Money, 2);
+        Immigration = (float)Math.Round(Immigration, 2);
     }
     
     private int CalculateHousing()

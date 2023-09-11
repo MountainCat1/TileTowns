@@ -12,6 +12,7 @@ public interface ITileMapData
     IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
     IEnumerable<TileData> TileData { get; }
     TileData GetData(Vector3Int cell);
+    public int AssignedWorkers { get; }
 }
 
 public class TileMapData : MonoBehaviour, ITileMapData
@@ -22,17 +23,25 @@ public class TileMapData : MonoBehaviour, ITileMapData
 
     // 
     
-    [Inject] private IGameManager _gameManager; 
+    [Inject] private IGameManager _gameManager;
+    [Inject] private IGameState _gameState; 
     
     public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
     public IEnumerable<TileData> TileData => Data.Values;
-    private readonly Dictionary<Vector3Int, TileData> _data  = new();
+    public int AssignedWorkers { get; private set; }
 
+    private readonly Dictionary<Vector3Int, TileData> _data  = new();
     private Tilemap _tilemap;
 
     private void OnEnable()
     {
         _gameManager.LevelLoaded += GameManagerOnGameLoaded;
+        _gameState.MutationChanged += OnMutationChanged;
+    }
+
+    private void OnMutationChanged()
+    {
+        AssignedWorkers = TileData.Sum(x => x.WorkersAssigned);
     }
 
     private void GameManagerOnGameLoaded()
@@ -46,7 +55,8 @@ public class TileMapData : MonoBehaviour, ITileMapData
 
         return data;
     }
-    
+
+
     public void InstantiateData(Tilemap tilemap)
     {
         if (_data.Any())

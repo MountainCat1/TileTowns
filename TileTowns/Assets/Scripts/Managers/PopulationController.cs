@@ -16,7 +16,7 @@ public class PopulationController : MonoBehaviour
     [SerializeField] private Canvas tilePopulationUIContainer;
 
     private List<GameObject> _instantiatedPrefabs = new List<GameObject>();
-
+    
     private void Start()
     {
         _playerController.PlayerModeSet += mode =>
@@ -43,6 +43,7 @@ public class PopulationController : MonoBehaviour
             RemoveWorker(data);
         };
     }
+    
 
     private bool RemoveWorker(TileData tileData)
     {
@@ -54,9 +55,7 @@ public class PopulationController : MonoBehaviour
 
     private bool AddWorker(TileData tileData)
     {
-        var assignedPops = _tileMapData.TileData.Sum(x => x.WorkersAssigned);
-        
-        if (_gameState.Population <= assignedPops)
+        if (_gameState.Population <= _tileMapData.AssignedWorkers)
             return false;
         
         return tileData.AddWorker();

@@ -4,11 +4,13 @@ using Zenject;
 
 public class PopulationDisplayUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI populationDisplay;
+    [SerializeField] private TextMeshProUGUI[] populationDisplays;
     [SerializeField] private TextMeshProUGUI workslotsDisplay;
     [SerializeField] private TextMeshProUGUI housingDisplay;
+    [SerializeField] private TextMeshProUGUI assignedWorkersDisplay;
 
     [Inject] private IGameState _gameState;
+    [Inject] private ITileMapData _tileMapData;
 
 
     [Inject]
@@ -20,7 +22,11 @@ public class PopulationDisplayUI : MonoBehaviour
     private void UpdateDisplay()
     {
         housingDisplay.text = $"{_gameState.Housing}";
-        populationDisplay.text = $"{_gameState.Population}";
+        foreach (var populationDisplay in populationDisplays)
+        {
+            populationDisplay.text = $"{_gameState.Population}";
+        }
         workslotsDisplay.text = $"{_gameState.WorkSlots}";
+        assignedWorkersDisplay.text = $"{_tileMapData.AssignedWorkers}";
     }
 }
