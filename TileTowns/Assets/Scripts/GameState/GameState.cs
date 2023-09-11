@@ -25,6 +25,7 @@ public interface IGameState
     void SetPersistentModifier(object modifierProvier, IPersistentModifier modifier);
     void ApplyTurnMutations();
     void ApplyMutation(IGameStateMutation mutation);
+    void Initialize();
 }
 
 public class GameState : IGameState
@@ -59,6 +60,12 @@ public class GameState : IGameState
         turnManager.TurnEnded += OnTurnEnded;
     }
 
+    public void Initialize()
+    {
+        MutationChanged?.Invoke();
+        Changed?.Invoke();
+    }
+    
     private void OnTurnEnded()
     {
         ApplyTurnMutations();

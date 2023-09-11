@@ -43,5 +43,7 @@ public class GameManager : MonoBehaviour, IGameManager
         });
         
         LevelLoaded?.Invoke();
+
+        _gameState.Initialize();
     }
 }
