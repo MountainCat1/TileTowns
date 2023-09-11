@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour, IGameManager
 
         _gameState.ApplyMutation(new GameStateMutation()
         {
-            PopulationChange = config.InitialPopulation
+            PopulationChange = config.InitialPopulation,
+            MoneyChange =config.InitialMoney
         });
         
         LevelLoaded?.Invoke();
