@@ -82,7 +82,12 @@ public class InputManager : MonoBehaviour, IInputManager
     {
         var move = _inputActions.Player.Move.ReadValue<Vector2>();
         if (move.magnitude > 0)
+        {
             PlayerMoved?.Invoke(move);
+            
+            // We assume that with player moved his pointer moves as well
+            PointerMoved?.Invoke(_cachedPointerPosition);
+        }
         else
             PlayerNotMoved?.Invoke();
         

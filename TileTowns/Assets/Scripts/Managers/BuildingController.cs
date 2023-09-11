@@ -141,6 +141,9 @@ public class BuildingController : MonoBehaviour, IBuildingController
         if (tileData.Building is not null)
             return false;
 
+        if (tileData.Feature != TileFeature.None)
+            return false;
+            
         return true;
     }
 }
