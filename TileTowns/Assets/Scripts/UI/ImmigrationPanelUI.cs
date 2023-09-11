@@ -25,7 +25,7 @@ namespace UI
         {
             var immigrationChange = _gameState.Mutations.Sum(x => x.ImmigrationChange);
             
-            changeDisplay.text = $"+ {immigrationChange}%";
+            changeDisplay.text = $"+{immigrationChange}%";
         }
 
         private void UpdateData()
