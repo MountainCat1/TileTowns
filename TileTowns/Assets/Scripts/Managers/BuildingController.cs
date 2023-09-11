@@ -89,6 +89,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
     public void SelectBuilding(Building building)
     {
         SelectedBuilding = building;
+        _playerController.SetPlayerMode(PlayerMode.Building);
         BuildingSelected?.Invoke(building);
     }
 

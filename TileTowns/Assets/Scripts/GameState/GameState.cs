@@ -109,6 +109,7 @@ public class GameState : IGameState
         {
             Population += Mathf.FloorToInt(Immigration / _gameConfig.ImmigrationPerPopulation);
             Immigration %= _gameConfig.ImmigrationPerPopulation;
+            Changed?.Invoke();
         }
     }
 

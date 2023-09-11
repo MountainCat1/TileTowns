@@ -12,7 +12,7 @@ namespace Buildings
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             mutation.BuildingIncome = MoneyPerWorker * tileData.WorkersAssigned;
-            mutation.ImmigrationChange = MoneyPerWorker * tileData.WorkersAssigned;
+            mutation.ImmigrationChange = 5 * tileData.WorkersAssigned;
         }
     }
 }

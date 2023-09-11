@@ -17,6 +17,7 @@ public class PopulationDisplayUI : MonoBehaviour
     private void Construct()
     {
         _gameState.MutationChanged += UpdateDisplay;
+        _gameState.Changed += UpdateDisplay;
     }
 
     private void UpdateDisplay()
