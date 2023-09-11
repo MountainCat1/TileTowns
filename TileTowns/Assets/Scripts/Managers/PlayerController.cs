@@ -57,6 +57,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
             return;
         }
 
+        if (PlayerMode == PlayerMode.Building)
+        {
+            SetPlayerMode(PlayerMode.PopulationManaging);
+            return;
+        }
+
         SetPlayerMode(PlayerMode.Default);
     }
 }

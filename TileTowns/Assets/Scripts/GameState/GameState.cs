@@ -62,8 +62,6 @@ public class GameState : IGameState
     private void OnTurnEnded()
     {
         ApplyTurnMutations();
-
-        _mutations.Clear();
     }
 
     public void SetMutation(object mutator, IGameStateTurnMutation mutation)
@@ -84,6 +82,8 @@ public class GameState : IGameState
     {
         ApplyMutationWithoutNotifying(mutation);
 
+        RoundFloatValues();
+        
         Changed?.Invoke();
     }
 
@@ -94,6 +94,8 @@ public class GameState : IGameState
             ApplyMutationWithoutNotifying(mutation);
         }
 
+        RoundFloatValues();
+        
         Changed?.Invoke();
     }
 
@@ -107,7 +109,14 @@ public class GameState : IGameState
         {
             Population += Mathf.FloorToInt(Immigration / _gameConfig.ImmigrationPerPopulation);
             Immigration %= _gameConfig.ImmigrationPerPopulation;
+            Changed?.Invoke();
         }
+    }
+
+    private void RoundFloatValues()
+    {
+        Money = (float)Math.Round(Money, 2);
+        Immigration = (float)Math.Round(Immigration, 2);
     }
     
     private int CalculateHousing()

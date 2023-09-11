@@ -13,6 +13,6 @@ public class TileMapManager : MonoBehaviour
 
     private void OnTileAdded(TileData tileData)
     {
-        _turnManager.RegisterTurnHandler(tileData);
+        _turnManager.RegisterMutator(tileData);
     }
 }
