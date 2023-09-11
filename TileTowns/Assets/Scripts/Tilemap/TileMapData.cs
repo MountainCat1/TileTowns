@@ -8,7 +8,7 @@ using Zenject;
 public interface ITileMapData
 {
     event Action<TileData> TileAdded;
-    
+
     IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
     IEnumerable<TileData> TileData { get; }
     TileData GetData(Vector3Int cell);
@@ -19,18 +19,19 @@ public class TileMapData : MonoBehaviour, ITileMapData
 {
     // Events
 
-    public event Action<TileData> TileAdded; 
+    public event Action<TileData> TileAdded;
 
     // 
-    
+
     [Inject] private IGameManager _gameManager;
-    [Inject] private IGameState _gameState; 
-    
+    [Inject] private IGameState _gameState;
+    [Inject] private ITileFeatureMap _tileFeatureMap;
+
     public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
     public IEnumerable<TileData> TileData => Data.Values;
     public int AssignedWorkers { get; private set; }
 
-    private readonly Dictionary<Vector3Int, TileData> _data  = new();
+    private readonly Dictionary<Vector3Int, TileData> _data = new();
     private Tilemap _tilemap;
 
     private void OnEnable()
@@ -63,7 +64,7 @@ public class TileMapData : MonoBehaviour, ITileMapData
             throw new InvalidOperationException();
 
         _tilemap = tilemap;
-        
+
         if (_tilemap != null)
         {
             BoundsInt bounds = _tilemap.cellBounds;
@@ -74,23 +75,29 @@ public class TileMapData : MonoBehaviour, ITileMapData
                 for (int y = bounds.y; y < bounds.y + bounds.size.y; y++)
                 {
                     Vector3Int cellPosition = new Vector3Int(x, y, 0);
-                    TileBase tile = allTiles[(x - bounds.x) + (y - bounds.y) * bounds.size.x];
+                    TileBase tile = _tilemap.GetTile(cellPosition);
 
-                    if (tile != null)
-                    {
-                        AddTileData(cellPosition, tile);
-                    }
+                    if (tile is null)
+                        continue;
+
+                    // Get the tile one cell above
+                    Vector3Int aboveCellPosition = cellPosition + new Vector3Int(0, 0, 1);
+                    TileBase aboveTile = _tilemap.GetTile(aboveCellPosition);
+                        
+                    TileFeature tileFeature = _tileFeatureMap.GetMapping(aboveTile);
+                    
+                    AddTileData(cellPosition, tile, tileFeature);
                 }
             }
         }
     }
-    
-    private TileData AddTileData(Vector3Int cellPosition, TileBase tileBase)
+
+    private TileData AddTileData(Vector3Int cellPosition, TileBase tileBase, TileFeature feature)
     {
-        var tileData = new TileData(cellPosition);
+        var tileData = new TileData(cellPosition, feature, tileBase);
 
         _data.Add(cellPosition, tileData);
-        
+
         TileAdded?.Invoke(tileData);
 
         return tileData;

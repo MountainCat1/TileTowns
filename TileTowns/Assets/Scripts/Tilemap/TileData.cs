@@ -1,11 +1,13 @@
 ﻿using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public interface ITileData
 {
     Vector3Int Position { get; }
     int WorkersAssigned { get; set; }
+    TileFeature Feature { get; set; }
 }
 
 public class TileData : IMutator, ITileData
@@ -18,13 +20,18 @@ public class TileData : IMutator, ITileData
     
     [CanBeNull] 
     public Building Building { get; private set; }
+
+    public TileFeature Feature { get; set; }
+    public TileBase TileBase { get; set; }
     public Vector3Int Position { get; private set; }
 
     public int WorkersAssigned { get; set; }
 
-    public TileData(Vector3Int position)
+    public TileData(Vector3Int position, TileFeature tileFeature, TileBase tileBase)
     {
         Position = position;
+        Feature = tileFeature;
+        TileBase = tileBase;
     }
 
     public IGameStateTurnMutation GetMutation()
