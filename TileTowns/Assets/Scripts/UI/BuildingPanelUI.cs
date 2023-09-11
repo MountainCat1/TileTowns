@@ -18,6 +18,13 @@ namespace UI
         private void OnEnable()
         {
             _gameManager.LevelLoaded += GameManagerOnGameLoaded;
+            _buildingController.BuildingDeselected += OnBuildingDeselected;
+        }
+
+        private void OnBuildingDeselected()
+        {
+            foreach (var buildingEntryUI in _buildingEntries)
+                buildingEntryUI.ShowAsDeselected();
         }
 
         private void OnDisable()

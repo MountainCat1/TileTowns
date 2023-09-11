@@ -6,16 +6,19 @@ using Zenject;
 
 public interface IBuildingController
 {
-    #region MyRegion
+    #region Events
+
     event Action PlaceBuildingFailed;
     event Action<Building, TileData> PlacedBuilding;
     event Action<Building> BuildingSelected;
+    event Action BuildingDeselected;
+
     #endregion
 
     void SelectBuilding(Building building);
     void BuildBuilding(TileData tileData, Building building);
     bool CanBuildOnTile(TileData tileData);
-    
+
     [CanBeNull] Building SelectedBuilding { get; }
 }
 
@@ -28,6 +31,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
     public event Action PlaceBuildingFailed;
     public event Action<Building, TileData> PlacedBuilding;
     public event Action<Building> BuildingSelected;
+    public event Action BuildingDeselected;
 
     #endregion
 
@@ -49,7 +53,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
 
         _gameManager.LevelLoaded += GameManagerOnGameLoaded;
-        
+
         _playerController.PlayerModeSet += OnPlayerModeSet;
     }
 
@@ -57,10 +61,16 @@ public class BuildingController : MonoBehaviour, IBuildingController
     {
         if (mode != PlayerMode.Building)
         {
-            SelectedBuilding = null;
+            DeselectBuilding();
         }
     }
 
+
+    private void DeselectBuilding()
+    {
+        SelectedBuilding = null;
+        BuildingDeselected?.Invoke();
+    }
 
     private void OnDisable()
     {
@@ -119,15 +129,15 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tilemap.RefreshAllTiles();
 
         tileData.SetBuilding(building);
-        
+
         PlacedBuilding?.Invoke(building, tileData);
     }
-    
+
     public bool CanBuildOnTile(TileData tileData)
     {
         if (tileData is null)
             return false;
-        
+
         if (tileData.Building is not null)
             return false;
 
