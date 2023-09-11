@@ -62,8 +62,6 @@ public class GameState : IGameState
     private void OnTurnEnded()
     {
         ApplyTurnMutations();
-
-        _mutations.Clear();
     }
 
     public void SetMutation(object mutator, IGameStateTurnMutation mutation)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 public interface ITurnHandler
 {
@@ -24,7 +25,7 @@ public interface ITurnManager
     //
     public void EndTurn();
     public void RegisterTurnHandler(ITurnHandler turnHandler);
-    public void RegisterTurnHandler(IMutator mutator);
+    public void RegisterMutator(IMutator mutator);
     public IReadOnlyCollection<IMutator> MutationHandlers { get; }
 }
 
@@ -47,7 +48,7 @@ public class TurnManager : MonoBehaviour, ITurnManager
     {
         _turnHandlers.Add(turnHandler);
     }
-    public void RegisterTurnHandler(IMutator mutator)
+    public void RegisterMutator(IMutator mutator)
     {
         _turnMutationHandlers.Add(mutator);
         mutator.MutationChanged += () =>
@@ -59,12 +60,17 @@ public class TurnManager : MonoBehaviour, ITurnManager
     public void EndTurn()
     {
         // End turn
-        RunTurnHandlers();
+        // RunTurnHandlers();
+        
+        foreach (var handler in _turnHandlers)
+        {
+            handler.OnTurn();
+        }
         
         TurnEnded?.Invoke();
         
-        // New Turn Started
-        RunTurnHandlers();
+        // // New Turn Started
+        // RunTurnHandlers();
         
         TurnStarted?.Invoke();
     }
@@ -75,15 +81,13 @@ public class TurnManager : MonoBehaviour, ITurnManager
         {
             RefreshHandler(handler);
         }
-        
-        foreach (var handler in _turnHandlers)
-        {
-            handler.OnTurn();
-        }
     }
 
     private void RefreshHandler(IMutator mutator)
     {
+        // ReSharper disable once SuspiciousTypeConversion.Global
+        Debug.Log($"Refreshing mutator: {mutator}");
+        
         var mutation = mutator.GetMutation();
 
         _gameState.SetMutation(mutator, mutation);
