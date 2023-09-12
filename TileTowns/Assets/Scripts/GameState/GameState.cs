@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -13,14 +14,18 @@ public interface IGameState
     //
     // Data
     float Money { get; }
-    float Immigration { get; set; }
+    float Immigration { get; }
+    int Housing { get; }
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
-    int Population { get; set; }
+    int Population { get; }
+    int WorkSlots { get; }
     void SetMutation(object mutator, IGameStateTurnMutation mutation);
+    void SetPersistentModifier(object modifierProvier, IPersistentModifier modifier);
     void ApplyTurnMutations();
     void ApplyMutation(IGameStateMutation mutation);
+    void Initialize();
 }
 
 public class GameState : IGameState
@@ -33,26 +38,37 @@ public class GameState : IGameState
 
     public float Money { get; private set; }
     public float Immigration { get; set; }
+    public int Housing => CalculateHousing();
+    public int WorkSlots => CalculateWorkSlots();
+
     public int Population { get; set; }
 
     [Inject] private IGameConfig _gameConfig;
     
     public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
     private Dictionary<object, IGameStateTurnMutation> _mutations;
+    
+    private IEnumerable<IPersistentModifier> PersistentModifiers => _persistentModifiers.Values;
+    private Dictionary<object, IPersistentModifier> _persistentModifiers;
 
     [Inject]
     public GameState(ITurnManager turnManager)
     {
         _mutations = new Dictionary<object, IGameStateTurnMutation>();
+        _persistentModifiers = new Dictionary<object, IPersistentModifier>();
 
         turnManager.TurnEnded += OnTurnEnded;
     }
 
+    public void Initialize()
+    {
+        MutationChanged?.Invoke();
+        Changed?.Invoke();
+    }
+    
     private void OnTurnEnded()
     {
         ApplyTurnMutations();
-
-        _mutations.Clear();
     }
 
     public void SetMutation(object mutator, IGameStateTurnMutation mutation)
@@ -61,11 +77,20 @@ public class GameState : IGameState
         _mutations[mutator] = mutation;
         MutationChanged?.Invoke();
     }
+    
+    public void SetPersistentModifier(object modifierProvier, IPersistentModifier modifier)
+    {
+        // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
+        _persistentModifiers[modifierProvier] = modifier;
+        MutationChanged?.Invoke();
+    }
 
     public void ApplyMutation(IGameStateMutation mutation)
     {
         ApplyMutationWithoutNotifying(mutation);
 
+        RoundFloatValues();
+        
         Changed?.Invoke();
     }
 
@@ -76,6 +101,8 @@ public class GameState : IGameState
             ApplyMutationWithoutNotifying(mutation);
         }
 
+        RoundFloatValues();
+        
         Changed?.Invoke();
     }
 
@@ -89,7 +116,23 @@ public class GameState : IGameState
         {
             Population += Mathf.FloorToInt(Immigration / _gameConfig.ImmigrationPerPopulation);
             Immigration %= _gameConfig.ImmigrationPerPopulation;
+            Changed?.Invoke();
         }
     }
 
+    private void RoundFloatValues()
+    {
+        Money = (float)Math.Round(Money, 2);
+        Immigration = (float)Math.Round(Immigration, 2);
+    }
+    
+    private int CalculateHousing()
+    {
+        return PersistentModifiers.Sum(x => x.Housing);
+    }
+    
+    private int CalculateWorkSlots()
+    {
+        return PersistentModifiers.Sum(x => x.WorkSlots);
+    }
 }

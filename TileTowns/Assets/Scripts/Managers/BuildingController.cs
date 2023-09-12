@@ -1,19 +1,25 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
 public interface IBuildingController
 {
-    #region MyRegion
+    #region Events
 
     event Action PlaceBuildingFailed;
     event Action<Building, TileData> PlacedBuilding;
+    event Action<Building> BuildingSelected;
+    event Action BuildingDeselected;
 
     #endregion
-    
+
     void SelectBuilding(Building building);
     void BuildBuilding(TileData tileData, Building building);
+    bool CanBuildOnTile(TileData tileData);
+
+    [CanBeNull] Building SelectedBuilding { get; }
 }
 
 public class BuildingController : MonoBehaviour, IBuildingController
@@ -24,6 +30,8 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
     public event Action PlaceBuildingFailed;
     public event Action<Building, TileData> PlacedBuilding;
+    public event Action<Building> BuildingSelected;
+    public event Action BuildingDeselected;
 
     #endregion
 
@@ -31,11 +39,12 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
     [Inject] private IResourceManager _resourceManager;
+    [Inject] private IPlayerController _playerController;
 
     [SerializeField] private Grid grid;
 
-    private Building _selectedBuilding;
     private Tilemap _tilemap;
+    public Building SelectedBuilding { get; private set; }
 
 
     private void OnEnable()
@@ -44,8 +53,24 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tileSelector.TilePointerEntered += TileSelectorOnTilePointerEntered;
 
         _gameManager.LevelLoaded += GameManagerOnGameLoaded;
+
+        _playerController.PlayerModeSet += OnPlayerModeSet;
     }
 
+    private void OnPlayerModeSet(PlayerMode mode)
+    {
+        if (mode != PlayerMode.Building)
+        {
+            DeselectBuilding();
+        }
+    }
+
+
+    private void DeselectBuilding()
+    {
+        SelectedBuilding = null;
+        BuildingDeselected?.Invoke();
+    }
 
     private void OnDisable()
     {
@@ -73,13 +98,15 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
     public void SelectBuilding(Building building)
     {
-        _selectedBuilding = building;
+        SelectedBuilding = building;
+        _playerController.SetPlayerMode(PlayerMode.Building);
+        BuildingSelected?.Invoke(building);
     }
 
     private void TileSelectorOnTilePointerClicked(Vector3Int cellPosition, TileData tileData)
     {
-        if (_selectedBuilding is not null)
-            BuildBuilding(tileData, _selectedBuilding);
+        if (SelectedBuilding is not null)
+            BuildBuilding(tileData, SelectedBuilding);
     }
 
     public void BuildBuilding(TileData tileData, Building building)
@@ -102,15 +129,21 @@ public class BuildingController : MonoBehaviour, IBuildingController
         _tilemap.RefreshAllTiles();
 
         tileData.SetBuilding(building);
-        
+
         PlacedBuilding?.Invoke(building, tileData);
     }
-    
-    private static bool CanBuildOnTile(TileData tileData)
+
+    public bool CanBuildOnTile(TileData tileData)
     {
+        if (tileData is null)
+            return false;
+
         if (tileData.Building is not null)
             return false;
 
+        if (tileData.Feature != TileFeature.None)
+            return false;
+            
         return true;
     }
 }

@@ -4,16 +4,15 @@ namespace Buildings
 {
     public class Farm : Building
     {
-        public override void CreateMutation(Vector3Int position, IGameStateTurnMutation mutation)
-        {
-            mutation.BuildingIncome = CalculateIncome();
-            mutation.ImmigrationChange = 5;
-        }
+        public override int WorkSlots => 4;
+        public override int Housing => 0;
 
-        private float CalculateIncome()
+        [field: SerializeField] public float MoneyPerWorker { get; set; }
+        
+        public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
-            // TODO add farm income logic here pls 🐲
-            return 5f;
+            mutation.BuildingIncome = MoneyPerWorker * tileData.WorkersAssigned;
+            mutation.ImmigrationChange = 5 * tileData.WorkersAssigned;
         }
     }
 }

@@ -11,6 +11,7 @@ public interface ITurnHandler
 public interface IMutator
 {
     public IGameStateTurnMutation GetMutation();
+    public IPersistentModifier GetPersistentModifier();
     public event Action MutationChanged;
 }
 
@@ -23,8 +24,9 @@ public interface ITurnManager
     //
     public void EndTurn();
     public void RegisterTurnHandler(ITurnHandler turnHandler);
-    public void RegisterTurnHandler(IMutator mutator);
+    public void RegisterMutator(IMutator mutator);
     public IReadOnlyCollection<IMutator> MutationHandlers { get; }
+    int TurnCount { get; }
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
@@ -36,18 +38,19 @@ public class TurnManager : MonoBehaviour, ITurnManager
     //
     
     [Inject] private IGameState _gameState;
+    
+    public int TurnCount { get; private set; }
 
     private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
     private readonly List<IMutator> _turnMutationHandlers = new List<IMutator>();
     
     public IReadOnlyCollection<IMutator> MutationHandlers => _turnMutationHandlers;
     
-
     public void RegisterTurnHandler(ITurnHandler turnHandler)
     {
         _turnHandlers.Add(turnHandler);
     }
-    public void RegisterTurnHandler(IMutator mutator)
+    public void RegisterMutator(IMutator mutator)
     {
         _turnMutationHandlers.Add(mutator);
         mutator.MutationChanged += () =>
@@ -59,12 +62,19 @@ public class TurnManager : MonoBehaviour, ITurnManager
     public void EndTurn()
     {
         // End turn
-        RunTurnHandlers();
+        // RunTurnHandlers();
+        
+        foreach (var handler in _turnHandlers)
+        {
+            handler.OnTurn();
+        }
         
         TurnEnded?.Invoke();
         
-        // New Turn Started
-        RunTurnHandlers();
+        // // New Turn Started
+        // RunTurnHandlers();
+
+        TurnCount++;
         
         TurnStarted?.Invoke();
     }
@@ -75,17 +85,19 @@ public class TurnManager : MonoBehaviour, ITurnManager
         {
             RefreshHandler(handler);
         }
-        
-        foreach (var handler in _turnHandlers)
-        {
-            handler.OnTurn();
-        }
     }
 
     private void RefreshHandler(IMutator mutator)
     {
+        // ReSharper disable once SuspiciousTypeConversion.Global
+        Debug.Log($"Refreshing mutator: {mutator}");
+        
         var mutation = mutator.GetMutation();
 
         _gameState.SetMutation(mutator, mutation);
+        
+        var persistentModifier = mutator.GetPersistentModifier();
+        
+        _gameState.SetPersistentModifier(mutator, persistentModifier);
     }
 }

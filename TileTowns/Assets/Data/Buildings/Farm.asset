@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Farm
   m_EditorClassIdentifier: 
   <Tile>k__BackingField: {fileID: 11400000, guid: 2944ed8f9f40662458250b5c151ee8e4, type: 2}
-  <Price>k__BackingField: 0
+  <Price>k__BackingField: 10
+  <MoneyPerWorker>k__BackingField: 0.2

@@ -7,29 +7,42 @@ using Zenject;
 
 public interface ITileMapData
 {
-    IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
-    TileData GetData(Vector3Int cell);
     event Action<TileData> TileAdded;
+
+    IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
+    IEnumerable<TileData> TileData { get; }
+    TileData GetData(Vector3Int cell);
+    public int AssignedWorkers { get; }
 }
 
 public class TileMapData : MonoBehaviour, ITileMapData
 {
     // Events
 
-    public event Action<TileData> TileAdded; 
+    public event Action<TileData> TileAdded;
 
     // 
-    
-    [Inject] private IGameManager _gameManager; 
-    
-    public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
-    private readonly Dictionary<Vector3Int, TileData> _data  = new();
 
+    [Inject] private IGameManager _gameManager;
+    [Inject] private IGameState _gameState;
+    [Inject] private ITileFeatureMap _tileFeatureMap;
+
+    public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
+    public IEnumerable<TileData> TileData => Data.Values;
+    public int AssignedWorkers { get; private set; }
+
+    private readonly Dictionary<Vector3Int, TileData> _data = new();
     private Tilemap _tilemap;
 
     private void OnEnable()
     {
         _gameManager.LevelLoaded += GameManagerOnGameLoaded;
+        _gameState.MutationChanged += OnMutationChanged;
+    }
+
+    private void OnMutationChanged()
+    {
+        AssignedWorkers = TileData.Sum(x => x.WorkersAssigned);
     }
 
     private void GameManagerOnGameLoaded()
@@ -41,19 +54,17 @@ public class TileMapData : MonoBehaviour, ITileMapData
     {
         _data.TryGetValue(position, out var data);
 
-        if (data is null)
-            throw new IndexOutOfRangeException();
-
         return data;
     }
-    
+
+
     public void InstantiateData(Tilemap tilemap)
     {
         if (_data.Any())
             throw new InvalidOperationException();
 
         _tilemap = tilemap;
-        
+
         if (_tilemap != null)
         {
             BoundsInt bounds = _tilemap.cellBounds;
@@ -64,23 +75,29 @@ public class TileMapData : MonoBehaviour, ITileMapData
                 for (int y = bounds.y; y < bounds.y + bounds.size.y; y++)
                 {
                     Vector3Int cellPosition = new Vector3Int(x, y, 0);
-                    TileBase tile = allTiles[(x - bounds.x) + (y - bounds.y) * bounds.size.x];
+                    TileBase tile = _tilemap.GetTile(cellPosition);
 
-                    if (tile != null)
-                    {
-                        AddTileData(cellPosition, tile);
-                    }
+                    if (tile is null)
+                        continue;
+
+                    // Get the tile one cell above
+                    Vector3Int aboveCellPosition = cellPosition + new Vector3Int(0, 0, 1);
+                    TileBase aboveTile = _tilemap.GetTile(aboveCellPosition);
+                        
+                    TileFeature tileFeature = _tileFeatureMap.GetMapping(aboveTile);
+                    
+                    AddTileData(cellPosition, tile, tileFeature);
                 }
             }
         }
     }
-    
-    private TileData AddTileData(Vector3Int cellPosition, TileBase tileBase)
+
+    private TileData AddTileData(Vector3Int cellPosition, TileBase tileBase, TileFeature feature)
     {
-        var tileData = new TileData(cellPosition);
+        var tileData = new TileData(cellPosition, feature, tileBase);
 
         _data.Add(cellPosition, tileData);
-        
+
         TileAdded?.Invoke(tileData);
 
         return tileData;

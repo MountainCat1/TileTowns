@@ -9,6 +9,7 @@ public interface IInputManager
     event Action PlayerNotMoved;
     event Action<Vector2> PointerMoved;
     event Action<Vector2> PointerClicked;
+    event Action<Vector2> PointerSecondaryClicked;
     event Action<float> OnScroll;
     event Action PlayerPressedSpaceBar;
     event Action PlayerPressedTab;
@@ -25,6 +26,7 @@ public class InputManager : MonoBehaviour, IInputManager
     public event Action PlayerNotMoved;
     
     public event Action<Vector2> PointerMoved;
+    public event Action<Vector2> PointerSecondaryClicked;
     public event Action<Vector2> PointerClicked;
 
     public event Action<float> OnScroll;
@@ -56,6 +58,10 @@ public class InputManager : MonoBehaviour, IInputManager
         {
             PointerClicked?.Invoke(_cachedPointerPosition);
         };
+        _inputActions.Player.SecondaryFire.performed += context =>
+        {
+            PointerSecondaryClicked?.Invoke(_cachedPointerPosition);
+        };
 
         
         _inputActions.Player.SpaceBar.performed += (_) => PlayerPressedSpaceBar?.Invoke();
@@ -76,7 +82,12 @@ public class InputManager : MonoBehaviour, IInputManager
     {
         var move = _inputActions.Player.Move.ReadValue<Vector2>();
         if (move.magnitude > 0)
+        {
             PlayerMoved?.Invoke(move);
+            
+            // We assume that with player moved his pointer moves as well
+            PointerMoved?.Invoke(_cachedPointerPosition);
+        }
         else
             PlayerNotMoved?.Invoke();
         

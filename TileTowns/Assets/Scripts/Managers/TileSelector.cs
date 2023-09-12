@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -8,25 +7,25 @@ public interface ITileSelector
 {
     event Action<Vector3Int, TileData> TilePointerEntered;
     event Action<Vector3Int, TileData> TilePointerClicked;
+    event Action<Vector3Int, TileData> TilePointerSecondaryClicked;
 }
 
 public class TileSelector : MonoBehaviour, ITileSelector
 {
-    // Events
-
+    #region Events
     public event Action<Vector3Int, TileData> TilePointerEntered;
     public event Action<Vector3Int, TileData> TilePointerClicked;
-    
-    //
-    
+    public event Action<Vector3Int, TileData> TilePointerSecondaryClicked;
+    #endregion
+
     [Inject] private IGameManager _gameManager;
-    [Inject] private IInputManager _inputManager;
     [Inject] private ITileMapData _tileMapData;
+    [Inject] private IInputManager _inputManager;
     
     [SerializeField] private Grid grid;
-    [SerializeField] private Transform tileHighlight;
-    
-    [SerializeField] private Vector2 mouseOffset;
+    [SerializeField] private TileBase highlightTile;
+    [SerializeField] private Tilemap highlightGrid;
+    [SerializeField] private CameraMovement cameraMovement;
     
     private Tilemap _tilemap;
     private Camera _camera;
@@ -36,56 +35,78 @@ public class TileSelector : MonoBehaviour, ITileSelector
 
     private void Awake()
     {
-        _inputManager = FindObjectsOfType<InputManager>().Single();
         _camera = Camera.main;
-        _gameManager.LevelLoaded += () =>
+
+        if (_camera == null)
         {
-            _tilemap = FindObjectsOfType<Tilemap>().Single();
-        };
+            Debug.LogError("Main Camera not found.");
+            return;
+        }
+
+        _gameManager.LevelLoaded += OnLevelLoaded;
     }
 
     private void Start()
     {
-        _inputManager.PointerMoved += InputManagerOnPointerMoved;
-        _inputManager.PointerClicked += InputManagerOnPointerClicked;
+        _inputManager.PointerMoved += OnPointerMoved;
+        _inputManager.PointerClicked += OnPointerClicked;
+        _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
     }
 
-    private void InputManagerOnPointerClicked(Vector2 pointerPosition)
+    private void OnLevelLoaded()
     {
-        var mousePosition = _camera.ScreenToWorldPoint(pointerPosition);
-        
-        var cell = grid.WorldToCell(new Vector3(mousePosition.x + mouseOffset.x, mousePosition.y +  + mouseOffset.y, 0));
+        _tilemap = _gameManager.Tilemap;
+    }
+
+    private void OnPointerSecondaryClicked(Vector2 pointerPosition)
+    {
+        var cell = PointerPositionToCell(pointerPosition);
 
         var tile = _tilemap.GetTile(cell);
-        
-        if(tile is null)
+
+        if (tile == null)
             return;
 
         var cellData = _tileMapData.GetData(cell);
-        
+        TilePointerSecondaryClicked?.Invoke(cell, cellData);
+    }
+    
+    private void OnPointerClicked(Vector2 pointerPosition)
+    {
+        var cell = PointerPositionToCell(pointerPosition);
+
+        var tile = _tilemap.GetTile(cell);
+
+        if (tile == null)
+            return;
+
+        var cellData = _tileMapData.GetData(cell);
         TilePointerClicked?.Invoke(cell, cellData);
     }
 
-    private void InputManagerOnPointerMoved(Vector2 pointerPosition)
+    private void OnPointerMoved(Vector2 pointerPosition)
     {
-        var mousePosition = _camera.ScreenToWorldPoint(pointerPosition);
+        var cell = PointerPositionToCell(pointerPosition);
 
-        var cell = grid.WorldToCell(new Vector3(mousePosition.x + mouseOffset.x, mousePosition.y +  + mouseOffset.y, 0));
-
-        if(cell == _lastCellSelected)
+        if (cell == _lastCellSelected)
             return;
 
+        MoveTileHighlightTo(_lastCellSelected, cell);
         _lastCellSelected = cell;
 
-        tileHighlight.position = grid.GetCellCenterWorld(cell);
-        
-        var tile = _tilemap.GetTile(cell);
-        
-        if(tile is null)
-            return;
-        
         var cellData = _tileMapData.GetData(cell);
-        
         TilePointerEntered?.Invoke(cell, cellData);
+    }
+
+    private Vector3Int PointerPositionToCell(Vector2 pointerPosition)
+    {
+        var worldPosition = _camera.ScreenToWorldPoint(pointerPosition);
+        return grid.WorldToCell(new Vector3(worldPosition.x, worldPosition.y, 0));
+    }
+
+    private void MoveTileHighlightTo(Vector3Int lastHighlightedCell, Vector3Int cell)
+    {
+        highlightGrid.SetTile(lastHighlightedCell, null);
+        highlightGrid.SetTile(cell, highlightTile);
     }
 }
