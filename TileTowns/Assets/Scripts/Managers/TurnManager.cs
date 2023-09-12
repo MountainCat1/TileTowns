@@ -26,6 +26,7 @@ public interface ITurnManager
     public void RegisterTurnHandler(ITurnHandler turnHandler);
     public void RegisterMutator(IMutator mutator);
     public IReadOnlyCollection<IMutator> MutationHandlers { get; }
+    int TurnCount { get; }
 }
 
 public class TurnManager : MonoBehaviour, ITurnManager
@@ -37,6 +38,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
     //
     
     [Inject] private IGameState _gameState;
+    
+    public int TurnCount { get; private set; }
 
     private readonly List<ITurnHandler> _turnHandlers = new List<ITurnHandler>();
     private readonly List<IMutator> _turnMutationHandlers = new List<IMutator>();
@@ -70,6 +73,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
         
         // // New Turn Started
         // RunTurnHandlers();
+
+        TurnCount++;
         
         TurnStarted?.Invoke();
     }
