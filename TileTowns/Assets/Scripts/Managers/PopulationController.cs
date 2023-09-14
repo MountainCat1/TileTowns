@@ -85,7 +85,7 @@ public class PopulationController : MonoBehaviour
         _instantiatedPrefabs.Add(script.gameObject);
         script.Initialize(tileData);
 
-        var position = _gameManager.Grid.GetCellCenterWorld(tileData.Position);
+        var position = _gameManager.Grid.GetCellCenterWorld((Vector3Int)tileData.Position);
 
         script.transform.position = position;
     }

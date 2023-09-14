@@ -47,7 +47,7 @@ public class BuildingGhost : MonoBehaviour
             buildingGhostTilemap.SetTile(lastCellWithBuildingGhost.Value, null);
         }
 
-        var tileData = _tileMapData.GetData(cell);
+        var tileData = _tileMapData.GetData((Vector2Int)cell);
         
         // Set the ghost on the new cell if building is possible
         if (_buildingController.CanBuildOnTile(tileData))

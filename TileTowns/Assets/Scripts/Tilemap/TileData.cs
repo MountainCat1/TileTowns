@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public interface ITileData
 {
-    Vector3Int Position { get; }
+    Vector2Int Position { get; }
     int WorkersAssigned { get; set; }
     TileFeature Feature { get; set; }
 }
@@ -23,11 +23,11 @@ public class TileData : IMutator, ITileData
 
     public TileFeature Feature { get; set; }
     public TileBase TileBase { get; set; }
-    public Vector3Int Position { get; private set; }
+    public Vector2Int Position { get; private set; }
 
     public int WorkersAssigned { get; set; }
 
-    public TileData(Vector3Int position, TileFeature tileFeature, TileBase tileBase)
+    public TileData(Vector2Int position, TileFeature tileFeature, TileBase tileBase)
     {
         Position = position;
         Feature = tileFeature;
