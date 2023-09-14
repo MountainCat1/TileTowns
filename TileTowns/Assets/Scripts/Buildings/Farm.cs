@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Buildings
 {
     public class Farm : Building
     {
+        [Inject] private ITileMapData _mapData;
+        
         public override int WorkSlots => 4;
         public override int Housing => 0;
 
