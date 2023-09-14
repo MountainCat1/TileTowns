@@ -9,9 +9,9 @@ public interface ITileMapData
 {
     event Action<TileData> TileAdded;
 
-    IReadOnlyDictionary<Vector3Int, TileData> Data { get; }
+    IReadOnlyDictionary<Vector2Int, TileData> Data { get; }
     IEnumerable<TileData> TileData { get; }
-    TileData GetData(Vector3Int cell);
+    TileData GetData(Vector2Int tilePosition);
     public int AssignedWorkers { get; }
 }
 
@@ -27,11 +27,12 @@ public class TileMapData : MonoBehaviour, ITileMapData
     [Inject] private IGameState _gameState;
     [Inject] private ITileFeatureMap _tileFeatureMap;
 
-    public IReadOnlyDictionary<Vector3Int, TileData> Data => _data;
+    public IReadOnlyDictionary<Vector2Int, TileData> Data => _data;
     public IEnumerable<TileData> TileData => Data.Values;
+
     public int AssignedWorkers { get; private set; }
 
-    private readonly Dictionary<Vector3Int, TileData> _data = new();
+    private readonly Dictionary<Vector2Int, TileData> _data = new();
     private Tilemap _tilemap;
 
     private void OnEnable()
@@ -50,7 +51,7 @@ public class TileMapData : MonoBehaviour, ITileMapData
         InstantiateData(_gameManager.Tilemap);
     }
 
-    public TileData GetData(Vector3Int position)
+    public TileData GetData(Vector2Int position)
     {
         _data.TryGetValue(position, out var data);
 
@@ -86,13 +87,13 @@ public class TileMapData : MonoBehaviour, ITileMapData
                         
                     TileFeature tileFeature = _tileFeatureMap.GetMapping(aboveTile);
                     
-                    AddTileData(cellPosition, tile, tileFeature);
+                    AddTileData((Vector2Int)cellPosition, tile, tileFeature);
                 }
             }
         }
     }
 
-    private TileData AddTileData(Vector3Int cellPosition, TileBase tileBase, TileFeature feature)
+    private TileData AddTileData(Vector2Int cellPosition, TileBase tileBase, TileFeature feature)
     {
         var tileData = new TileData(cellPosition, feature, tileBase);
 

@@ -67,7 +67,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
         if (tile == null)
             return;
 
-        var cellData = _tileMapData.GetData(cell);
+        var cellData = _tileMapData.GetData((Vector2Int)cell);
         TilePointerSecondaryClicked?.Invoke(cell, cellData);
     }
     
@@ -80,7 +80,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
         if (tile == null)
             return;
 
-        var cellData = _tileMapData.GetData(cell);
+        var cellData = _tileMapData.GetData((Vector2Int)cell);
         TilePointerClicked?.Invoke(cell, cellData);
     }
 
@@ -94,7 +94,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
         MoveTileHighlightTo(_lastCellSelected, cell);
         _lastCellSelected = cell;
 
-        var cellData = _tileMapData.GetData(cell);
+        var cellData = _tileMapData.GetData((Vector2Int)cell);
         TilePointerEntered?.Invoke(cell, cellData);
     }
 
