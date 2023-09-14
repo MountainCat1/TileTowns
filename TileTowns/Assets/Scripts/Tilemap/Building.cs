@@ -28,9 +28,16 @@ public abstract class Building : ScriptableObject
         return "NO DESCRIPTION??? WTH?!!!";
     }
 
-    protected TileData[] GetAdjacentTiles()
+    protected TileData[] GetAdjacentTiles(Vector2Int position)
     {
-        // TileMapData.Data
-        throw new NotImplementedException();
+        TileData[] neighbours = new[]
+        {
+            TileMapData.Data[position + new Vector2Int(0, 1)],
+            TileMapData.Data[position + new Vector2Int(0, -1)],
+            TileMapData.Data[position + new Vector2Int(1, 0)],
+            TileMapData.Data[position + new Vector2Int(-1, 0)],
+        };
+        
+        return neighbours;
     }
 }
