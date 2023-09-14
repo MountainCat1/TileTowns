@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour, IGameManager
     //
 
     [Inject] private IGameState _gameState;
+    [Inject] private DiContainer _container;
     
     public Tilemap Tilemap { get; private set; }
 
@@ -41,6 +42,11 @@ public class GameManager : MonoBehaviour, IGameManager
             PopulationChange = config.InitialPopulation,
             MoneyChange =config.InitialMoney
         });
+
+        foreach (var building in LevelConfig.BuildingSet)
+        {
+            _container.Inject(building);
+        }
         
         LevelLoaded?.Invoke();
 
