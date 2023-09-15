@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using UnityEngine;
 using Zenject;
 
 namespace Buildings
@@ -11,12 +10,12 @@ namespace Buildings
         public override int WorkSlots => 4;
         public override int Housing => 0;
 
-        [field: SerializeField] public float MoneyPerWorker { get; set; }
+        public float moneyPerWorker;
         
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             int adjacentForests = CountAdjacentForestTiles(tileData);
-            mutation.BuildingIncome = MoneyPerWorker * tileData.WorkersAssigned * (1 + adjacentForests);
+            mutation.BuildingIncome = moneyPerWorker * tileData.WorkersAssigned * (1 + adjacentForests);
         }
 
         private int CountAdjacentForestTiles(ITileData tileData)
