@@ -13,5 +13,6 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<IBuildingController>().To<BuildingController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ITurnManager>().To<TurnManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IPlayerController>().To<PlayerController>().FromComponentsInHierarchy().AsSingle();
+        Container.Bind<IToolTipController>().To<ToolTipController>().FromComponentsInHierarchy().AsSingle();
     }      
 }
