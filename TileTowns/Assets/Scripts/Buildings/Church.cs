@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 namespace Buildings
 {
@@ -9,13 +8,11 @@ namespace Buildings
 
         public override int WorkSlots => 2;
         public override int Housing => 2;
-
-        [field: SerializeField] public float CostPerWorker { get; set; }
+        public override int Amenities => 10;
 
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
-            mutation.BuildingIncome = -CostPerWorker * tileData.WorkersAssigned;
-            mutation.ImmigrationChange = 50 * tileData.WorkersAssigned;
+            mutation.ImmigrationChange = Amenities * (1 / 1 + WorkSlots - tileData.WorkersAssigned);
         }
     }
 }
