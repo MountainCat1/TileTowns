@@ -21,6 +21,8 @@ public class ToolTipController : MonoBehaviour, IToolTipController
     private void Start()
     {
         _inputManager.PointerMoved += UpdateTooltipPosition;
+        
+        HideTooltipPanel();
     }
 
     private void UpdateTooltipPosition(Vector2 position)
@@ -60,7 +62,7 @@ public class ToolTipController : MonoBehaviour, IToolTipController
 
     private void HideTooltipPanel()
     {
-        panelTransform.gameObject.SetActive(true);
+        panelTransform.gameObject.SetActive(false);
     }
 }
 
