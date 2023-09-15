@@ -16,6 +16,11 @@ public interface IGameState
     float Money { get; }
     float Immigration { get; }
     int Housing { get; }
+    // Calculated Data
+
+    public float ImmigrationChange { get; }
+    public float BuildingIncome { get; }
+    public float MoneyChange { get; }
 
     //
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
@@ -41,6 +46,13 @@ public class GameState : IGameState
     public int Housing => CalculateHousing();
     public int WorkSlots => CalculateWorkSlots();
 
+    // Calculated Data
+    public float ImmigrationChange => CalculateImmigrationChange();
+    public float BuildingIncome => CalculateBuildingIncome();
+    public float MoneyChange => CalculateMoneyChange();
+
+    //
+    
     public int Population { get; set; }
 
     [Inject] private IGameConfig _gameConfig;
@@ -128,11 +140,46 @@ public class GameState : IGameState
     
     private int CalculateHousing()
     {
-        return PersistentModifiers.Sum(x => x.Housing);
+        int sum = 0;
+        foreach (var modifier in PersistentModifiers)
+        {
+            sum += modifier.Housing;
+        }
+        return sum;
     }
     
     private int CalculateWorkSlots()
     {
-        return PersistentModifiers.Sum(x => x.WorkSlots);
+        int sum = 0;
+        foreach (var modifier in PersistentModifiers)
+        {
+            sum += modifier.WorkSlots;
+        }
+        return sum;
+    }
+    
+    private float CalculateImmigrationChange()
+    {
+        float sum = 0;
+        foreach (var mutation in Mutations)
+        {
+            sum += mutation.ImmigrationChange ?? 0;
+        }
+        return sum;
+    }
+
+    private float CalculateBuildingIncome()
+    {
+        float sum = 0;
+        foreach (var mutation in Mutations)
+        {
+            sum += mutation.BuildingIncome;
+        }
+        return sum;
+    }
+
+    private float CalculateMoneyChange()
+    {
+        return CalculateBuildingIncome();
     }
 }

@@ -12,10 +12,18 @@ namespace UI
         [SerializeField] private TextMeshProUGUI moneyDisplay;
         [SerializeField] private TextMeshProUGUI incomeDisplay;
 
+        [SerializeField] private ToolTipSender incomeTooltipHoverable;
+
         private void OnEnable()
         {
             _gameState.Changed += GameStateOnChanged;
             _gameState.MutationChanged += GameStateMutationChanged;
+
+            incomeTooltipHoverable.TooltipDataProvider = () => new TooltipData()
+            {
+                Title = "Income",
+                Content = @$"Building income: {_gameState.BuildingIncome}"
+            };
         }
 
         private void GameStateMutationChanged() {

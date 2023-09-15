@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI changeDisplay;
         [SerializeField] private TextMeshProUGUI progressTextDisplay;
         [SerializeField] private Slider progressSliderDisplay;
+        [SerializeField] private ToolTipSender toolTipSender;
 
         [Inject] private IGameState _gameState;
 
@@ -21,9 +23,19 @@ namespace UI
             _gameState.MutationChanged += UpdateMutationData;
         }
 
+        private void Start()
+        {
+            toolTipSender.TooltipDataProvider = () => new TooltipData()
+            {
+                Title = "Immigration",
+                Content =
+                    $"Immigration: {_gameState.Immigration}\nImmigration change: {_gameState.ImmigrationChange}"
+            };
+        }
+
         private void UpdateMutationData()
         {
-            var immigrationChange = _gameState.Mutations.Sum(x => x.ImmigrationChange);
+            var immigrationChange = _gameState.ImmigrationChange;
             
             changeDisplay.text = $"+{immigrationChange}%";
         }
