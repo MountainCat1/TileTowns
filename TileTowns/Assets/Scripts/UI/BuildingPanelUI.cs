@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Buildings.Extensions;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,7 @@ namespace UI
     {
         [Inject] private IBuildingController _buildingController;
         [Inject] private IGameManager _gameManager;
+        [Inject] private DiContainer _container;
 
         [SerializeField] private Transform buildingChoiceContainer;
 
@@ -52,15 +54,19 @@ namespace UI
 
         private BuildingEntryUI CreateBuildingEntries(Building building)
         {
-            var createdButton = Instantiate(buildingEntryPrefab, buildingChoiceContainer);
-
+            var createdButtonGo = _container.InstantiatePrefab(buildingEntryPrefab, buildingChoiceContainer);
+            
+            var createdButton = createdButtonGo.GetComponent<BuildingEntryUI>();
+            
             createdButton.Initialize(building);
-            createdButton.Selected += () => CreatedButtonOnSelected(createdButton, building);
+            createdButton.Selected += () => BuildingEntryOnSelected(createdButton, building);
+
+            createdButtonGo.GetComponentInChildren<ToolTipSender>().TooltipDataProvider = building.GetTooltipData;
             
             return createdButton;
         }
 
-        private void CreatedButtonOnSelected(BuildingEntryUI buildingEntry, Building building)
+        private void BuildingEntryOnSelected(BuildingEntryUI buildingEntry, Building building)
         {
             foreach (var buildingEntryUI in _buildingEntries)
                 buildingEntryUI.ShowAsDeselected();

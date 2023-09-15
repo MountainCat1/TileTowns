@@ -1,28 +1,34 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
 public interface IToolTipController
 {
-    void SetTooltip(object sender, TooltipData tooltipData);
+    void SetTooltipProvider(object sender, Func<TooltipData> tooltipDataProvider);
     void RemoveTooltip(object sender);
 }
 
 public class ToolTipController : MonoBehaviour, IToolTipController
 {
     [Inject] private IInputManager _inputManager;
+    [Inject] private IGameState _gameState;
 
     [SerializeField] private RectTransform panelTransform;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI contentText;
     
     private object _sender;
+    private Func<TooltipData> _tooltipDataProvider;
 
     private void Start()
     {
         _inputManager.PointerMoved += UpdateTooltipPosition;
         
         HideTooltipPanel();
+
+        _gameState.MutationChanged += UpdateTooltipData;
+        _gameState.Changed += UpdateTooltipData;
     }
 
     private void UpdateTooltipPosition(Vector2 position)
@@ -37,14 +43,22 @@ public class ToolTipController : MonoBehaviour, IToolTipController
     }
 
 
-    public void SetTooltip(object sender, TooltipData tooltipData)
+    public void SetTooltipProvider(object sender, Func<TooltipData> tooltipDataProvider)
     {
         _sender = sender;
+        _tooltipDataProvider = tooltipDataProvider;
+
+        UpdateTooltipData();
+        
+        ShowTooltipPanel();
+    }
+
+    private void UpdateTooltipData()
+    {
+        var tooltipData = _tooltipDataProvider?.Invoke() ?? new TooltipData();
         
         titleText.text = tooltipData.Title;
         contentText.text = tooltipData.Content;
-        
-        ShowTooltipPanel();
     }
 
     public void RemoveTooltip(object sender)
