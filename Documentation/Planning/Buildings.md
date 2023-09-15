@@ -3,10 +3,9 @@ Buildings provide work slots, which can be filled with pops. Only work slot with
 
 
 * Houses - provides housing and amenities 
-* Farm - provides income (*food* or *currency*), + a little bit of housing
+* Farm - provides income (*food* or *currency*) + a little bit of housing
 * Wood mill - provides income (wood or *currency*)
 * Church - provide amenities and control
-* 
 
 ### Work Slots
 * Farmer {
@@ -27,7 +26,7 @@ Building
 ```csharp
 {
 	string Name;
-	Dictionary<Workpslot, int> Workslots;
+	Dictionary<Workslot, int> Workslots;
 } 
 ```
 
