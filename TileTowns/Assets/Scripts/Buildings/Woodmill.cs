@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Zenject;
 
 namespace Buildings
@@ -14,7 +15,16 @@ namespace Buildings
         
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
-            mutation.BuildingIncome = MoneyPerWorker * tileData.WorkersAssigned;
+            int adjacentForests = CountAdjacentForestTiles(tileData);
+            mutation.BuildingIncome = MoneyPerWorker * tileData.WorkersAssigned * (1 + adjacentForests);
+        }
+
+        private int CountAdjacentForestTiles(ITileData tileData)
+        {
+            var adjacentTiles = GetAdjacentTiles(tileData.Position);
+            int amountOfAdjacentForests = adjacentTiles.Count(tile => tile.Feature == TileFeature.Forest);
+
+            return amountOfAdjacentForests;
         }
     }
 }
