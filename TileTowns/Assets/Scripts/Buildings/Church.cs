@@ -8,11 +8,11 @@ namespace Buildings
 
         public override int WorkSlots => 2;
         public override int Housing => 2;
-        public override int Amenities => 10;
+        public override int ImmigrationChange => 10;
 
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
-            mutation.ImmigrationChange = Amenities * (1 / 1 + WorkSlots - tileData.WorkersAssigned);
+            mutation.ImmigrationChange = ImmigrationChange * (1 / 1 + WorkSlots - tileData.WorkersAssigned);
         }
     }
 }
