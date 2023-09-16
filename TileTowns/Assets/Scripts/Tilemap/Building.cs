@@ -9,6 +9,7 @@ public abstract class Building : ScriptableObject
     [field: SerializeField] public float Price { get; set; }
     public virtual int WorkSlots => 0;
     public virtual int Housing => 0;
+    public virtual int ImmigrationChange => 0;
 
     [Inject] protected ITileMapData TileMapData { get; private set; }
 
