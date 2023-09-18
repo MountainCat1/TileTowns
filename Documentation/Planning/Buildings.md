@@ -1,11 +1,9 @@
 Buildings provide work slots, which can be filled with pops. Only work slot with a pop utilizing it produces income, amenities etc. (basically like in stellaris)
 
-
-
-* Houses - provides housing and amenities 
+* Houses - provide housing and amenities 
 * Farm - provides income (*food* or *currency*) + a little bit of housing
 * Wood mill - provides income (wood or *currency*)
-* Church - provide amenities and control
+* Church - provides amenities and control
 
 ### Work Slots
 * Farmer {

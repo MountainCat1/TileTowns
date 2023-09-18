@@ -1,8 +1,8 @@
 Buildings provide work slots, which can be filled with pops. Only work slot with a pop utilizing it produces income, or some special effect.
 
 * Town hall - starting building, the more far away other buildings are, the less efficient they get - *transport penalty*
-* Houses - provides housing 
-* Church - provide amenities, and income 
+* Houses - provide housing
+* Church - provides amenities, and income 
 * Farm - provides income (bonus for surrounding farms and *rich soil (?)*)
 * Wood mill - provides income (bonus for surrounding forests)
 * Mine - provides income from surrounding mountains 
