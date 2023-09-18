@@ -1,6 +1,6 @@
 Buildings provide work slots, which can be filled with pops. Only work slot with a pop utilizing it produces income, or some special effect.
 
-* Town hall - starting building, the more far away other buildings are, the less efficient they get - *transport penalty*
+* Town hall - starting building, the further away other buildings are, the less efficient they get - *transport penalty*
 * Houses - provide housing
 * Church - provides amenities, and income 
 * Farm - provides income (bonus for surrounding farms and *rich soil (?)*)
@@ -18,28 +18,28 @@ Player starts with 50 *immigration*, each time *immigration* hits 100. player ga
 
 You gain *immigration* by:
 * by default
-* free housing
-* free work slots, better salary more *immigration*
-* amenities > 0 
+* available housing
+* available work slots, better salary more *immigration*
+* positive amount of amenities
 
 You lose *immigration* by:
-* not enough housing 
-* no free work slots 
-* amenities < 0 
+* insufficient housing
+* lack of available work slots
+* negative amount of amenities
 
 ### Upgrades
-* Farm 
-	* farms start to provide housing
-	* farms get little bonus from surrounding empty tiles
-* Houses 
-	* more housing per house 
-	* free housing now provides with amenities  
+* Farm
+	* provides housing
+	* gets little bonus from surrounding empty tiles
+* Houses
+	* more housing per house
+	* available housing provides amenities  
 * Church
 	* increases productivity in buildings around it
 	* increases work slots 
 * Wood mill
-	* Wood mill starts to produce small about of food per forest tiles that surround it
-	* Wood mills now get productivity bonus from surrounding wood mills 
+	* starts to produce small amount of food per surrounding forest tile
+	* gets productivity bonus from surrounding wood mills 
 #### === *need more!* ===
 
 ## Goal
