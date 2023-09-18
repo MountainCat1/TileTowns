@@ -29,7 +29,7 @@ Building
 ```
 
 Workslot
-```json
+```
 {
 	decimal Salary;
 	decimal Income;

@@ -7,9 +7,9 @@ Buildings provide work slots, which can be filled with pops. Only work slot with
 * Wood mill - provides income (bonus for surrounding forests)
 * Mine - provides income from surrounding mountains 
 * Fishing station - provides income from surrounding water tiles
-
 * Port - if at least one port is connected via road to the town hall, all other ports allow a player to build behind the sea, also decreases the transport penalty if on the same island
 * Roads - if connected to the town hall they reduce the *transport penalty* 
+
 ### Amenities 
 Default value is 0, you need to build buildings that provide *amenities*, the more pops you have the more amenities you need. 
 
@@ -21,7 +21,8 @@ You gain *immigration* by:
 * free housing
 * free work slots, better salary more *immigration*
 * amenities > 0 
-Lose immigration by:
+
+You lose *immigration* by:
 * not enough housing 
 * no free work slots 
 * amenities < 0 
