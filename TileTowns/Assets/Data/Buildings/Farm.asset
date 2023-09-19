@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Tile>k__BackingField: {fileID: 11400000, guid: 2944ed8f9f40662458250b5c151ee8e4, type: 2}
   <Price>k__BackingField: 10
-  <MoneyPerWorker>k__BackingField: 0.2
+  moneyPerWorker: 0.2

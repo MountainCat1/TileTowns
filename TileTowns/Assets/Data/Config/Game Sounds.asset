@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad574914f884539ba561cf7522f4dd6, type: 3}
-  m_Name: GameConfig
+  m_Script: {fileID: 11500000, guid: 96aa66b1b2d549b2a30ea818bebbe019, type: 3}
+  m_Name: Game Sounds
   m_EditorClassIdentifier: 
+  <ErrorSound>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
+  <Building>k__BackingField: {fileID: 8300000, guid: ed5faffee656ee44b9381c7dca6375a0, type: 3}

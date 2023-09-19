@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 public class GameInstaller : MonoInstaller<GameInstaller>
 {
@@ -14,5 +15,9 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<ITurnManager>().To<TurnManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IPlayerController>().To<PlayerController>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IToolTipController>().To<ToolTipController>().FromComponentsInHierarchy().AsSingle();
+
+        Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
+        
+        Container.Bind<ISoundManager>().To<SoundManager>().AsSingle().NonLazy();
     }      
 }
