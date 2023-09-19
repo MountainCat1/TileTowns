@@ -25,7 +25,6 @@ public class TileSelector : MonoBehaviour, ITileSelector
     [SerializeField] private Grid grid;
     [SerializeField] private TileBase highlightTile;
     [SerializeField] private Tilemap highlightGrid;
-    [SerializeField] private CameraMovement cameraMovement;
     
     private Tilemap _tilemap;
     private Camera _camera;

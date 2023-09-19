@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Buildings;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -35,6 +36,7 @@ public class CustomTileAssetGenerator : MonoBehaviour
     {
         CreateCustomTiles<Building>("Buildings");
     }
+
     /// <summary>
     /// This method instantiates an object per class that derives from <typeparamref name="T"/>
     /// </summary>
@@ -48,14 +50,14 @@ public class CustomTileAssetGenerator : MonoBehaviour
         var types = assemblies.SelectMany(x => x.GetTypes());
         foreach (var type in types)
         {
-            if (tileBaseType.IsAssignableFrom(type) && type != tileBaseType
-                                                    && !type.IsAbstract
-                                                    && !type.ContainsGenericParameters
-                                                    && type != typeof(Tile)
-                                                    && !type.IsSubclassOf(typeof(RuleTile))
-                                                    && type.IsSubclassOf(typeof(T)))
+            if (type != tileBaseType
+                && !type.IsAbstract
+                && !type.ContainsGenericParameters
+                && type != typeof(Tile)
+                && !type.IsSubclassOf(typeof(RuleTile))
+                && type.IsSubclassOf(typeof(T)))
             {
-                string fullAssetPath = Path.Combine( "Assets", "Data", assetPath, type.Name + ".asset");
+                string fullAssetPath = Path.Combine("Assets", "Data", assetPath, type.Name + ".asset");
 
                 // Check if an asset already exists at the specified path
                 if (AssetDatabase.LoadAssetAtPath<ScriptableObject>(fullAssetPath))

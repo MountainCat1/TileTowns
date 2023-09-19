@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12c6a65519a24b019ffd9501a2a83863, type: 3}
-  m_Name: Farm
+  m_Script: {fileID: 11500000, guid: 7542949fb7b24570b00c9b72afb29d9e, type: 3}
+  m_Name: House
   m_EditorClassIdentifier: 
-  <Tile>k__BackingField: {fileID: 11400000, guid: 2944ed8f9f40662458250b5c151ee8e4, type: 2}
-  <Price>k__BackingField: 10
-  moneyPerWorker: 0.2
+  <Tile>k__BackingField: {fileID: 0}
+  <Price>k__BackingField: 0

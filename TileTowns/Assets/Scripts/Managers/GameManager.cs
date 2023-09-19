@@ -16,12 +16,12 @@ public class GameManager : MonoBehaviour, IGameManager
     // Events
 
     public event Action LevelLoaded;
-    
+
     //
 
     [Inject] private IGameState _gameState;
     [Inject] private DiContainer _container;
-    
+
     public Tilemap Tilemap { get; private set; }
 
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
@@ -40,14 +40,14 @@ public class GameManager : MonoBehaviour, IGameManager
         _gameState.ApplyMutation(new GameStateMutation()
         {
             PopulationChange = config.InitialPopulation,
-            MoneyChange =config.InitialMoney
+            MoneyChange = config.InitialMoney
         });
 
         foreach (var building in LevelConfig.BuildingSet)
         {
             _container.Inject(building);
         }
-        
+
         LevelLoaded?.Invoke();
 
         _gameState.Initialize();

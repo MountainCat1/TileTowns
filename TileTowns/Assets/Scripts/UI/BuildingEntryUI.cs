@@ -33,7 +33,9 @@ namespace UI
             priceDisplay.text = $"{building.Price}$";
 
             _building = building;
-            buildingImage.sprite = building.Tile.sprite;
+            
+            if(building.Tile is not null)
+                buildingImage.sprite = building.Tile.sprite;
             
             ShowAsDeselected();
         }
