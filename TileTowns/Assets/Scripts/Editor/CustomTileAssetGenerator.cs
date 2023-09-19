@@ -50,10 +50,6 @@ public class CustomTileAssetGenerator : MonoBehaviour
         var types = assemblies.SelectMany(x => x.GetTypes());
         foreach (var type in types)
         {
-            if (type == typeof(Woodmill))
-                Debug.Log("XD");
-
-
             if (type != tileBaseType
                 && !type.IsAbstract
                 && !type.ContainsGenericParameters
