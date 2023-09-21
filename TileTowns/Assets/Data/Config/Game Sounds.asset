@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96aa66b1b2d549b2a30ea818bebbe019, type: 3}
   m_Name: Game Sounds
   m_EditorClassIdentifier: 
-  <ErrorSound>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
+  <ErrorSound>k__BackingField: {fileID: 8300000, guid: ed5faffee656ee44b9381c7dca6375a0, type: 3}
   <Building>k__BackingField: {fileID: 8300000, guid: ed5faffee656ee44b9381c7dca6375a0, type: 3}
+  <TurnEnded>k__BackingField: {fileID: 8300000, guid: c1d2eb0afb0f52e48b05ab0f1a401eae, type: 3}
+  <GameMusic>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
+  <MenuMusic>k__BackingField: {fileID: 0}
