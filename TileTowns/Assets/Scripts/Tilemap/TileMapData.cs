@@ -69,7 +69,6 @@ public class TileMapData : MonoBehaviour, ITileMapData
         if (_tilemap != null)
         {
             BoundsInt bounds = _tilemap.cellBounds;
-            TileBase[] allTiles = _tilemap.GetTilesBlock(bounds);
 
             for (int x = bounds.x; x < bounds.x + bounds.size.x; x++)
             {
