@@ -1,11 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UI;
 using UnityEngine;
 using Zenject;
 
-public class PopulationController : MonoBehaviour
+public interface IPopulationController
 {
+    public event Action<TileData> WorkerAssigned;
+    public event Action<TileData> WorkerUnassigned;
+}
+
+public class PopulationController : MonoBehaviour, IPopulationController
+{
+    #region Events
+
+    public event Action<TileData> WorkerAssigned;
+    public event Action<TileData> WorkerUnassigned;
+
+    #endregion
+    
+    
     [Inject] private IPlayerController _playerController;
     [Inject] private ITileMapData _tileMapData;
     [Inject] private IGameManager _gameManager;
@@ -50,6 +65,8 @@ public class PopulationController : MonoBehaviour
         if (tileData.WorkersAssigned == 0)
             return false;
         
+        WorkerUnassigned?.Invoke(tileData);
+        
         return tileData.RemoveWorker();
     }
 
@@ -57,6 +74,8 @@ public class PopulationController : MonoBehaviour
     {
         if (_gameState.Population <= _tileMapData.AssignedWorkers)
             return false;
+        
+        WorkerAssigned?.Invoke(tileData);
         
         return tileData.AddWorker();
     }

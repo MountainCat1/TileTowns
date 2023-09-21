@@ -20,7 +20,6 @@ public class TileMapData : MonoBehaviour, ITileMapData
     // Events
 
     public event Action<TileData> TileAdded;
-
     // 
 
     [Inject] private IGameManager _gameManager;

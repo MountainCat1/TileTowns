@@ -15,6 +15,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<ITurnManager>().To<TurnManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IPlayerController>().To<PlayerController>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IToolTipController>().To<ToolTipController>().FromComponentsInHierarchy().AsSingle();
+        Container.Bind<IPopulationController>().To<PopulationController>().FromComponentsInHierarchy().AsSingle();
 
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
         

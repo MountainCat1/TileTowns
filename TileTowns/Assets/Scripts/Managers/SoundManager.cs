@@ -24,7 +24,7 @@ public class SoundManager : ISoundManager
     [Inject] private IBuildingController _buildingController;
     [Inject] private ITurnManager _turnManager;
     [Inject] private IGameManager _gameManager;
-    [Inject] private PopulationController _tileMapData;
+    [Inject] private IPopulationController _populationController;
     
     [Inject] private Camera _camera;
 
@@ -40,18 +40,22 @@ public class SoundManager : ISoundManager
         
         soundParent = _camera.transform;
         
-        _buildingController.PlaceBuildingFailed += delegate { PlaySound(_gameSounds.ErrorSound); };
-        _buildingController.PlacedBuilding += delegate { PlaySound(_gameSounds.ErrorSound); };
+        _buildingController.PlaceBuildingFailed += delegate { PlaySound(_gameSounds.Error); };
+        _buildingController.PlacedBuilding += delegate { PlaySound(_gameSounds.Building); };
         
         _turnManager.TurnEnded += delegate { PlaySound(_gameSounds.TurnEnded); };
         
         _gameManager.LevelLoaded += delegate { PlaySound(_gameSounds.GameMusic, SoundType.Music); };
         
-        _tileMapData.PopAssigned += delegate { PlaySound(_gameSounds.GameMusic, SoundType.Music); };
+        _populationController.WorkerAssigned += delegate { PlaySound(_gameSounds.WorkerAssigned); };
+        _populationController.WorkerUnassigned += delegate { PlaySound(_gameSounds.WorkerUndassigned); };
     }
 
     private void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx)
     {
+        if (clip is null)
+            Debug.LogWarning($"Missing sound!");
+        
         var audioSource = PlayAtPoint(clip, soundParent);
         _audioSources[soundType].Add(audioSource);
     }
