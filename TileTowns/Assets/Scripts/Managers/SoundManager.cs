@@ -49,6 +49,7 @@ public class SoundManager : ISoundManager
         
         _populationController.WorkerAssigned += delegate { PlaySound(_gameSounds.WorkerAssigned); };
         _populationController.WorkerUnassigned += delegate { PlaySound(_gameSounds.WorkerUndassigned); };
+        _populationController.WorkerAssignedFailed += delegate { PlaySound(_gameSounds.Error); };
     }
 
     private void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx)
