@@ -42,11 +42,11 @@ public class TileSelector : MonoBehaviour, ITileSelector
             return;
         }
 
-        _gameManager.LevelLoaded += OnLevelLoaded;
     }
 
     private void Start()
     {
+        _gameManager.LevelLoaded += OnLevelLoaded;
         _inputManager.PointerMoved += OnPointerMoved;
         _inputManager.PointerClicked += OnPointerClicked;
         _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
