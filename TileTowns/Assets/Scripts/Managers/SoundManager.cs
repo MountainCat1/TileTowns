@@ -1,15 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using UI;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
-
-public enum SoundType
-{
-    Sfx,
-    Music
-}
 
 public interface ISoundManager
 {

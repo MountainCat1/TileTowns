@@ -2,6 +2,12 @@
 using UnityEngine;
 using Zenject;
 
+public enum SoundType
+{
+    Sfx,
+    Music
+}
+
 public interface ISoundPlayer
 {
     public void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx);
