@@ -1,14 +1,19 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class RoadManager : MonoBehaviour
 {
+    private event Action<Vector2Int> RoadPlaced;
+    
     [Inject] protected ITileMapData TileMapData { get; private set; }
     private Dictionary<Vector2Int, bool> _roadMap = new();
-
+    
     private void Start()
     {
+        RoadPlaced += CreateRoad;
+        
         _roadMap = new Dictionary<Vector2Int, bool>();
         
         foreach (var tile in TileMapData.Data)
@@ -18,6 +23,11 @@ public class RoadManager : MonoBehaviour
     }
     
     public void PlaceRoad(Vector2Int position)
+    {
+        RoadPlaced?.Invoke(position);
+    }
+    
+    public void CreateRoad(Vector2Int position)
     {
         _roadMap[position] = true;
         
