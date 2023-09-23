@@ -18,4 +18,6 @@ MonoBehaviour:
   <WorkerAssigned>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
   <WorkerUndassigned>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
   <GameMusic>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
-  <MenuMusic>k__BackingField: {fileID: 0}
+  <MenuMusic>k__BackingField: {fileID: 8300000, guid: a6a4d5d7c07c109439d2bf3c5cc693a9, type: 3}
+  <ButtonClick>k__BackingField: {fileID: 8300000, guid: e4a1e55789b46344e86a14f2e1ab0100, type: 3}
+  <ButtonHover>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}

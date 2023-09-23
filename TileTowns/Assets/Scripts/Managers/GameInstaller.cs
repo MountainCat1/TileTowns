@@ -19,6 +19,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
 
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
         
+        Container.Bind<ISoundPlayer>().To<SoundPlayer>().AsSingle().NonLazy();
         Container.Bind<ISoundManager>().To<SoundManager>().AsSingle().NonLazy();
     }      
 }

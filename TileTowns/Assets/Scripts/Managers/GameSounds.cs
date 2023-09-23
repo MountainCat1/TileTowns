@@ -9,6 +9,8 @@ public interface IGameSounds
     AudioClip MenuMusic { get; set; }
     AudioClip WorkerAssigned { get; set; }
     AudioClip WorkerUndassigned { get; set; }
+    AudioClip ButtonClick { get; set; }
+    AudioClip ButtonHover { get; set; }
 }
 
 [CreateAssetMenu(menuName = "Data/Game Sounds")]
@@ -23,5 +25,8 @@ public class GameSounds : ScriptableObject, IGameSounds
     
     [field: SerializeField] public AudioClip GameMusic { get; set; }
     [field: SerializeField] public AudioClip MenuMusic { get; set; }
+    
+    [field: SerializeField] public AudioClip ButtonClick { get; set; }
+    [field: SerializeField] public AudioClip ButtonHover { get; set; }
 
 }
