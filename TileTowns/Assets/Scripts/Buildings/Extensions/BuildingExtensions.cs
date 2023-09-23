@@ -1,6 +1,4 @@
-﻿using UnityEngine.Rendering.Universal;
-
-namespace Buildings.Extensions
+﻿namespace Buildings.Extensions
 {
     public static class BuildingExtensions
     {

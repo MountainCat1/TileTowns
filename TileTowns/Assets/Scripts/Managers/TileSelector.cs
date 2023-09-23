@@ -31,25 +31,24 @@ public class TileSelector : MonoBehaviour, ITileSelector
 
     private Vector3Int _lastCellSelected;
     
+    [Inject]
+    private void Construct()
+    {
+        _gameManager.LevelLoaded += OnLevelLoaded;
+        _inputManager.PointerMoved += OnPointerMoved;
+        _inputManager.PointerClicked += OnPointerClicked;
+        _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
+    }
 
-    private void Awake()
+    private void Start()
     {
         _camera = Camera.main;
-
+        
         if (_camera == null)
         {
             Debug.LogError("Main Camera not found.");
             return;
         }
-
-        _gameManager.LevelLoaded += OnLevelLoaded;
-    }
-
-    private void Start()
-    {
-        _inputManager.PointerMoved += OnPointerMoved;
-        _inputManager.PointerClicked += OnPointerClicked;
-        _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
     }
 
     private void OnLevelLoaded()

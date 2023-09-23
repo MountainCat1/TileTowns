@@ -1,8 +1,5 @@
-﻿using System;
-using UI;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 
 public interface ISoundManager
 {
@@ -10,43 +7,35 @@ public interface ISoundManager
 
 public class SoundManager : ISoundManager
 {
-    private const float DelayToDestroyNonPlayingAudioSource = 0.5f;
-    
     [Inject] private IGameSounds _gameSounds;
+    [Inject] private ISoundPlayer _soundPlayer;
+    
     [Inject] private IBuildingController _buildingController;
-    [Inject] private Camera _camera;
-
-    private Transform soundParent;
+    [Inject] private ITurnManager _turnManager;
+    [Inject] private IGameManager _gameManager;
+    [Inject] private IPopulationController _populationController;
 
     [Inject]
     private void Construct()
     {
-        soundParent = _camera.transform;
+
+        _buildingController.PlaceBuildingFailed += delegate { PlaySound(_gameSounds.Error); };
+        _buildingController.PlacedBuilding += delegate { PlaySound(_gameSounds.Building); };
         
-        _buildingController.PlaceBuildingFailed += delegate { PlaySound(_gameSounds.ErrorSound); };
-        _buildingController.PlacedBuilding += delegate { PlaySound(_gameSounds.ErrorSound); };
+        _turnManager.TurnEnded += delegate { PlaySound(_gameSounds.TurnEnded); };
+        
+        _gameManager.LevelLoaded += delegate { PlaySound(_gameSounds.GameMusic, SoundType.Music); };
+        
+        _populationController.WorkerAssigned += delegate { PlaySound(_gameSounds.WorkerAssigned); };
+        _populationController.WorkerUnassigned += delegate { PlaySound(_gameSounds.WorkerUndassigned); };
+        _populationController.WorkerAssignedFailed += delegate { PlaySound(_gameSounds.Error); };
     }
 
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx)
     {
-        PlayAtPoint(clip, soundParent);
-    }
-
-    public static AudioSource PlayAtPoint(AudioClip clip, Transform parent, float volume = 1f)
-    {
-        GameObject audioObject = new GameObject("AudioPlayer");
-        AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+        if (clip is null)
+            Debug.LogWarning($"Missing sound!");
         
-        if (parent != null)
-        {
-            audioObject.transform.SetParent(parent);
-        }
-
-        audioSource.clip = clip;
-        audioSource.Play();
-
-        Object.Destroy(audioObject, clip.length + DelayToDestroyNonPlayingAudioSource);
-
-        return audioSource;
+        _soundPlayer.PlaySound(clip, soundType);
     }
 }

@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96aa66b1b2d549b2a30ea818bebbe019, type: 3}
   m_Name: Game Sounds
   m_EditorClassIdentifier: 
-  <ErrorSound>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
+  <Error>k__BackingField: {fileID: 8300000, guid: 5d5d5d268209b654d9f7cd1cb6347713, type: 3}
   <Building>k__BackingField: {fileID: 8300000, guid: ed5faffee656ee44b9381c7dca6375a0, type: 3}
+  <TurnEnded>k__BackingField: {fileID: 8300000, guid: e4a1e55789b46344e86a14f2e1ab0100, type: 3}
+  <WorkerAssigned>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
+  <WorkerUndassigned>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
+  <GameMusic>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
+  <MenuMusic>k__BackingField: {fileID: 8300000, guid: a6a4d5d7c07c109439d2bf3c5cc693a9, type: 3}
+  <ButtonClick>k__BackingField: {fileID: 8300000, guid: e4a1e55789b46344e86a14f2e1ab0100, type: 3}
+  <ButtonHover>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
