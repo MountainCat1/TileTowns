@@ -8,6 +8,7 @@ using Zenject;
 public interface IPopulationController
 {
     public event Action<TileData> WorkerAssigned;
+    public event Action<TileData> WorkerAssignedFailed;
     public event Action<TileData> WorkerUnassigned;
 }
 
@@ -16,6 +17,7 @@ public class PopulationController : MonoBehaviour, IPopulationController
     #region Events
 
     public event Action<TileData> WorkerAssigned;
+    public event Action<TileData> WorkerAssignedFailed;
     public event Action<TileData> WorkerUnassigned;
 
     #endregion
@@ -73,11 +75,21 @@ public class PopulationController : MonoBehaviour, IPopulationController
     private bool AddWorker(TileData tileData)
     {
         if (_gameState.Population <= _tileMapData.AssignedWorkers)
+        {
+            WorkerAssignedFailed?.Invoke(tileData);
             return false;
+        }
         
         WorkerAssigned?.Invoke(tileData);
         
-        return tileData.AddWorker();
+        var result = tileData.AddWorker();
+        
+        if(result == true)
+            WorkerAssigned?.Invoke(tileData);
+        else
+            WorkerAssignedFailed?.Invoke(tileData);
+
+        return result;
     }
 
     private void HidePopulationUI()
