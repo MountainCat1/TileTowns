@@ -6,7 +6,7 @@ using Zenject;
 
 public class RoadManager : MonoBehaviour
 {
-    private event Action<Building, ITileData> RoadPlaced;
+    private event Action<ITileData> RoadPlaced;
 
     [Inject] private IGameManager _gameManager;
     [Inject] private IBuildingController _buildingController;
@@ -34,9 +34,11 @@ public class RoadManager : MonoBehaviour
     
     private void Start()
     {
-        _buildingController.PlacedBuilding += CreateRoad;
         _gameManager.LevelLoaded += InitializeRoadMap;
         _gameManager.LevelLoaded += OnGameLoaded;
+        
+        RoadPlaced += CreateRoad;
+        _buildingController.PlacedBuilding += (_, tileData) => RoadPlaced?.Invoke(tileData);
     }
     
     private void OnGameLoaded()
@@ -54,7 +56,7 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    private void CreateRoad(Building building, ITileData tileData)
+    private void CreateRoad(ITileData tileData)
     {
         var position = tileData.Position;
         _roadMap[position] = true;
