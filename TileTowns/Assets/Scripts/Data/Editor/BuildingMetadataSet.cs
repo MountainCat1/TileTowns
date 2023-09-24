@@ -26,6 +26,8 @@ namespace Data.Editor
                     .Select(path => AssetDatabase.LoadAssetAtPath<Building>(path))
                     .Where(x => x is not null)
                     .ToArray();
+                
+                EditorUtility.SetDirty(buildingSet);
             }
         }
     }
