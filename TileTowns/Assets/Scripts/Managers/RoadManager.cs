@@ -12,6 +12,22 @@ public class RoadManager : MonoBehaviour
     [Inject] private IBuildingController _buildingController;
     [Inject] protected ITileMapData TileMapData { get; private set; }
 
+    [SerializeField] public Tile upDownLeftRightRoad;
+    [SerializeField] public Tile upLeftRightRoad;
+    [SerializeField] public Tile downLeftRightRoad;
+    [SerializeField] public Tile upDownLeftRoad;
+    [SerializeField] public Tile upDownRightRoad;
+    [SerializeField] public Tile upRightRoad;
+    [SerializeField] public Tile downLeftRoad;
+    [SerializeField] public Tile upDownRoad;
+    [SerializeField] public Tile downRightRoad;
+    [SerializeField] public Tile upLeftRoad;
+    [SerializeField] public Tile leftRightRoad;
+    [SerializeField] public Tile upRoad;
+    [SerializeField] public Tile rightRoad;
+    [SerializeField] public Tile downRoad;
+    [SerializeField] public Tile leftRoad;
+    
     private Tilemap _tilemap;
     private Dictionary<Vector2Int, bool> _roadMap = new();
     private const int RoadZIndex = 1;
@@ -79,63 +95,63 @@ public class RoadManager : MonoBehaviour
         
         if (hasRoadAbove && hasRoadBelow && hasRoadLeft && hasRoadRight)
         {
-            // All sides have roads
+            SetRoad(position, upDownLeftRightRoad);
         }
         else if (hasRoadAbove && hasRoadBelow && hasRoadLeft)
         {
-            // Roads are from above, below, and left
+            SetRoad(position, upDownLeftRoad);
         }
         else if (hasRoadAbove && hasRoadBelow && hasRoadRight)
         {
-            // Roads are from above, below, and right
+            SetRoad(position, upDownRightRoad);
         }
         else if (hasRoadAbove && hasRoadLeft && hasRoadRight)
         {
-            // Roads are from above, left, and right
+            SetRoad(position, upLeftRightRoad);
         }
         else if (hasRoadBelow && hasRoadLeft && hasRoadRight)
         {
-            // Roads are from below, left, and right
+            SetRoad(position ,downLeftRightRoad);
         }
         else if (hasRoadAbove && hasRoadBelow)
         {
-            // Roads are from above and below
+            SetRoad(position, upDownRoad);
         }
         else if (hasRoadAbove && hasRoadLeft)
         {
-            // Roads are from above and left
+            SetRoad(position, upLeftRoad);
         }
         else if (hasRoadAbove && hasRoadRight)
         {
-            // Roads are from above and right
+            SetRoad(position, upRightRoad);
         }
         else if (hasRoadBelow && hasRoadLeft)
         {
-            // Roads are from below and left
+            SetRoad(position, downLeftRoad);
         }
         else if (hasRoadBelow && hasRoadRight)
         {
-            // Roads are from below and right
+            SetRoad(position, downRightRoad);
         }
         else if (hasRoadLeft && hasRoadRight)
         {
-            // Roads are from left and right
+            SetRoad(position, leftRightRoad);
         }
         else if (hasRoadAbove)
         {
-            // There is a road from above
+            SetRoad(position, upRoad);
         }
         else if (hasRoadBelow)
         {
-            // There is a road from below
+            SetRoad(position, downRoad);
         }
         else if (hasRoadLeft)
         {
-            // There is a road from the left
+            SetRoad(position, leftRoad);
         }
         else if (hasRoadRight)
         {
-            // There is a road from the right
+            SetRoad(position, rightRoad);
         }
         else
         {
@@ -154,5 +170,13 @@ public class RoadManager : MonoBehaviour
         };
         
         return neighbours;
+    }
+    
+    private void SetRoad(Vector2Int position, TileBase roadTile)
+    {
+        var position3d = new Vector3Int(position.x, position.y, RoadZIndex);
+        
+        _tilemap.SetTile(position3d, roadTile);
+        _tilemap.RefreshAllTiles();
     }
 }
