@@ -67,6 +67,8 @@ public class RoadManager : MonoBehaviour
                 UpdateRoad(adjacentPosition);
             }
         }
+        
+        UpdateRoad(position);
     }
 
     private void UpdateRoad(Vector2Int position)
