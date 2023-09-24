@@ -12,10 +12,12 @@ namespace UI
 
         [Inject]
         private void Construct(
-            IBuildingController buildingController
+            IBuildingController buildingController,
+            IPopulationController populationController
         )
         {
-            buildingController.PlaceBuildingFailed += () => LogError("Can't place building"); 
+            buildingController.PlaceBuildingFailed += () => LogError("Cannot place building"); 
+            populationController.WorkerAssignedFailed += (_) => LogError("Cannot assign more workers"); 
         }
 
 
