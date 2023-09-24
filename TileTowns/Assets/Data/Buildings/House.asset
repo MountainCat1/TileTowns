@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7542949fb7b24570b00c9b72afb29d9e, type: 3}
   m_Name: House
   m_EditorClassIdentifier: 
-  <Tile>k__BackingField: {fileID: 0}
+  <Tile>k__BackingField: {fileID: 11400000, guid: 71a82773e453a7c468e670a37f49f74c, type: 2}
   <Price>k__BackingField: 0
