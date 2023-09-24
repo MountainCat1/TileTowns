@@ -5,14 +5,16 @@ using Zenject;
 
 public class RoadManager : MonoBehaviour
 {
-    private event Action<Vector2Int> RoadPlaced;
-    
+    private event Action<Building, ITileData> RoadPlaced;
+
+    [Inject] private IBuildingController _buildingController;
     [Inject] protected ITileMapData TileMapData { get; private set; }
     private Dictionary<Vector2Int, bool> _roadMap = new();
     
     private void Start()
     {
         RoadPlaced += CreateRoad;
+        _buildingController.PlacedBuilding += RoadPlaced;
         
         _roadMap = new Dictionary<Vector2Int, bool>();
         
@@ -21,14 +23,10 @@ public class RoadManager : MonoBehaviour
             _roadMap.Add(tile.Value.Position, false);
         }
     }
-    
-    public void PlaceRoad(Vector2Int position)
+
+    private void CreateRoad(Building building, ITileData tileData)
     {
-        RoadPlaced?.Invoke(position);
-    }
-    
-    public void CreateRoad(Vector2Int position)
-    {
+        var position = tileData.Position;
         _roadMap[position] = true;
         
         var adjacentTiles = GetAdjacentPositions(position);
