@@ -13,9 +13,14 @@ public class RoadManager : MonoBehaviour
     
     private void Start()
     {
+        InitializeRoadMap();
+        
         RoadPlaced += CreateRoad;
         _buildingController.PlacedBuilding += RoadPlaced;
-        
+    }
+
+    private void InitializeRoadMap()
+    {
         _roadMap = new Dictionary<Vector2Int, bool>();
         
         foreach (var tile in TileMapData.Data)
