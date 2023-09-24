@@ -14,6 +14,7 @@ public class RoadManager : MonoBehaviour
 
     private Tilemap _tilemap;
     private Dictionary<Vector2Int, bool> _roadMap = new();
+    private const int RoadZIndex = 1;
     
     private void Start()
     {
