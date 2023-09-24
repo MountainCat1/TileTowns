@@ -15,7 +15,7 @@ namespace Buildings
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             int adjacentForests = CountAdjacentForestTiles(tileData);
-            mutation.BuildingIncome = moneyPerWorker * tileData.WorkersAssigned * (1 + adjacentForests);
+            mutation.BuildingIncome = moneyPerWorker * tileData.WorkersAssigned * adjacentForests;
         }
 
         private int CountAdjacentForestTiles(ITileData tileData)
