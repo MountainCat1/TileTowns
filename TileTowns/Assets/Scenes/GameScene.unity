@@ -742,6 +742,65 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &226715574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 226715575}
+  - component: {fileID: 226715576}
+  m_Layer: 0
+  m_Name: Road Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &226715575
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226715574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 231949092}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &226715576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226715574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd0236b023f4646b0e43bf7ca5f7b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upDownLeftRightRoad: {fileID: 11400000, guid: fa0c3f3b4ee6f454ea0fcc5bab20c98a, type: 2}
+  upLeftRightRoad: {fileID: 11400000, guid: 97f7e72a179947e4ca54519f77baee56, type: 2}
+  downLeftRightRoad: {fileID: 11400000, guid: e9d910a40fb0c694bb35faf332fd1690, type: 2}
+  upDownLeftRoad: {fileID: 11400000, guid: 4e09b36d4f36d544683bc031f94d0132, type: 2}
+  upDownRightRoad: {fileID: 11400000, guid: e68ee8660966ce244ab13c2a163f1e47, type: 2}
+  upRightRoad: {fileID: 11400000, guid: 93290132d887dc2429f836f46a6e11bf, type: 2}
+  downLeftRoad: {fileID: 11400000, guid: b771cf1433eb89849b5dc497c670d52c, type: 2}
+  upDownRoad: {fileID: 11400000, guid: 7a54d5b4fef99f243900f0af26a908fa, type: 2}
+  downRightRoad: {fileID: 11400000, guid: 653e1a58a6c89fb43988a07663c2cf90, type: 2}
+  upLeftRoad: {fileID: 11400000, guid: 8bd25afd6ddd815439086bca319d6e02, type: 2}
+  leftRightRoad: {fileID: 11400000, guid: 07061e578ec7fc44d81d9830c7907fb5, type: 2}
+  upRoad: {fileID: 11400000, guid: 2722ac0358187564782c7470384dd7dc, type: 2}
+  rightRoad: {fileID: 11400000, guid: 2988880daff0a8743b048412e85291f4, type: 2}
+  downRoad: {fileID: 11400000, guid: 10332956d7b176e4aa07133e5a327065, type: 2}
+  leftRoad: {fileID: 11400000, guid: 1d50f2903281eb34ba1bf9924ab85305, type: 2}
 --- !u!1 &231949091
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +843,7 @@ Transform:
   - {fileID: 1330518539}
   - {fileID: 1993202865}
   - {fileID: 2094636532}
+  - {fileID: 226715575}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
