@@ -25,6 +25,8 @@ public class TileMapData : MonoBehaviour, ITileMapData
     [Inject] private IGameManager _gameManager;
     [Inject] private IGameState _gameState;
     [Inject] private ITileFeatureMap _tileFeatureMap;
+    
+    [field: SerializeField] private List<Tile> WaterTiles { get; set; }
 
     public IReadOnlyDictionary<Vector2Int, TileData> Data => _data;
     public IEnumerable<TileData> TileData => Data.Values;
@@ -84,6 +86,9 @@ public class TileMapData : MonoBehaviour, ITileMapData
                     TileBase aboveTile = _tilemap.GetTile(aboveCellPosition);
                         
                     TileFeature tileFeature = _tileFeatureMap.GetMapping(aboveTile);
+
+                    if (WaterTiles.Contains(tile))
+                        tileFeature = TileFeature.Sea;
                     
                     AddTileData((Vector2Int)cellPosition, tile, tileFeature);
                 }

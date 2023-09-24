@@ -6932,6 +6932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cb357834bfa394481a8cc8772a62c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WaterTiles>k__BackingField:
+  - {fileID: 11400000, guid: 0f4c397cbd94dad45828e8dee0930132, type: 2}
 --- !u!1 &1724021389
 GameObject:
   m_ObjectHideFlags: 0
