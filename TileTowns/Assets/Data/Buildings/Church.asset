@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Church
   m_EditorClassIdentifier: 
   <Tile>k__BackingField: {fileID: 11400000, guid: 3422b68a7debe5f4ba66bd3f28157824, type: 2}
-  <Price>k__BackingField: 0
+  <Price>k__BackingField: 25

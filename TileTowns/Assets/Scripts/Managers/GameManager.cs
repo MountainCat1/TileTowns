@@ -48,8 +48,37 @@ public class GameManager : MonoBehaviour, IGameManager
             _container.Inject(building);
         }
 
+        _gameState.Changed += CheckForEndGameCondition;
+        
         LevelLoaded?.Invoke();
-
+        
         _gameState.Initialize();
+    }
+
+    private void CheckForEndGameCondition()
+    {
+        var result = LevelConfig.WinCondition.Check(_gameState);
+
+        if (result.Won)
+        {
+            Win();
+            return;
+        }
+
+        if (result.Lost)
+        {
+            Lose();
+            return;
+        }
+    }
+
+    private void Lose()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void Win()
+    {
+        throw new NotImplementedException();
     }
 }

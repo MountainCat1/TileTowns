@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: House
   m_EditorClassIdentifier: 
   <Tile>k__BackingField: {fileID: 11400000, guid: 71a82773e453a7c468e670a37f49f74c, type: 2}
-  <Price>k__BackingField: 0
+  <Price>k__BackingField: 15

@@ -1,6 +1,8 @@
-﻿public abstract class WinCondition
+﻿using UnityEngine;
+
+public abstract class WinCondition : ScriptableObject
 {
-    public abstract WinConditionCheckResult Check(GameState gameState);
+    public abstract WinConditionCheckResult Check(IGameState gameState);
 
     public WinConditionCheckResult Won => new WinConditionCheckResult()
     {
