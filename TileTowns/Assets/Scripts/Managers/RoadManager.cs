@@ -1,18 +1,23 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Zenject;
 
 public class RoadManager : MonoBehaviour
 {
     private event Action<Building, ITileData> RoadPlaced;
 
+    [Inject] private IGameManager _gameManager;
     [Inject] private IBuildingController _buildingController;
     [Inject] protected ITileMapData TileMapData { get; private set; }
+
+    private Tilemap _tilemap;
     private Dictionary<Vector2Int, bool> _roadMap = new();
     
     private void Start()
     {
+        _tilemap = _gameManager.Tilemap;
         InitializeRoadMap();
         
         RoadPlaced += CreateRoad;
