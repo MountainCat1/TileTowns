@@ -34,11 +34,14 @@ public class RoadManager : MonoBehaviour
     
     private void Start()
     {
+        _buildingController.PlacedBuilding += CreateRoad;
+        _gameManager.LevelLoaded += InitializeRoadMap;
+        _gameManager.LevelLoaded += OnGameLoaded;
+    }
+    
+    private void OnGameLoaded()
+    {
         _tilemap = _gameManager.Tilemap;
-        InitializeRoadMap();
-        
-        RoadPlaced += CreateRoad;
-        _buildingController.PlacedBuilding += RoadPlaced;
     }
 
     private void InitializeRoadMap()
