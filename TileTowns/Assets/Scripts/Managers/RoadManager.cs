@@ -6,8 +6,14 @@ using Zenject;
 
 public class RoadManager : MonoBehaviour
 {
-    private event Action<ITileData> RoadPlaced;
+    private const int RoadZIndex = 1;
 
+    #region Events
+
+    public event Action<ITileData> RoadPlaced;
+
+    #endregion
+    
     [Inject] private IGameManager _gameManager;
     [Inject] private IBuildingController _buildingController;
     [Inject] protected ITileMapData TileMapData { get; private set; }
@@ -30,15 +36,13 @@ public class RoadManager : MonoBehaviour
     
     private Tilemap _tilemap;
     private Dictionary<Vector2Int, bool> _roadMap = new();
-    private const int RoadZIndex = 1;
     
     private void Start()
     {
         _gameManager.LevelLoaded += InitializeRoadMap;
         _gameManager.LevelLoaded += OnGameLoaded;
         
-        RoadPlaced += CreateRoad;
-        _buildingController.PlacedBuilding += (_, tileData) => RoadPlaced?.Invoke(tileData);
+        _buildingController.PlacedBuilding += (_, tileData) => CreateRoad(tileData);
     }
     
     private void OnGameLoaded()
@@ -71,6 +75,8 @@ public class RoadManager : MonoBehaviour
         }
         
         UpdateRoad(position);
+        
+        RoadPlaced?.Invoke(tileData);
     }
 
     private void UpdateRoad(Vector2Int position)
@@ -95,11 +101,11 @@ public class RoadManager : MonoBehaviour
             hasRoadRight = true;
         }
 
-        if (_roadMap[ position + new Vector2Int(-1, 0)])
+        if (_roadMap[position + new Vector2Int(-1, 0)])
         {
             hasRoadLeft = true;
         }
-        
+
         if (hasRoadAbove && hasRoadBelow && hasRoadLeft && hasRoadRight)
         {
             SetRoad(position, upDownLeftRightRoad);
@@ -118,7 +124,7 @@ public class RoadManager : MonoBehaviour
         }
         else if (hasRoadBelow && hasRoadLeft && hasRoadRight)
         {
-            SetRoad(position ,downLeftRightRoad);
+            SetRoad(position, downLeftRightRoad);
         }
         else if (hasRoadAbove && hasRoadBelow)
         {
