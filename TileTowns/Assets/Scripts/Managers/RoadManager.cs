@@ -4,7 +4,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
-public class RoadManager : MonoBehaviour
+public interface IRoadManager
+{
+    event Action<ITileData> RoadPlaced;
+    void CreateRoad(ITileData tileData);
+}
+
+public class RoadManager : MonoBehaviour, IRoadManager
 {
     private const int RoadZIndex = 1;
 
@@ -60,7 +66,7 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    private void CreateRoad(ITileData tileData)
+    public void CreateRoad(ITileData tileData)
     {
         var position = tileData.Position;
         _roadMap[position] = true;
