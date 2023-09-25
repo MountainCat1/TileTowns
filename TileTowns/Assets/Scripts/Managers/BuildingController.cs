@@ -24,7 +24,7 @@ public interface IBuildingController
 
 public class BuildingController : MonoBehaviour, IBuildingController
 {
-    private const int BuildingZIndex = 1;
+    private const int BuildingZIndex = 2;
 
     #region Events
 
