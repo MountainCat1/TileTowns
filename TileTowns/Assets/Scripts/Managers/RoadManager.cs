@@ -4,10 +4,22 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
-public class RoadManager : MonoBehaviour
+public interface IRoadManager
 {
-    private event Action<Building, ITileData> RoadPlaced;
+    event Action<ITileData> RoadPlaced;
+    void CreateRoad(ITileData tileData);
+}
 
+public class RoadManager : MonoBehaviour, IRoadManager
+{
+    private const int RoadZIndex = 1;
+
+    #region Events
+
+    public event Action<ITileData> RoadPlaced;
+
+    #endregion
+    
     [Inject] private IGameManager _gameManager;
     [Inject] private IBuildingController _buildingController;
     [Inject] protected ITileMapData TileMapData { get; private set; }
@@ -30,15 +42,18 @@ public class RoadManager : MonoBehaviour
     
     private Tilemap _tilemap;
     private Dictionary<Vector2Int, bool> _roadMap = new();
-    private const int RoadZIndex = 1;
     
     private void Start()
     {
-        _tilemap = _gameManager.Tilemap;
-        InitializeRoadMap();
+        _gameManager.LevelLoaded += InitializeRoadMap;
+        _gameManager.LevelLoaded += OnGameLoaded;
         
-        RoadPlaced += CreateRoad;
-        _buildingController.PlacedBuilding += RoadPlaced;
+        _buildingController.PlacedBuilding += (_, tileData) => CreateRoad(tileData);
+    }
+    
+    private void OnGameLoaded()
+    {
+        _tilemap = _gameManager.Tilemap;
     }
 
     private void InitializeRoadMap()
@@ -51,7 +66,7 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    private void CreateRoad(Building building, ITileData tileData)
+    public void CreateRoad(ITileData tileData)
     {
         var position = tileData.Position;
         _roadMap[position] = true;
@@ -64,6 +79,10 @@ public class RoadManager : MonoBehaviour
                 UpdateRoad(adjacentPosition);
             }
         }
+        
+        UpdateRoad(position);
+        
+        RoadPlaced?.Invoke(tileData);
     }
 
     private void UpdateRoad(Vector2Int position)
@@ -88,11 +107,11 @@ public class RoadManager : MonoBehaviour
             hasRoadRight = true;
         }
 
-        if (_roadMap[ position + new Vector2Int(-1, 0)])
+        if (_roadMap[position + new Vector2Int(-1, 0)])
         {
             hasRoadLeft = true;
         }
-        
+
         if (hasRoadAbove && hasRoadBelow && hasRoadLeft && hasRoadRight)
         {
             SetRoad(position, upDownLeftRightRoad);
@@ -111,7 +130,7 @@ public class RoadManager : MonoBehaviour
         }
         else if (hasRoadBelow && hasRoadLeft && hasRoadRight)
         {
-            SetRoad(position ,downLeftRightRoad);
+            SetRoad(position, downLeftRightRoad);
         }
         else if (hasRoadAbove && hasRoadBelow)
         {
