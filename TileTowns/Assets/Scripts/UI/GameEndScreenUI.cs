@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-public class WinScreenUI : MonoBehaviour
+public class GameEndScreenUI : MonoBehaviour
 {
     [Inject] private IGameManager _gameManager;
 
@@ -33,6 +31,11 @@ public class WinScreenUI : MonoBehaviour
         _gameManager.LoadMainMenu();
     }
 
+    public void Retry()
+    {
+        _gameManager.LoadMainMenu();
+    }
+    
     public void Continue()
     {
         _gameManager.LoadNextLevel();
