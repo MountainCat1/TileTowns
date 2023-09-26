@@ -1,5 +1,7 @@
 ﻿using System;
+using Data;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Zenject;
 
@@ -9,6 +11,10 @@ public interface IGameManager
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
+    event Action<WinConditionCheckResult> LevelEnded;
+
+    public void LoadNextLevel();
+    public void LoadMainMenu();
 }
 
 public class GameManager : MonoBehaviour, IGameManager
@@ -16,20 +22,34 @@ public class GameManager : MonoBehaviour, IGameManager
     // Events
 
     public event Action LevelLoaded;
+    public event Action<WinConditionCheckResult> LevelEnded;
 
     //
 
     [Inject] private IGameState _gameState;
     [Inject] private DiContainer _container;
 
+    [SerializeField] private string mainMenuScene;
+
     public Tilemap Tilemap { get; private set; }
 
+    [field: SerializeField] public LevelSet LevelSet { get; private set; }
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
 
     private void Start()
     {
         LoadLevel(LevelConfig);
+    }
+
+    public void LoadNextLevel()
+    {
+        
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
     }
 
     public void LoadLevel(LevelConfig config)
@@ -61,24 +81,16 @@ public class GameManager : MonoBehaviour, IGameManager
 
         if (result.Won)
         {
-            Win();
+            LevelEnded?.Invoke(result);
             return;
         }
 
         if (result.Lost)
         {
-            Lose();
+            LevelEnded?.Invoke(result);
             return;
         }
-    }
-
-    private void Lose()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void Win()
-    {
-        throw new NotImplementedException();
+        
+        
     }
 }
