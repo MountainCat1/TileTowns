@@ -12,9 +12,8 @@ public interface IGameManager
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
     event Action<WinConditionCheckResult> LevelEnded;
-
-    public void LoadNextLevel();
-    public void LoadMainMenu();
+    void Restart();
+    void LoadLevel(LevelConfig config);
 }
 
 public class GameManager : MonoBehaviour, IGameManager
@@ -30,6 +29,7 @@ public class GameManager : MonoBehaviour, IGameManager
     [Inject] private DiContainer _container;
 
     [SerializeField] private string mainMenuScene;
+    [SerializeField] private string levelScene;
 
     public Tilemap Tilemap { get; private set; }
 
@@ -42,15 +42,11 @@ public class GameManager : MonoBehaviour, IGameManager
         LoadLevel(LevelConfig);
     }
 
-    public void LoadNextLevel()
+    public void Restart()
     {
         
     }
-
-    public void LoadMainMenu()
-    {
-        SceneManager.LoadScene(mainMenuScene);
-    }
+    
 
     public void LoadLevel(LevelConfig config)
     {
