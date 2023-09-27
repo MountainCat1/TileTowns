@@ -4,17 +4,18 @@
 public class GatherMoneyWinCondition : WinCondition
 {
     [field: SerializeField] public float Goal { get; set; }
-    [field: SerializeField] public float TurnLimit { get; set; }
+    [field: SerializeField] public int TurnLimit { get; set; }
 
     public override IGameResult Check(IGameState gameState)
     {
         var result = new GameResult
         {
-            Progress = (gameState.Money / Goal) / 100f
+            WinProgress = (gameState.Money / Goal),
+            LoseProgress = (gameState.Turn) / (float)TurnLimit
         };
 
-        if (result.Progress > 1)
-            result.Progress = 1;
+        if (result.WinProgress > 1)
+            result.WinProgress = 1;
         
         if (gameState.Money >= Goal)
             return result.Win();

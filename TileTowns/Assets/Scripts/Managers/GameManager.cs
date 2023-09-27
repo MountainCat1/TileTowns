@@ -7,11 +7,17 @@ using Zenject;
 
 public interface IGameManager
 {
+    #region Events
+
+    event Action<IGameResult> GameResultChanged;
     event Action LevelLoaded;
+    event Action<IGameResult> LevelEnded;
+
+    #endregion
+    
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
-    event Action<IGameResult> LevelEnded;
     void Restart();
     void LoadLevel(LevelConfig config);
 }
@@ -28,10 +34,8 @@ public class GameManager : MonoBehaviour, IGameManager
 
     [Inject] private IGameState _gameState;
     [Inject] private ILevelManager _levelManager;
+    [Inject] private ITurnManager _turnManager;
     [Inject] private DiContainer _container;
-
-    [SerializeField] private string mainMenuScene;
-    [SerializeField] private string levelScene;
 
     public Tilemap Tilemap { get; private set; }
 
@@ -52,11 +56,13 @@ public class GameManager : MonoBehaviour, IGameManager
     private void OnEnable()
     {
         _gameState.Changed += CheckForEndGameCondition;
+        _turnManager.TurnStarted += CheckForEndGameCondition;
     }
 
     private void OnDisable()
     {
         _gameState.Changed -= CheckForEndGameCondition;
+        _turnManager.TurnStarted -= CheckForEndGameCondition;
     }
 
 
@@ -83,9 +89,12 @@ public class GameManager : MonoBehaviour, IGameManager
 
     private void CheckForEndGameCondition()
     {
+        Debug.Log($"Checking end game condition... (Turn: { _gameState.Turn})");
+
         var result = LevelConfig.WinCondition.Check(_gameState);
 
         GameResultChanged?.Invoke(result);
+        
         
         if (result.Won)
         {
