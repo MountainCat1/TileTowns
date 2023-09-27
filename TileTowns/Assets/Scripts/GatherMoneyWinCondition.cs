@@ -6,7 +6,7 @@ public class GatherMoneyWinCondition : WinCondition
     [field: SerializeField] public float Goal { get; set; }
     [field: SerializeField] public float TurnLimit { get; set; }
 
-    public override GameResult Check(IGameState gameState)
+    public override IGameResult Check(IGameState gameState)
     {
         var result = new GameResult
         {

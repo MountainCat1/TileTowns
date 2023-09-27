@@ -11,7 +11,7 @@ public interface IGameManager
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
-    event Action<GameResult> LevelEnded;
+    event Action<IGameResult> LevelEnded;
     void Restart();
     void LoadLevel(LevelConfig config);
 }
@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour, IGameManager
     // Events
 
     public event Action LevelLoaded;
-    public event Action<GameResult> LevelEnded;
+    public event Action<IGameResult> LevelEnded;
+    public event Action<IGameResult> GameResultChanged;
 
     //
 
@@ -84,6 +85,8 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         var result = LevelConfig.WinCondition.Check(_gameState);
 
+        GameResultChanged?.Invoke(result);
+        
         if (result.Won)
         {
             LevelEnded?.Invoke(result);

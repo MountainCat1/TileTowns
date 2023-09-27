@@ -15,7 +15,7 @@ public class GameEndScreenUI : MonoBehaviour
         _gameManager.LevelEnded += OnLevelEnded;
     }
 
-    private void OnLevelEnded(GameResult result)
+    private void OnLevelEnded(IGameResult result)
     {
         if (result.Won)
         {
