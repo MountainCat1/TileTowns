@@ -27,7 +27,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     [SerializeField] private Tilemap highlightGrid;
     
     private Tilemap _tilemap;
-    private Camera _camera;
+    [Inject] private Camera _camera;
 
     private Vector3Int _lastCellSelected;
     
@@ -39,16 +39,13 @@ public class TileSelector : MonoBehaviour, ITileSelector
         _inputManager.PointerClicked += OnPointerClicked;
         _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
     }
-
-    private void Start()
+    
+    public void OnDestroy()
     {
-        _camera = Camera.main;
-        
-        if (_camera == null)
-        {
-            Debug.LogError("Main Camera not found.");
-            return;
-        }
+        _gameManager.LevelLoaded -= OnLevelLoaded;
+        _inputManager.PointerMoved -= OnPointerMoved;
+        _inputManager.PointerClicked -= OnPointerClicked;
+        _inputManager.PointerSecondaryClicked -= OnPointerSecondaryClicked;
     }
 
     private void OnLevelLoaded()
@@ -107,4 +104,6 @@ public class TileSelector : MonoBehaviour, ITileSelector
         highlightGrid.SetTile(lastHighlightedCell, null);
         highlightGrid.SetTile(cell, highlightTile);
     }
+
+
 }

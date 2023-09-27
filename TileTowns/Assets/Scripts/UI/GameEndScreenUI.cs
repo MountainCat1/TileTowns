@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 public class GameEndScreenUI : MonoBehaviour
 {
     [Inject] private IGameManager _gameManager;
+    [Inject] private ILevelManager _levelManager;
 
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject loseMenu;
@@ -13,7 +15,7 @@ public class GameEndScreenUI : MonoBehaviour
         _gameManager.LevelEnded += OnLevelEnded;
     }
 
-    private void OnLevelEnded(WinConditionCheckResult result)
+    private void OnLevelEnded(GameResult result)
     {
         if (result.Won)
         {
@@ -28,16 +30,16 @@ public class GameEndScreenUI : MonoBehaviour
 
     public void Quit()
     {
-        _gameManager.LoadMainMenu();
+        _levelManager.LoadMainMenu();
     }
 
     public void Retry()
     {
-        _gameManager.LoadMainMenu();
+        _gameManager.Restart();
     }
     
     public void Continue()
     {
-        _gameManager.LoadNextLevel();
+        _gameManager.Restart();
     }
 }

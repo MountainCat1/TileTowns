@@ -5,7 +5,7 @@ public class GatherMoneyWinCondition : WinCondition
 {
     [field: SerializeField] public float Goal { get; set; }
 
-    public override WinConditionCheckResult Check(IGameState gameState)
+    public override GameResult Check(IGameState gameState)
     {
         if (gameState.Money >= Goal)
         {

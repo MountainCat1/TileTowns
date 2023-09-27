@@ -32,6 +32,7 @@ namespace UI
         private void OnDisable()
         {
             _gameManager.LevelLoaded -= GameManagerOnGameLoaded;
+            _buildingController.BuildingDeselected -= OnBuildingDeselected;
         }
 
 

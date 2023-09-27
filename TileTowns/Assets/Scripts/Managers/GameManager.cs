@@ -11,7 +11,7 @@ public interface IGameManager
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
-    event Action<WinConditionCheckResult> LevelEnded;
+    event Action<GameResult> LevelEnded;
     void Restart();
     void LoadLevel(LevelConfig config);
 }
@@ -21,11 +21,12 @@ public class GameManager : MonoBehaviour, IGameManager
     // Events
 
     public event Action LevelLoaded;
-    public event Action<WinConditionCheckResult> LevelEnded;
+    public event Action<GameResult> LevelEnded;
 
     //
 
     [Inject] private IGameState _gameState;
+    [Inject] private ILevelManager _levelManager;
     [Inject] private DiContainer _container;
 
     [SerializeField] private string mainMenuScene;
@@ -44,14 +45,26 @@ public class GameManager : MonoBehaviour, IGameManager
 
     public void Restart()
     {
-        
+        _levelManager.LoadLevel(LevelConfig);
     }
-    
+
+    private void OnEnable()
+    {
+        _gameState.Changed += CheckForEndGameCondition;
+    }
+
+    private void OnDisable()
+    {
+        _gameState.Changed -= CheckForEndGameCondition;
+    }
+
 
     public void LoadLevel(LevelConfig config)
     {
         Debug.Log("Instantiating level map...");
         Tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, Grid.transform, false);
+
+        _gameState.Reset();
 
         _gameState.ApplyMutation(new GameStateMutation()
         {
@@ -64,10 +77,8 @@ public class GameManager : MonoBehaviour, IGameManager
             _container.Inject(building);
         }
 
-        _gameState.Changed += CheckForEndGameCondition;
-        
         LevelLoaded?.Invoke();
-        
+
         _gameState.Initialize();
     }
 
@@ -86,7 +97,5 @@ public class GameManager : MonoBehaviour, IGameManager
             LevelEnded?.Invoke(result);
             return;
         }
-        
-        
     }
 }

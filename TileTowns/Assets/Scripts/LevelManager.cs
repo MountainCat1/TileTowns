@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 public interface ILevelManager
 {
@@ -13,23 +14,24 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [SerializeField] private string mainMenuScene;
     [SerializeField] private string levelScene;
 
-    private void Awake()
+    private ZenjectSceneLoader _sceneLoader;
+    
+    [Inject]
+    public void Construct(ZenjectSceneLoader sceneLoader)
     {
-        DontDestroyOnLoad(gameObject);
+        _sceneLoader = sceneLoader;
     }
-
+    
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(mainMenuScene);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+        _sceneLoader.LoadScene(mainMenuScene);
     }
 
     public void LoadLevel(LevelConfig levelConfig)
     {
-        SceneManager.LoadSceneAsync(mainMenuScene).completed += operation =>
+        SceneManager.LoadSceneAsync(levelScene).completed += operation =>
         {
-            IGameManager gameManager = FindObjectOfType<GameManager>();
-
-            gameManager.LoadLevel(levelConfig);
         };
     }
 }

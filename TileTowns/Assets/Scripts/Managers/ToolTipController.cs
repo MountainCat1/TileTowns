@@ -21,7 +21,7 @@ public class ToolTipController : MonoBehaviour, IToolTipController
     private object _sender;
     private Func<TooltipData> _tooltipDataProvider;
 
-    private void Start()
+    private void OnEnable()
     {
         _inputManager.PointerMoved += UpdateTooltipPosition;
         
@@ -29,6 +29,13 @@ public class ToolTipController : MonoBehaviour, IToolTipController
 
         _gameState.MutationChanged += UpdateTooltipData;
         _gameState.Changed += UpdateTooltipData;
+    }
+
+    private void OnDisable()
+    {
+        _inputManager.PointerMoved -= UpdateTooltipPosition;
+        _gameState.MutationChanged -= UpdateTooltipData;
+        _gameState.Changed -= UpdateTooltipData;
     }
 
     private void UpdateTooltipPosition(Vector2 position)

@@ -2,28 +2,28 @@
 
 public abstract class WinCondition : ScriptableObject
 {
-    public abstract WinConditionCheckResult Check(IGameState gameState);
+    public abstract GameResult Check(IGameState gameState);
 
-    public WinConditionCheckResult Won => new WinConditionCheckResult()
+    public GameResult Won => new GameResult()
     {
         Won = true,
         Lost = false
     };
     
-    public WinConditionCheckResult Lost => new WinConditionCheckResult()
+    public GameResult Lost => new GameResult()
     {
         Won = false,
         Lost = true
     };
     
-    public WinConditionCheckResult Continue => new WinConditionCheckResult()
+    public GameResult Continue => new GameResult()
     {
         Won = false,
         Lost = false
     };
 }
 
-public class WinConditionCheckResult
+public class GameResult
 {
     public bool Won { get; set; }
     public bool Lost { get; set; }
