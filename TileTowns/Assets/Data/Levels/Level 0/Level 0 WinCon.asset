@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Level 0 WinCon
   m_EditorClassIdentifier: 
   <Goal>k__BackingField: 25
+  <TurnLimit>k__BackingField: 3
