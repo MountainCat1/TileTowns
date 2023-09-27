@@ -64,8 +64,6 @@ public class GameManager : MonoBehaviour, IGameManager
         Debug.Log("Instantiating level map...");
         Tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, Grid.transform, false);
 
-        _gameState.Reset();
-
         _gameState.ApplyMutation(new GameStateMutation()
         {
             PopulationChange = config.InitialPopulation,

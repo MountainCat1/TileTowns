@@ -30,7 +30,6 @@ public interface IGameState
     void ApplyTurnMutations();
     void ApplyMutation(IGameStateMutation mutation);
     void Initialize();
-    void Reset();
 }
 
 public class GameState : IGameState
@@ -78,13 +77,6 @@ public class GameState : IGameState
     {
         MutationChanged?.Invoke();
         Changed?.Invoke();
-    }
-
-    public void Reset()
-    {
-        Money = 0;
-        Population = 0;
-        Immigration = 0;
     }
 
     private void OnTurnEnded()
