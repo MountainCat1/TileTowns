@@ -5,23 +5,24 @@
 ![Closed Issues](https://img.shields.io/github/issues-closed-raw/MountainCat1/The-Greatest-Hero-Of-This-Run.svg)
 ![Open Pull Requests](https://img.shields.io/github/issues-pr-raw/MountainCat1/The-Greatest-Hero-Of-This-Run.svg)
 
-Turn-based Strategic City-Building Puzzle Game:
+### Turn-based Strategic City-Building Puzzle Game
 
-Strategically plan and develop your burgeoning settlement turn by turn. Each level presents unique challenges, compelling you to carefully place a variety of structures. Dive deep into the intricacies of each building type, and master their diverse upgrades and mechanics to achieve your objectives. Unfold the potential of your city, and craft the perfect balance between growth and strategy.
+Strategically plan and evolve your burgeoning settlement turn by turn. Encounter unique challenges in each level, urging you to thoughtfully position various structures. Delve into the nuances of every building type, mastering their multifaceted upgrades and mechanics to fulfill your goals. Harness the vast potential of your metropolis and strike the ideal equilibrium between growth and strategy.
 
-Game includes
-* Many different levels with different win and lose conditions
-* Unique maps requiring different approach to each one
-* Immigration mechanic, attract peopel to your settlement
-* Assign your population to the most important buildings
-* Steam Achievements!
-* In-game settings
+### Game Features:
+* Varied levels each with distinct victory and defeat conditions.
+* Unique maps demanding tailored strategies for success.
+* Attractive immigration mechanics: draw settlers to your domain.
+* Assign your populace to key structures, optimizing city performance.
+* Unlock Steam Achievements!
+* Comprehensive in-game settings for tailored gameplay.
 
 
-Tile Towns was created using:
+### Built With:
 * C#
 * Unity Game Engine
 * Aseprite
 * Zenject
 
+  
 ![Screenshot of the game](/Screenshot.png)
