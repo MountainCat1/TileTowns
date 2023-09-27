@@ -3,6 +3,8 @@
 public abstract class WinCondition : ScriptableObject
 {
     public abstract IGameResult Check(IGameState gameState);
+    public abstract string WinDescription { get; }
+    public abstract string LoseDescription { get; }
 }
 
 public interface IGameResult

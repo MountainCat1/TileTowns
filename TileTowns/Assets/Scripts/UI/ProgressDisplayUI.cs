@@ -13,6 +13,9 @@ namespace UI
         
         [SerializeField] private TextMeshProUGUI winProgressText;
         [SerializeField] private TextMeshProUGUI loseProgressText;
+        
+        [SerializeField] private TextMeshProUGUI winConditionText;
+        [SerializeField] private TextMeshProUGUI loseConditionText;
 
         [Inject] private IGameManager _gameManager;
         
@@ -20,6 +23,11 @@ namespace UI
         private void Construct()
         {
             _gameManager.GameResultChanged += OnGameResultChanged;
+
+            var winCondition = _gameManager.LevelConfig.WinCondition;
+
+            winConditionText.text = winCondition.WinDescription;
+            loseConditionText.text = winCondition.LoseDescription;
         }
 
         private void OnGameResultChanged(IGameResult gameResult)
