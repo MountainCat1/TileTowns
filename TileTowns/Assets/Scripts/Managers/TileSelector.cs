@@ -104,6 +104,4 @@ public class TileSelector : MonoBehaviour, ITileSelector
         highlightGrid.SetTile(lastHighlightedCell, null);
         highlightGrid.SetTile(cell, highlightTile);
     }
-
-
 }

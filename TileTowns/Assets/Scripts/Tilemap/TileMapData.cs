@@ -44,7 +44,6 @@ public class TileMapData : MonoBehaviour, ITileMapData
 
     private void OnDisable()
     {
-        Debug.Log("XD");
         _gameManager.LevelLoaded -= GameManagerOnGameLoaded;
         _gameState.MutationChanged -= OnMutationChanged;
     }

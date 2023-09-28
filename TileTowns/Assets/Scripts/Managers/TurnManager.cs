@@ -68,7 +68,8 @@ public class TurnManager : MonoBehaviour, ITurnManager
         {
             handler.OnTurn();
         }
-        
+
+        Debug.Log($"Turn {TurnCount} ending...");
         TurnEnded?.Invoke();
         
         // // New Turn Started
@@ -76,6 +77,7 @@ public class TurnManager : MonoBehaviour, ITurnManager
 
         TurnCount++;
         
+        Debug.Log($"Turn {TurnCount} starting...");
         TurnStarted?.Invoke();
     }
 

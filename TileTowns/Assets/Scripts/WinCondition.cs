@@ -2,29 +2,53 @@
 
 public abstract class WinCondition : ScriptableObject
 {
-    public abstract GameResult Check(IGameState gameState);
-
-    public GameResult Won => new GameResult()
-    {
-        Won = true,
-        Lost = false
-    };
-    
-    public GameResult Lost => new GameResult()
-    {
-        Won = false,
-        Lost = true
-    };
-    
-    public GameResult Continue => new GameResult()
-    {
-        Won = false,
-        Lost = false
-    };
+    public abstract IGameResult Check(IGameState gameState);
+    public abstract string WinDescription { get; }
+    public abstract string LoseDescription { get; }
 }
 
-public class GameResult
+public interface IGameResult
+{
+    bool Won { get; set; }
+    bool Lost { get; set; }
+    
+    float WinProgress { get; set; }
+    float LoseProgress { get; set; }
+    
+    IGameResult Continue();
+    IGameResult Win();
+    IGameResult Lose();
+}
+
+public class GameResult : IGameResult
 {
     public bool Won { get; set; }
     public bool Lost { get; set; }
+    public float WinProgress { get; set; }
+    public float LoseProgress { get; set; }
+
+    public IGameResult Continue()
+    {
+        Won = false;
+        Lost = false;
+        
+        return this;
+    }
+
+    public IGameResult Win()
+    {
+        Won = true;
+        Lost = false;
+
+        return this;
+    }
+    
+    
+    public IGameResult Lose()
+    {
+        Won = false;
+        Lost = true;
+
+        return this;
+    }
 }

@@ -15,6 +15,7 @@ public interface IGameState
     float Money { get; }
     float Immigration { get; }
     int Housing { get; }
+    int Turn { get; }
     // Calculated Data
 
     public float ImmigrationChange { get; }
@@ -30,7 +31,6 @@ public interface IGameState
     void ApplyTurnMutations();
     void ApplyMutation(IGameStateMutation mutation);
     void Initialize();
-    void Reset();
 }
 
 public class GameState : IGameState
@@ -42,7 +42,9 @@ public class GameState : IGameState
     //
 
     public float Money { get; private set; }
-    public float Immigration { get; set; }
+    public float Immigration { get; private set; }
+    public int Turn => _turnManager.TurnCount;
+    public int Population { get; private set; }
     public int Housing => CalculateHousing();
     public int WorkSlots => CalculateWorkSlots();
 
@@ -53,8 +55,9 @@ public class GameState : IGameState
 
     //
     
-    public int Population { get; set; }
 
+    [Inject] private ITurnManager _turnManager;
+    
     [Inject] private IGameConfig _gameConfig;
     
     public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
@@ -66,8 +69,6 @@ public class GameState : IGameState
     [Inject]
     public GameState(ITurnManager turnManager)
     {
-        Debug.Log("Instantiating game state");
-        
         _mutations = new Dictionary<object, IGameStateTurnMutation>();
         _persistentModifiers = new Dictionary<object, IPersistentModifier>();
 
@@ -78,13 +79,6 @@ public class GameState : IGameState
     {
         MutationChanged?.Invoke();
         Changed?.Invoke();
-    }
-
-    public void Reset()
-    {
-        Money = 0;
-        Population = 0;
-        Immigration = 0;
     }
 
     private void OnTurnEnded()
