@@ -133,6 +133,11 @@ public class GameState : IGameState
             Population += Mathf.FloorToInt(Immigration / immigrationSettings.ImmigrationPerPopulation);
             Immigration %= immigrationSettings.ImmigrationPerPopulation;
         }
+        else if (Immigration <= 0)
+        {
+            Population -= Mathf.FloorToInt(Immigration / immigrationSettings.ImmigrationPerPopulation);
+            Immigration %= immigrationSettings.ImmigrationPerPopulation;
+        }
     }
 
     private void RoundFloatValues()

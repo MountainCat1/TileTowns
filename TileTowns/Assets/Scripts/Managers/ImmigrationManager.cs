@@ -17,6 +17,7 @@ namespace DefaultNamespace
         {
             _turnManager.RegisterMutator(this);
             _turnManager.TurnStarted += () => MutationChanged?.Invoke();
+            _turnManager.TurnEnded += () => MutationChanged?.Invoke();
         }
         
         public IGameStateTurnMutation GetMutation()
@@ -46,8 +47,5 @@ namespace DefaultNamespace
             
             return immigrationDelta;
         }
-
-        
-
     }
 }
