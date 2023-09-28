@@ -69,8 +69,6 @@ public class GameState : IGameState
     [Inject]
     public GameState(ITurnManager turnManager)
     {
-        Debug.Log("Instantiating game state");
-        
         _mutations = new Dictionary<object, IGameStateTurnMutation>();
         _persistentModifiers = new Dictionary<object, IPersistentModifier>();
 
