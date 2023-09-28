@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad574914f884539ba561cf7522f4dd6, type: 3}
   m_Name: Default Game Config
   m_EditorClassIdentifier: 
+  <ImmigrationSettings>k__BackingField:
+    <ImmigrationPerPopulation>k__BackingField: -5
+    <ImmigrationPerFreeHousing>k__BackingField: 0.2
+    <ImmigrationPerFreeJob>k__BackingField: 0.2
