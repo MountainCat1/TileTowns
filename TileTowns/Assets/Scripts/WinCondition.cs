@@ -1,27 +1,29 @@
-﻿public abstract class WinCondition
-{
-    public abstract WinConditionCheckResult Check(GameState gameState);
+﻿using UnityEngine;
 
-    public WinConditionCheckResult Won => new WinConditionCheckResult()
+public abstract class WinCondition : ScriptableObject
+{
+    public abstract GameResult Check(IGameState gameState);
+
+    public GameResult Won => new GameResult()
     {
         Won = true,
         Lost = false
     };
     
-    public WinConditionCheckResult Lost => new WinConditionCheckResult()
+    public GameResult Lost => new GameResult()
     {
         Won = false,
         Lost = true
     };
     
-    public WinConditionCheckResult Continue => new WinConditionCheckResult()
+    public GameResult Continue => new GameResult()
     {
         Won = false,
         Lost = false
     };
 }
 
-public class WinConditionCheckResult
+public class GameResult
 {
     public bool Won { get; set; }
     public bool Lost { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
+using Data;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Zenject;
 
@@ -9,6 +11,9 @@ public interface IGameManager
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
+    event Action<GameResult> LevelEnded;
+    void Restart();
+    void LoadLevel(LevelConfig config);
 }
 
 public class GameManager : MonoBehaviour, IGameManager
@@ -16,14 +21,20 @@ public class GameManager : MonoBehaviour, IGameManager
     // Events
 
     public event Action LevelLoaded;
+    public event Action<GameResult> LevelEnded;
 
     //
 
     [Inject] private IGameState _gameState;
+    [Inject] private ILevelManager _levelManager;
     [Inject] private DiContainer _container;
+
+    [SerializeField] private string mainMenuScene;
+    [SerializeField] private string levelScene;
 
     public Tilemap Tilemap { get; private set; }
 
+    [field: SerializeField] public LevelSet LevelSet { get; private set; }
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
 
@@ -32,10 +43,28 @@ public class GameManager : MonoBehaviour, IGameManager
         LoadLevel(LevelConfig);
     }
 
+    public void Restart()
+    {
+        _levelManager.LoadLevel(LevelConfig);
+    }
+
+    private void OnEnable()
+    {
+        _gameState.Changed += CheckForEndGameCondition;
+    }
+
+    private void OnDisable()
+    {
+        _gameState.Changed -= CheckForEndGameCondition;
+    }
+
+
     public void LoadLevel(LevelConfig config)
     {
         Debug.Log("Instantiating level map...");
         Tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, Grid.transform, false);
+
+        _gameState.Reset();
 
         _gameState.ApplyMutation(new GameStateMutation()
         {
@@ -51,5 +80,22 @@ public class GameManager : MonoBehaviour, IGameManager
         LevelLoaded?.Invoke();
 
         _gameState.Initialize();
+    }
+
+    private void CheckForEndGameCondition()
+    {
+        var result = LevelConfig.WinCondition.Check(_gameState);
+
+        if (result.Won)
+        {
+            LevelEnded?.Invoke(result);
+            return;
+        }
+
+        if (result.Lost)
+        {
+            LevelEnded?.Invoke(result);
+            return;
+        }
     }
 }

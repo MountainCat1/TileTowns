@@ -11,6 +11,8 @@ public class LevelConfig : ScriptableObject
     
     [field: SerializeField] public int InitialPopulation { get; set; }
     [field: SerializeField] public float InitialMoney { get; set; }
+    
+    [field: SerializeField] public WinCondition WinCondition { get; set; }
 }
 
 

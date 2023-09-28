@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0367f7b23c4193b0a9e486a2b3520d, type: 3}
   m_Name: Woodmill
   m_EditorClassIdentifier: 
-  <Tile>k__BackingField: {fileID: 0}
-  <Price>k__BackingField: 0
+  <Tile>k__BackingField: {fileID: 11400000, guid: de0020e9489fb8246a275a35820359cc, type: 2}
+  <Price>k__BackingField: 15
   moneyPerWorker: 0
