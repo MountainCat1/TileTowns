@@ -128,14 +128,9 @@ public class GameState : IGameState
         Population += mutation.PopulationChange ?? 0;
 
         var immigrationSettings = _gameConfig.ImmigrationSettings;
-        if (Immigration >= immigrationSettings.ImmigrationPerPopulation)
+        if (Immigration >= immigrationSettings.ImmigrationPerPopulation || Immigration <= 0)
         {
             Population += Mathf.FloorToInt(Immigration / immigrationSettings.ImmigrationPerPopulation);
-            Immigration %= immigrationSettings.ImmigrationPerPopulation;
-        }
-        else if (Immigration <= 0)
-        {
-            Population -= Mathf.FloorToInt(Immigration / immigrationSettings.ImmigrationPerPopulation);
             Immigration %= immigrationSettings.ImmigrationPerPopulation;
         }
     }

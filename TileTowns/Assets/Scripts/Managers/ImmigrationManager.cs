@@ -39,9 +39,9 @@ namespace DefaultNamespace
             var immigrationConfig = _gameConfig.ImmigrationSettings;
             float immigrationDelta = 0f;
 
-            immigrationDelta += immigrationConfig.ImmigrationPerPopulation * _gameState.Population;
-            immigrationDelta += immigrationConfig.ImmigrationPerFreeHousing * (_gameState.Housing - _gameState.Population);
-            immigrationDelta += immigrationConfig.ImmigrationPerFreeJob * (_gameState.WorkSlots - _gameState.Population);
+            immigrationDelta += immigrationConfig.ImmigrationForPopulation * _gameState.Population;
+            immigrationDelta += immigrationConfig.ImmigrationForFreeHousing * (_gameState.Housing - _gameState.Population);
+            immigrationDelta += immigrationConfig.ImmigrationForFreeJob * (_gameState.WorkSlots - _gameState.Population);
 
             Debug.Log($"Immigration manager calculated immigration change: {immigrationDelta}");
             

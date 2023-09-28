@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Default Game Config
   m_EditorClassIdentifier: 
   <ImmigrationSettings>k__BackingField:
-    <ImmigrationPerPopulation>k__BackingField: -0.05
+    <ImmigrationPerPopulation>k__BackingField: 1
     <ImmigrationPerFreeHousing>k__BackingField: 0.2
     <ImmigrationPerFreeJob>k__BackingField: 0.2
