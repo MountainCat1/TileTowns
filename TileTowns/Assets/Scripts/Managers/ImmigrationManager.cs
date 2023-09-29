@@ -11,13 +11,12 @@ namespace DefaultNamespace
         [Inject] private IGameState _gameState;
         [Inject] private IGameConfig _gameConfig;
         [Inject] private ITurnManager _turnManager;
-
+        [Inject] private IGameManager _gameManager;
+        
         [Inject]
         private void Construct()
         {
             _turnManager.RegisterMutator(this);
-            _turnManager.TurnStarted += () => MutationChanged?.Invoke();
-            _turnManager.TurnEnded += () => MutationChanged?.Invoke();
         }
         
         public IGameStateTurnMutation GetMutation()
