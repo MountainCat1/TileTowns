@@ -7,7 +7,7 @@ public interface IGameState
 {
     // Events
     event Action MutationChanged;
-
+    event Action PersistentModifierChanged;
     event Action Changed;
 
     //
@@ -36,6 +36,7 @@ public interface IGameState
 public class GameState : IGameState
 {
     // Events
+    public event Action PersistentModifierChanged;
     public event Action Changed;
 
     public event Action MutationChanged;
@@ -98,6 +99,7 @@ public class GameState : IGameState
         // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
         _persistentModifiers[modifierProvier] = modifier;
         MutationChanged?.Invoke();
+        PersistentModifierChanged?.Invoke();
     }
 
     public void ApplyMutation(IGameStateMutation mutation)
