@@ -12,11 +12,28 @@ namespace Buildings
         [field: SerializeField] public float MoneyPerWorker { get; set; }
         [field: SerializeField] public float ModifierPerAdjectedFarm { get; set; }
 
+        [TextArea]
+        [field: SerializeField] private string description =
+            @"Farm is a building that produces income based on an amount of adjected farms.";
+
+        public override string GetDescription()
+        {
+            return description;
+        }
+
+        public override void OnPlaced(ITileData tileData)
+        {
+            foreach (var adjacentTile in GetAdjacentTiles(tileData.Position))
+            {
+                adjacentTile.UpdateMutation();
+            }
+        }
+
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
-            var modifier = 1 + GetAdjacentTiles(tileData.Position)
-                .Count(x => x.Building is Farm) 
-                * ModifierPerAdjectedFarm;
+            var adjectedTiles = GetAdjacentTiles(tileData.Position);
+            
+            var modifier = 1 + adjectedTiles.Count(x => x.Building is Farm) * ModifierPerAdjectedFarm;
             
             mutation.BuildingIncome = MoneyPerWorker * tileData.WorkersAssigned * modifier;
         }

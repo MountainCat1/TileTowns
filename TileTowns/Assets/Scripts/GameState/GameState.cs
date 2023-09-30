@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
 public interface IGameState
@@ -131,7 +130,7 @@ public class GameState : IGameState
 
         var immigrationSettings = _gameConfig.ImmigrationSettings;
 
-        while (Immigration >= 100)
+        while (Immigration >= immigrationSettings.MaxImmigration)
         {
             Immigration -= immigrationSettings.ImmigrationPerPopulation;
             Population++;

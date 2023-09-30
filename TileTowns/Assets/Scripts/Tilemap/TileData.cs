@@ -3,14 +3,15 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public interface ITileData
+public interface ITileData : IMutator
 {
     Vector2Int Position { get; }
     int WorkersAssigned { get; set; }
     TileFeature Feature { get; set; }
+    void UpdateMutation();
 }
 
-public class TileData : IMutator, ITileData
+public class TileData : ITileData
 {
     // Events
 
@@ -58,6 +59,8 @@ public class TileData : IMutator, ITileData
     {
         Building = building;
         
+        building.OnPlaced(this);
+        
         MutationChanged?.Invoke();
     }
 
@@ -87,5 +90,10 @@ public class TileData : IMutator, ITileData
         
         MutationChanged?.Invoke();
         return true;
+    }
+
+    public void UpdateMutation()
+    {
+        MutationChanged?.Invoke();
     }
 }

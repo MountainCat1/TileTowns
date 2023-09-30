@@ -1,7 +1,6 @@
 ﻿using System;
 using Data;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Zenject;
 

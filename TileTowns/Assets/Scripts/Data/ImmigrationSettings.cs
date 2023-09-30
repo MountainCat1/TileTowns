@@ -11,5 +11,6 @@ namespace Data
         [field: SerializeField] public float ImmigrationForPopulation { get; set; } = -0.1f;
         [field: SerializeField] public float ImmigrationForFreeHousing { get; set; } = 0.2f;
         [field: SerializeField] public float ImmigrationForFreeJob { get; set; } = 0.2f;
+        [field: SerializeField] public int MaxImmigration { get; set; } = 100;
     }
 }
