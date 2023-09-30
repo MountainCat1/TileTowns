@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -14,12 +15,14 @@ namespace DefaultNamespace
 
         [Inject] private IBuildingController _buildingController;
         [Inject] private IPopulationController _populationController;
+        [Inject] private IGameManager _gameManager;
         
         [Inject]
         private void Construct()
         {
             _turnManager.RegisterMutator(this);
 
+            _gameManager.LevelLoaded += UpdateMutation;
             
             // TODO: This is a hack, we need to find a better way to update the mutation
             _buildingController.PlacedBuilding += (_, _) => UpdateMutation();
