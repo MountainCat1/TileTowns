@@ -11,12 +11,22 @@ namespace DefaultNamespace
         [Inject] private IGameState _gameState;
         [Inject] private IGameConfig _gameConfig;
         [Inject] private ITurnManager _turnManager;
-        [Inject] private IGameManager _gameManager;
+
+        [Inject] private IBuildingController _buildingController;
+        [Inject] private IPopulationController _populationController;
         
         [Inject]
         private void Construct()
         {
             _turnManager.RegisterMutator(this);
+
+            
+            // TODO: This is a hack, we need to find a better way to update the mutation
+            _buildingController.PlacedBuilding += (_, _) => UpdateMutation();
+            _turnManager.TurnEnded += UpdateMutation;
+            _turnManager.TurnStarted += UpdateMutation;
+            _populationController.WorkerAssigned += (_) => UpdateMutation();
+            _populationController.WorkerUnassigned += (_) => UpdateMutation();
         }
         
         public IGameStateTurnMutation GetMutation()
@@ -45,6 +55,11 @@ namespace DefaultNamespace
             Debug.Log($"Immigration manager calculated immigration change: {immigrationDelta}");
             
             return immigrationDelta;
+        }
+
+        private void UpdateMutation()
+        {
+            MutationChanged?.Invoke();
         }
     }
 }

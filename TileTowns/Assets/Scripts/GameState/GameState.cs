@@ -123,17 +123,26 @@ public class GameState : IGameState
         Changed?.Invoke();
     }
     
+    // -20 imigration
+    // 
+    
     public void ApplyMutationWithoutNotifying(IGameStateMutation mutation)
     {
-        Money += mutation.MoneyChange ?? 0;
+        Money += mutation.MoneyChange ?? 0; 
         Immigration += mutation.ImmigrationChange ?? 0;
         Population += mutation.PopulationChange ?? 0;
 
         var immigrationSettings = _gameConfig.ImmigrationSettings;
-        if (Immigration >= immigrationSettings.ImmigrationPerPopulation || Immigration <= 0)
+
+        while (Immigration >= 100)
         {
-            Population += Mathf.FloorToInt(Immigration / immigrationSettings.ImmigrationPerPopulation);
-            Immigration %= immigrationSettings.ImmigrationPerPopulation;
+            Immigration -= 50;
+            Population++;
+        }
+        while (Immigration <= 0)
+        {
+            Immigration += 50;
+            Population--;
         }
     }
 
