@@ -21,6 +21,13 @@ public interface IGameManager
     void LoadLevel(LevelConfig config);
 }
 
+public enum GameStage
+{
+    Preloaded,
+    Playing,
+    Ended
+}
+
 public class GameManager : MonoBehaviour, IGameManager
 {
     // Events
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviour, IGameManager
     [field: SerializeField] public LevelSet LevelSet { get; private set; }
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
-
+    [field: SerializeField] public GameStage GameStage { get; private set; } = GameStage.Preloaded;
     private void Start()
     {
         LoadLevel(LevelConfig);
@@ -84,12 +91,16 @@ public class GameManager : MonoBehaviour, IGameManager
         }
 
         LevelLoaded?.Invoke();
+        GameStage = GameStage.Playing;
 
         _gameState.Initialize();
     }
 
     private void CheckForEndGameCondition()
     {
+        if(GameStage != GameStage.Playing)
+            return;
+        
         Debug.Log($"Checking end game condition... (Turn: { _gameState.Turn})");
 
         var result = LevelConfig.WinCondition.Check(_gameState);
@@ -99,12 +110,14 @@ public class GameManager : MonoBehaviour, IGameManager
         
         if (result.Won)
         {
+            GameStage = GameStage.Ended;
             LevelEnded?.Invoke(result);
             return;
         }
 
         if (result.Lost)
         {
+            GameStage = GameStage.Ended;
             LevelEnded?.Invoke(result);
             return;
         }
