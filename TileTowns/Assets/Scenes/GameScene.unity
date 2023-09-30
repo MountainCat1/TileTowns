@@ -3319,6 +3319,7 @@ MonoBehaviour:
   <LevelSet>k__BackingField: {fileID: 0}
   <LevelConfig>k__BackingField: {fileID: 11400000, guid: 9ea6e635e2411a641a8115badcaf7795, type: 2}
   <Grid>k__BackingField: {fileID: 1883418741}
+  <GameStage>k__BackingField: 0
 --- !u!1 &599262585
 GameObject:
   m_ObjectHideFlags: 0
@@ -6239,7 +6240,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &1120869852
 MonoBehaviour:
