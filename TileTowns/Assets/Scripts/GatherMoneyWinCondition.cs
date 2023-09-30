@@ -7,7 +7,7 @@ public class GatherMoneyWinCondition : WinCondition
     [field: SerializeField] public int TurnLimit { get; set; }
 
     public override string WinDescription => $"Accumulate {Goal}$ money";
-    public override string LoseDescription => $"Don't take more than ${TurnLimit} turns";
+    public override string LoseDescription => $"Don't take more than {TurnLimit} turns";
 
     public override IGameResult Check(IGameState gameState)
     {
