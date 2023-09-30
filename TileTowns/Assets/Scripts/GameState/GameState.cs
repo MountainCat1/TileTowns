@@ -123,9 +123,6 @@ public class GameState : IGameState
         Changed?.Invoke();
     }
     
-    // -20 imigration
-    // 
-    
     public void ApplyMutationWithoutNotifying(IGameStateMutation mutation)
     {
         Money += mutation.MoneyChange ?? 0; 
