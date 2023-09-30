@@ -36,12 +36,12 @@ namespace UI
 
         private void UpdateMutationData()
         {
-            var immigrationChange = _gameState.ImmigrationChange;
+            var immigrationChange = Mathf.Round(_gameState.ImmigrationChange * 10) / 10;
 
             if (immigrationChange < 0)
-                changeDisplay.text = $"{immigrationChange * 100}%";
+                changeDisplay.text = $"{immigrationChange}%";
             else
-                changeDisplay.text = $"+{immigrationChange * 100}%";
+                changeDisplay.text = $"+{immigrationChange}%";
             
             changeDisplay.color = immigrationChange >= 0 ? positiveColor : negativeColor;
         }

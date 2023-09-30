@@ -28,6 +28,10 @@ public abstract class Building : ScriptableObject
         return "NO DESCRIPTION??? WTH?!!!";
     }
 
+    public virtual void OnPlaced(ITileData tileData)
+    {
+    }
+
     protected TileData[] GetAdjacentTiles(Vector2Int position)
     {
         TileData[] neighbours = new[]
