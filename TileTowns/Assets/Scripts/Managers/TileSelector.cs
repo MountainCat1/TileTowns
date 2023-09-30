@@ -38,8 +38,19 @@ public class TileSelector : MonoBehaviour, ITileSelector
         _inputManager.PointerMoved += OnPointerMoved;
         _inputManager.PointerClicked += OnPointerClicked;
         _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
+        
+        _gameManager.LevelEnded += OnLevelEnded;
     }
-    
+
+    private void OnLevelEnded(IGameResult gameResult)
+    {
+        _inputManager.PointerMoved -= OnPointerMoved;
+        _inputManager.PointerClicked -= OnPointerClicked;
+        _inputManager.PointerSecondaryClicked -= OnPointerSecondaryClicked;
+        
+        RemoveSelector();
+    }
+
     public void OnDestroy()
     {
         _gameManager.LevelLoaded -= OnLevelLoaded;
@@ -103,5 +114,10 @@ public class TileSelector : MonoBehaviour, ITileSelector
     {
         highlightGrid.SetTile(lastHighlightedCell, null);
         highlightGrid.SetTile(cell, highlightTile);
+    }
+    
+    private void RemoveSelector()
+    {
+        highlightGrid.SetTile(_lastCellSelected, null);
     }
 }

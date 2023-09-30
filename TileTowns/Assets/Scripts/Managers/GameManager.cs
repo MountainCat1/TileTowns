@@ -17,6 +17,7 @@ public interface IGameManager
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
+    GameStage GameStage { get; }
     void Restart();
     void LoadLevel(LevelConfig config);
 }
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour, IGameManager
     public event Action LevelLoaded;
     public event Action<IGameResult> LevelEnded;
     public event Action<IGameResult> GameResultChanged;
+    public event Action<IGameResult> GameEnded;
 
     //
 
