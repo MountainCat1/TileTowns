@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour, IGameManager
     //
 
     [Inject] private IGameState _gameState;
+    [Inject] private IGameConfig _gameConfig;
     [Inject] private ILevelManager _levelManager;
     [Inject] private ITurnManager _turnManager;
     [Inject] private DiContainer _container;
@@ -74,7 +75,8 @@ public class GameManager : MonoBehaviour, IGameManager
         _gameState.ApplyMutation(new GameStateMutation()
         {
             PopulationChange = config.InitialPopulation,
-            MoneyChange = config.InitialMoney
+            MoneyChange = config.InitialMoney,
+            ImmigrationChange = _gameConfig.ImmigrationSettings.InitialImmigration
         });
 
         foreach (var building in LevelConfig.BuildingSet)

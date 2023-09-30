@@ -7,7 +7,7 @@ public interface IGameState
 {
     // Events
     event Action MutationChanged;
-
+    event Action PersistentModifierChanged;
     event Action Changed;
 
     //
@@ -36,6 +36,7 @@ public interface IGameState
 public class GameState : IGameState
 {
     // Events
+    public event Action PersistentModifierChanged;
     public event Action Changed;
 
     public event Action MutationChanged;
@@ -98,6 +99,7 @@ public class GameState : IGameState
         // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
         _persistentModifiers[modifierProvier] = modifier;
         MutationChanged?.Invoke();
+        PersistentModifierChanged?.Invoke();
     }
 
     public void ApplyMutation(IGameStateMutation mutation)
@@ -120,18 +122,24 @@ public class GameState : IGameState
         
         Changed?.Invoke();
     }
-
+    
     public void ApplyMutationWithoutNotifying(IGameStateMutation mutation)
     {
-        Money += mutation.MoneyChange ?? 0;
+        Money += mutation.MoneyChange ?? 0; 
         Immigration += mutation.ImmigrationChange ?? 0;
         Population += mutation.PopulationChange ?? 0;
 
-        if (Immigration >= _gameConfig.ImmigrationPerPopulation)
+        var immigrationSettings = _gameConfig.ImmigrationSettings;
+
+        while (Immigration >= 100)
         {
-            Population += Mathf.FloorToInt(Immigration / _gameConfig.ImmigrationPerPopulation);
-            Immigration %= _gameConfig.ImmigrationPerPopulation;
-            Changed?.Invoke();
+            Immigration -= immigrationSettings.ImmigrationPerPopulation;
+            Population++;
+        }
+        while (Immigration <= 0)
+        {
+            Immigration += immigrationSettings.ImmigrationPerPopulation;
+            Population--;
         }
     }
 

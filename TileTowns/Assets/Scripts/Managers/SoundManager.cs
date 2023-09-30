@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Security.Cryptography;
+using UnityEngine;
 using Zenject;
 
 public interface ISoundManager
@@ -14,23 +15,41 @@ public class SoundManager : ISoundManager
     [Inject] private ITurnManager _turnManager;
     [Inject] private IGameManager _gameManager;
     [Inject] private IPopulationController _populationController;
+    
+    [Inject] private Camera _camera;
+     
+    private AudioSource _soundtrackPlayer;
 
     [Inject]
     private void Construct()
     {
-
         _buildingController.PlaceBuildingFailed += delegate { PlaySound(_gameSounds.Error); };
         _buildingController.PlacedBuilding += delegate { PlaySound(_gameSounds.Building); };
         
         _turnManager.TurnEnded += delegate { PlaySound(_gameSounds.TurnEnded); };
         
-        _gameManager.LevelLoaded += delegate { PlaySound(_gameSounds.GameMusic, SoundType.Music); };
+        _gameManager.LevelLoaded += delegate { SetSoundtrack(_gameSounds.GameMusic); };
         
         _populationController.WorkerAssigned += delegate { PlaySound(_gameSounds.WorkerAssigned); };
         _populationController.WorkerUnassigned += delegate { PlaySound(_gameSounds.WorkerUndassigned); };
         _populationController.WorkerAssignedFailed += delegate { PlaySound(_gameSounds.Error); };
     }
 
+    public void SetSoundtrack(AudioClip clip)
+    {
+        if (clip is null)
+            Debug.LogWarning($"Missing sound!");
+
+        // Destroy previous soundtrack player
+        Object.Destroy(_soundtrackPlayer);
+        
+        _soundtrackPlayer = SoundPlayer.PlayAtPoint(
+            clip: clip,
+            parent: _camera.transform,
+            destroy: false
+        );
+    }
+    
     private void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx)
     {
         if (clip is null)
