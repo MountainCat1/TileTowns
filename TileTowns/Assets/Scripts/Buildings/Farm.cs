@@ -23,6 +23,7 @@ namespace Buildings
 
         public override void OnPlaced(ITileData tileData)
         {
+            // Update all adjected tiles, because they might have farms that need to update their income
             foreach (var adjacentTile in GetAdjacentTiles(tileData.Position))
             {
                 adjacentTile.UpdateMutation();
@@ -31,6 +32,8 @@ namespace Buildings
 
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
+            // Farm gets more income based on amount of adjected farms
+            
             var adjectedTiles = GetAdjacentTiles(tileData.Position);
             
             var modifier = 1 + adjectedTiles.Count(x => x.Building is Farm) * ModifierPerAdjectedFarm;
