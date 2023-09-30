@@ -136,12 +136,12 @@ public class GameState : IGameState
 
         while (Immigration >= 100)
         {
-            Immigration -= 50;
+            Immigration -= immigrationSettings.ImmigrationPerPopulation;
             Population++;
         }
         while (Immigration <= 0)
         {
-            Immigration += 50;
+            Immigration += immigrationSettings.ImmigrationPerPopulation;
             Population--;
         }
     }
