@@ -20,12 +20,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
 {
     // Events
 
-    public event Action<PlayerMode> PlayerModeSet; 
+    public event Action<PlayerMode> PlayerModeSet;
 
     //
-    
+
     [Inject] private IInputManager _inputManager;
     [Inject] private ITurnManager _turnManager;
+    [Inject] private IGameManager _gameManager;
 
     public PlayerMode PlayerMode { get; private set; }
 
@@ -37,14 +38,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void OnPlayerPressedSpaceBar()
     {
-        _turnManager.EndTurn();
+        if (_gameManager.GameStage == GameStage.Playing)
+            _turnManager.EndTurn();
     }
 
     public void SetPlayerMode(PlayerMode newPlayerMode)
     {
         Debug.Log($"Switching to {newPlayerMode} mode...");
         PlayerMode = newPlayerMode;
-        
+
         PlayerModeSet?.Invoke(PlayerMode);
     }
 
