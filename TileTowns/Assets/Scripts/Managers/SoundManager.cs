@@ -27,7 +27,7 @@ public class SoundManager : ISoundManager
         
         _turnManager.TurnEnded += delegate { PlaySound(_gameSounds.TurnEnded); };
         
-        _gameManager.LevelLoaded += delegate { SetSoundtrack(_gameSounds.GameMusic); };
+        _gameManager.LevelLoaded += delegate { SetSoundtrack(_gameManager.LevelConfig.Soundtrack); };
         
         _populationController.WorkerAssigned += delegate { PlaySound(_gameSounds.WorkerAssigned); };
         _populationController.WorkerUnassigned += delegate { PlaySound(_gameSounds.WorkerUndassigned); };
