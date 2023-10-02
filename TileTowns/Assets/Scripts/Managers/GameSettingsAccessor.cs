@@ -1,86 +1,82 @@
 ﻿using System.IO;
 using UnityEngine;
-using Zenject;
 
-namespace DefaultNamespace
+public interface IGameSettingsAccessor
 {
-    public interface IGameSettingsAccessor
+    GameSettings Settings { get; }
+}
+
+public class GameSettingsAccessor : IGameSettingsAccessor
+{
+    public GameSettings Settings => GetSettings();
+
+    private GameSettings _gameSettings;
+
+    private readonly string _settingsFilePath = Application.persistentDataPath;
+
+    private GameSettings GetSettings()
     {
-        GameSettings Settings { get; }
+        // If game settings have already been loaded, return them
+        if (_gameSettings is not null)
+            return _gameSettings;
+
+        // Otherwise, try to load them from the JSON file
+        Debug.Log($"Loading game settings from {_settingsFilePath}...");
+        _gameSettings = LoadObjectFromJson<GameSettings>("GameSettings.json");
+
+        // If the settings are still null, create a new default instance
+        if (_gameSettings is null)
+        {
+            _gameSettings = new GameSettings();
+            SaveObjectToJson(_gameSettings, "GameSettings.json");
+        }
+
+        return _gameSettings;
     }
 
-    public class GameSettingsAccessor : IGameSettingsAccessor
+
+    public void Save()
     {
-        public GameSettings Settings => GetSettings();
+        Debug.Log($"Saving game settings to {_settingsFilePath}...");
+        SaveObjectToJson(_gameSettings ?? new GameSettings(), _settingsFilePath);
+    }
 
-        private GameSettings _gameSettings;
+    private void SaveObjectToJson<T>(T myObject, string fileName)
+    {
+        // Get the path to the AppData folder
+        string appDataPath = _settingsFilePath;
 
-        private readonly string _settingsFilePath = Application.persistentDataPath;
-        
-        private GameSettings GetSettings()
+        // Combine the AppData path with the file name to get the full file path
+        string filePath = Path.Combine(appDataPath, fileName);
+
+        // Convert the object to JSON
+        string json = JsonUtility.ToJson(myObject);
+
+        // Write the JSON data to the file in the AppData folder
+        File.WriteAllText(filePath, json);
+    }
+
+    // Load the object from JSON
+    private T LoadObjectFromJson<T>(string fileName) where T : class
+    {
+        // Get the path to the AppData folder
+        string appDataPath = _settingsFilePath;
+
+        // Combine the AppData path with the file name to get the full file path
+        string filePath = Path.Combine(appDataPath, fileName);
+
+        if (File.Exists(filePath))
         {
-            // If game settings have already been loaded, return them
-            if (_gameSettings is not null)
-                return _gameSettings;
+            // Read the JSON data from the file
+            string json = File.ReadAllText(filePath);
 
-            // Otherwise, try to load them from the JSON file
-            Debug.Log($"Loading game settings from {_settingsFilePath}...");
-            _gameSettings = LoadObjectFromJson<GameSettings>("GameSettings.json");
-            
-            // If the settings are still null, create a new default instance
-            if (_gameSettings is null)
-            {
-                _gameSettings = new GameSettings();
-                SaveObjectToJson(_gameSettings, "GameSettings.json");
-            }
-
-            return _gameSettings;
+            // Deserialize the JSON data back into the object
+            return JsonUtility.FromJson<T>(json);
         }
-
-
-        public void Save()
+        else
         {
-            Debug.Log($"Saving game settings to {_settingsFilePath}...");
-            SaveObjectToJson(_gameSettings ?? new GameSettings(), _settingsFilePath);
-        }
-
-        private void SaveObjectToJson<T>(T myObject, string fileName)
-        {
-            // Get the path to the AppData folder
-            string appDataPath = _settingsFilePath;
-
-            // Combine the AppData path with the file name to get the full file path
-            string filePath = Path.Combine(appDataPath, fileName);
-
-            // Convert the object to JSON
-            string json = JsonUtility.ToJson(myObject);
-
-            // Write the JSON data to the file in the AppData folder
-            File.WriteAllText(filePath, json);
-        }
-
-        // Load the object from JSON
-        private T LoadObjectFromJson<T>(string fileName) where T : class
-        {
-            // Get the path to the AppData folder
-            string appDataPath = _settingsFilePath;
-
-            // Combine the AppData path with the file name to get the full file path
-            string filePath = Path.Combine(appDataPath, fileName);
-
-            if (File.Exists(filePath))
-            {
-                // Read the JSON data from the file
-                string json = File.ReadAllText(filePath);
-
-                // Deserialize the JSON data back into the object
-                return JsonUtility.FromJson<T>(json);
-            }
-            else
-            {
-                Debug.LogError("JSON file not found: " + filePath);
-                return null;
-            }
+            Debug.LogError("JSON file not found: " + filePath);
+            return null;
         }
     }
 }
