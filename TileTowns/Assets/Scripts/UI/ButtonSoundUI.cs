@@ -16,12 +16,12 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _soundPlayer.PlaySound(_gameSounds.ButtonHover);
+            _soundPlayer.PlaySound(_gameSounds.ButtonHover, SoundType.UI);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _soundPlayer.PlaySound(_gameSounds.ButtonClick);
+            _soundPlayer.PlaySound(_gameSounds.ButtonClick, SoundType.UI);
         }
     }
 }

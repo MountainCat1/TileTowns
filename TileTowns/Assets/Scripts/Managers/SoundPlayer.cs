@@ -7,7 +7,7 @@ public enum SoundType
 {
     Sfx,
     Music,
-    Ui
+    UI
 }
 
 public interface ISoundPlayer
@@ -36,7 +36,7 @@ public class SoundPlayer : ISoundPlayer
         
         _volumes[SoundType.Music] = _settingsAccessor.Settings.muiscVolume;
         _volumes[SoundType.Sfx] = _settingsAccessor.Settings.sfxVolume;
-        _volumes[SoundType.Ui] = _settingsAccessor.Settings.uiVolume;
+        _volumes[SoundType.UI] = _settingsAccessor.Settings.uiVolume;
         
         soundParent = _camera.transform;
     }
