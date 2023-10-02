@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 using Zenject;
 
 public class GameInstaller : MonoInstaller<GameInstaller>
@@ -18,6 +19,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<IPlayerController>().To<PlayerController>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IToolTipController>().To<ToolTipController>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IPopulationController>().To<PopulationController>().FromComponentsInHierarchy().AsSingle();
+        Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().FromComponentsInHierarchy().AsSingle();
 
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
         
