@@ -15,11 +15,6 @@ namespace DefaultNamespace
 
         private GameSettings _gameSettings;
 
-        [Inject]
-        void Construct()
-        {
-        }
-
         private GameSettings GetSettings()
         {
             // If game settings have already been loaded, return them
