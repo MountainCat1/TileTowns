@@ -3,8 +3,14 @@ using UnityEngine;
 
 namespace Data
 {
-    public class LevelSet : ScriptableObject
+    public interface ILevelSet
     {
-        [field: SerializeField] private List<LevelConfig> LevelConfigs;
+        List<LevelConfig> LevelConfigs { get; }
+    }
+
+    [CreateAssetMenu(menuName = "Data/Level Set")]
+    public class LevelSet : ScriptableObject, ILevelSet
+    {
+        [field: SerializeField] public List<LevelConfig> LevelConfigs { get; private set; }
     }
 }

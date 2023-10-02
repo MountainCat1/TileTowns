@@ -15,3 +15,4 @@ MonoBehaviour:
   gameConfig: {fileID: 11400000, guid: ea23b04bd8e2e5e45bb2cf0bf0211049, type: 2}
   tileFeatureMap: {fileID: 11400000, guid: d1c193d2abb68d64c89d72eef8194bff, type: 2}
   gameSounds: {fileID: 11400000, guid: 6fe4e05b5e9506c4d9501c610e82de57, type: 2}
+  levelSet: {fileID: 11400000, guid: 050c40a56be5ab5499b7fa877be67af2, type: 2}
