@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 using Zenject;
 
 public class MainMenuInstaller : MonoInstaller<MainMenuInstaller>
@@ -9,6 +10,7 @@ public class MainMenuInstaller : MonoInstaller<MainMenuInstaller>
         
         Container.Bind<ILevelManager>().To<LevelManager>().FromComponentInHierarchy().AsSingle();
         
+        Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().AsSingle().NonLazy();
         Container.Bind<ISoundPlayer>().To<SoundPlayer>().AsSingle().NonLazy();
     }
 }

@@ -19,10 +19,10 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<IPlayerController>().To<PlayerController>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IToolTipController>().To<ToolTipController>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IPopulationController>().To<PopulationController>().FromComponentsInHierarchy().AsSingle();
-        Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().FromComponentsInHierarchy().AsSingle();
 
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
         
+        Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().AsSingle().NonLazy();
         Container.Bind<ISoundPlayer>().To<SoundPlayer>().AsSingle().NonLazy();
         Container.Bind<ISoundManager>().To<SoundManager>().AsSingle().NonLazy();
     }      
