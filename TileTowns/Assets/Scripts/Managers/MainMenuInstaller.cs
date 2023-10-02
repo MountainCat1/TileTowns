@@ -7,6 +7,8 @@ public class MainMenuInstaller : MonoInstaller<MainMenuInstaller>
     {
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
         
+        Container.Bind<ILevelManager>().To<LevelManager>().FromComponentInHierarchy().AsSingle();
+        
         Container.Bind<ISoundPlayer>().To<SoundPlayer>().AsSingle().NonLazy();
     }
 }

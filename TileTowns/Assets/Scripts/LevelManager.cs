@@ -23,7 +23,6 @@ public class LevelManager : MonoBehaviour, ILevelManager
     
     public void LoadMainMenu()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
         _sceneLoader.LoadScene(mainMenuScene);
     }
 
