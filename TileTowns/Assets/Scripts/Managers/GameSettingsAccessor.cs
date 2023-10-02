@@ -4,7 +4,12 @@ using Zenject;
 
 namespace DefaultNamespace
 {
-    public class GameSettingsAccessor
+    public interface IGameSettingsAccessor
+    {
+        GameSettings Settings { get; }
+    }
+
+    public class GameSettingsAccessor : IGameSettingsAccessor
     {
         public GameSettings Settings => GetSettings();
 
