@@ -15,6 +15,8 @@ namespace DefaultNamespace
 
         private GameSettings _gameSettings;
 
+        private readonly string _settingsFilePath = Application.persistentDataPath;
+        
         private GameSettings GetSettings()
         {
             // If game settings have already been loaded, return them
@@ -22,6 +24,7 @@ namespace DefaultNamespace
                 return _gameSettings;
 
             // Otherwise, try to load them from the JSON file
+            Debug.Log($"Loading game settings from {_settingsFilePath}...");
             _gameSettings = LoadObjectFromJson<GameSettings>("GameSettings.json");
             
             // If the settings are still null, create a new default instance
@@ -35,10 +38,16 @@ namespace DefaultNamespace
         }
 
 
-        public void SaveObjectToJson<T>(T myObject, string fileName)
+        public void Save()
+        {
+            Debug.Log($"Saving game settings to {_settingsFilePath}...");
+            SaveObjectToJson(_gameSettings ?? new GameSettings(), _settingsFilePath);
+        }
+
+        private void SaveObjectToJson<T>(T myObject, string fileName)
         {
             // Get the path to the AppData folder
-            string appDataPath = Application.persistentDataPath;
+            string appDataPath = _settingsFilePath;
 
             // Combine the AppData path with the file name to get the full file path
             string filePath = Path.Combine(appDataPath, fileName);
@@ -51,10 +60,10 @@ namespace DefaultNamespace
         }
 
         // Load the object from JSON
-        public T LoadObjectFromJson<T>(string fileName) where T : class
+        private T LoadObjectFromJson<T>(string fileName) where T : class
         {
             // Get the path to the AppData folder
-            string appDataPath = Application.persistentDataPath;
+            string appDataPath = _settingsFilePath;
 
             // Combine the AppData path with the file name to get the full file path
             string filePath = Path.Combine(appDataPath, fileName);
