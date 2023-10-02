@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using Zenject;
 
 public enum SoundType
 {
     Sfx,
-    Music
+    Music,
+    Ui
 }
 
 public interface ISoundPlayer
@@ -23,15 +25,17 @@ public class SoundPlayer : ISoundPlayer
     private readonly Dictionary<SoundType, float> _volumes = new();
 
     [Inject] private Camera _camera;
+    [Inject] private IGameSettingsAccessor _settingsAccessor;
+    
     [Inject]
     private void Construct()
     {
         _audioSources[SoundType.Music] = new List<AudioSource>();
         _audioSources[SoundType.Sfx] = new List<AudioSource>();
         
-        // TODO: Load from settings
-        _volumes[SoundType.Music] = 0.5f;
-        _volumes[SoundType.Sfx] = 0.5f;
+        _volumes[SoundType.Music] = _settingsAccessor.Settings.muiscVolume;
+        _volumes[SoundType.Sfx] = _settingsAccessor.Settings.sfxVolume;
+        _volumes[SoundType.Ui] = _settingsAccessor.Settings.uiVolume;
         
         soundParent = _camera.transform;
     }
