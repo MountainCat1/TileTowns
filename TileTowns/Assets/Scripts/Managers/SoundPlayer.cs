@@ -13,6 +13,7 @@ public enum SoundType
 public interface ISoundPlayer
 {
     public void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx);
+    AudioSource CreateSound(AudioClip clip, SoundType soundType, Transform parent, bool destroy = true);
 }
 
 public class SoundPlayer : ISoundPlayer
@@ -45,10 +46,7 @@ public class SoundPlayer : ISoundPlayer
         if (clip is null)
             Debug.LogWarning($"Missing sound!");
 
-        var volume = _volumes[soundType];
-        
-        var audioSource = PlayAtPoint(clip, soundParent, volume);
-        _audioSources[soundType].Add(audioSource);
+        CreateSound(clip, soundType, soundParent);
     }
 
     public void ChangeVolume(SoundType soundType, float targetVolume)
@@ -60,7 +58,7 @@ public class SoundPlayer : ISoundPlayer
         }
     }
 
-    public static AudioSource PlayAtPoint(AudioClip clip, Transform parent, float volume = 1f, bool destroy = true)
+    public AudioSource CreateSound(AudioClip clip, SoundType soundType, Transform parent, bool destroy = true)
     {
         GameObject audioObject = new GameObject("AudioPlayer");
         AudioSource audioSource = audioObject.AddComponent<AudioSource>();
@@ -69,6 +67,8 @@ public class SoundPlayer : ISoundPlayer
         {
             audioObject.transform.SetParent(parent);
         }
+
+        var volume = _volumes[soundType];
 
         audioSource.clip = clip;
         audioSource.volume = volume;

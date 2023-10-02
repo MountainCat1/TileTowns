@@ -17,7 +17,7 @@ public class SoundManager : ISoundManager
     
     [Inject] private Camera _camera;
      
-    private AudioSource _soundtrackPlayer;
+    private AudioSource _soundtrackAudioSource;
 
     [Inject]
     private void Construct()
@@ -40,10 +40,11 @@ public class SoundManager : ISoundManager
             Debug.LogWarning($"Missing sound!");
 
         // Destroy previous soundtrack player
-        Object.Destroy(_soundtrackPlayer);
+        Object.Destroy(_soundtrackAudioSource);
         
-        _soundtrackPlayer = SoundPlayer.PlayAtPoint(
+        _soundtrackAudioSource = _soundPlayer.CreateSound(
             clip: clip,
+            soundType: SoundType.Music,
             parent: _camera.transform,
             destroy: false
         );
