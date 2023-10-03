@@ -9,19 +9,14 @@ namespace UI
         [Inject] private IGameSounds _gameSounds;
         [Inject] private ISoundPlayer _soundPlayer;
 
-        private void Start()
-        {
-            
-        }
-
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _soundPlayer.PlaySound(_gameSounds.ButtonHover);
+            _soundPlayer.PlaySound(_gameSounds.ButtonHover, SoundType.UI);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _soundPlayer.PlaySound(_gameSounds.ButtonClick);
+            _soundPlayer.PlaySound(_gameSounds.ButtonClick, SoundType.UI);
         }
     }
 }

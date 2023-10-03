@@ -5,12 +5,14 @@ using Zenject;
 public enum SoundType
 {
     Sfx,
-    Music
+    Music,
+    UI
 }
 
 public interface ISoundPlayer
 {
     public void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx);
+    AudioSource CreateSound(AudioClip clip, SoundType soundType, Transform parent, bool destroy = true);
 }
 
 public class SoundPlayer : ISoundPlayer
@@ -23,15 +25,17 @@ public class SoundPlayer : ISoundPlayer
     private readonly Dictionary<SoundType, float> _volumes = new();
 
     [Inject] private Camera _camera;
+    [Inject] private IGameSettingsAccessor _settingsAccessor;
+    
     [Inject]
     private void Construct()
     {
         _audioSources[SoundType.Music] = new List<AudioSource>();
         _audioSources[SoundType.Sfx] = new List<AudioSource>();
         
-        // TODO: Load from settings
-        _volumes[SoundType.Music] = 0.5f;
-        _volumes[SoundType.Sfx] = 0.5f;
+        _volumes[SoundType.Music] = _settingsAccessor.Settings.muiscVolume;
+        _volumes[SoundType.Sfx] = _settingsAccessor.Settings.sfxVolume;
+        _volumes[SoundType.UI] = _settingsAccessor.Settings.uiVolume;
         
         soundParent = _camera.transform;
     }
@@ -41,10 +45,7 @@ public class SoundPlayer : ISoundPlayer
         if (clip is null)
             Debug.LogWarning($"Missing sound!");
 
-        var volume = _volumes[soundType];
-        
-        var audioSource = PlayAtPoint(clip, soundParent, volume);
-        _audioSources[soundType].Add(audioSource);
+        CreateSound(clip, soundType, soundParent);
     }
 
     public void ChangeVolume(SoundType soundType, float targetVolume)
@@ -56,7 +57,7 @@ public class SoundPlayer : ISoundPlayer
         }
     }
 
-    public static AudioSource PlayAtPoint(AudioClip clip, Transform parent, float volume = 1f, bool destroy = true)
+    public AudioSource CreateSound(AudioClip clip, SoundType soundType, Transform parent, bool destroy = true)
     {
         GameObject audioObject = new GameObject("AudioPlayer");
         AudioSource audioSource = audioObject.AddComponent<AudioSource>();
@@ -65,6 +66,8 @@ public class SoundPlayer : ISoundPlayer
         {
             audioObject.transform.SetParent(parent);
         }
+
+        var volume = _volumes[soundType];
 
         audioSource.clip = clip;
         audioSource.volume = volume;
