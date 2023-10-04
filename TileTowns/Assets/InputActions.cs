@@ -107,6 +107,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""db873336-1bdd-4d5e-a976-479e6dce29a4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -393,6 +402,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Secondary Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7dc5c160-62ec-43d9-9286-cd546aaf87b8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -989,6 +1009,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_SpaceBar = m_Player.FindAction("SpaceBar", throwIfNotFound: true);
         m_Player_Tab = m_Player.FindAction("Tab", throwIfNotFound: true);
         m_Player_SecondaryFire = m_Player.FindAction("Secondary Fire", throwIfNotFound: true);
+        m_Player_Back = m_Player.FindAction("Back", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1069,6 +1090,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SpaceBar;
     private readonly InputAction m_Player_Tab;
     private readonly InputAction m_Player_SecondaryFire;
+    private readonly InputAction m_Player_Back;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -1082,6 +1104,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @SpaceBar => m_Wrapper.m_Player_SpaceBar;
         public InputAction @Tab => m_Wrapper.m_Player_Tab;
         public InputAction @SecondaryFire => m_Wrapper.m_Player_SecondaryFire;
+        public InputAction @Back => m_Wrapper.m_Player_Back;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1118,6 +1141,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @SecondaryFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
+                @Back.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1149,6 +1175,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @SecondaryFire.started += instance.OnSecondaryFire;
                 @SecondaryFire.performed += instance.OnSecondaryFire;
                 @SecondaryFire.canceled += instance.OnSecondaryFire;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -1314,6 +1343,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnSpaceBar(InputAction.CallbackContext context);
         void OnTab(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
