@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IInputManager
@@ -13,6 +14,7 @@ public interface IInputManager
     event Action<float> OnScroll;
     event Action PlayerPressedSpaceBar;
     event Action PlayerPressedTab;
+    event Action PlayerPressedBack;
 }
 
 public class InputManager : MonoBehaviour, IInputManager
@@ -32,6 +34,7 @@ public class InputManager : MonoBehaviour, IInputManager
     public event Action<float> OnScroll;
     public event Action PlayerPressedSpaceBar;
     public event Action PlayerPressedTab;
+    public event Action PlayerPressedBack;
     
     // Dependencies
     
@@ -66,6 +69,7 @@ public class InputManager : MonoBehaviour, IInputManager
         
         _inputActions.Player.SpaceBar.performed += (_) => PlayerPressedSpaceBar?.Invoke();
         _inputActions.Player.Tab.performed += (context => PlayerPressedTab?.Invoke());
+        _inputActions.Player.Back.performed += (context => PlayerPressedBack?.Invoke());
     }
 
     private void OnEnable()
