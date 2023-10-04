@@ -13,6 +13,8 @@ public interface IGameSounds
     AudioClip ButtonHover { get; set; }
     AudioClip Lose { get; set; }
     AudioClip Win { get; set; }
+    AudioClip LoseMusic { get; set; }
+    AudioClip WinMusic { get; set; }
 }
 
 [CreateAssetMenu(menuName = "Data/Game Sounds")]
@@ -34,4 +36,6 @@ public class GameSounds : ScriptableObject, IGameSounds
     [field: SerializeField] public AudioClip Lose { get; set; }
     [field: SerializeField] public AudioClip Win { get; set; }
 
+    [field: SerializeField] public AudioClip LoseMusic { get; set; }
+    [field: SerializeField] public AudioClip WinMusic { get; set; }
 }

@@ -32,6 +32,18 @@ public class SoundManager : ISoundManager
         _populationController.WorkerAssigned += delegate { PlaySound(_gameSounds.WorkerAssigned); };
         _populationController.WorkerUnassigned += delegate { PlaySound(_gameSounds.WorkerUndassigned); };
         _populationController.WorkerAssignedFailed += delegate { PlaySound(_gameSounds.Error); };
+
+        _gameManager.LevelEnded += result =>
+        {
+            if (result.Won)
+            {
+                SetSoundtrack(_gameSounds.WinMusic);
+            }
+            else if(result.Lost)
+            {
+                SetSoundtrack(_gameSounds.LoseMusic);
+            }
+        };
     }
 
     public void SetSoundtrack(AudioClip clip)

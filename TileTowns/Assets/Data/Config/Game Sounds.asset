@@ -23,3 +23,5 @@ MonoBehaviour:
   <ButtonHover>k__BackingField: {fileID: 8300000, guid: 3519bf2639210ec41b7ec4528931520e, type: 3}
   <Lose>k__BackingField: {fileID: 8300000, guid: b93846eb22058a5479e76e614928cca2, type: 3}
   <Win>k__BackingField: {fileID: 8300000, guid: 10730a0b7a77d1146be4bc2e79973491, type: 3}
+  <LoseMusic>k__BackingField: {fileID: 8300000, guid: c19d7aec844f0a34abf5a3c3df9c765e, type: 3}
+  <WinMusic>k__BackingField: {fileID: 8300000, guid: c85030647aa64294a879ed378122f7fe, type: 3}
