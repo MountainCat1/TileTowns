@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -27,18 +28,18 @@ public class SoundPlayer : ISoundPlayer
 
     [Inject] private Camera _camera;
     [Inject] private IGameSettingsAccessor _settingsAccessor;
-    
+
     [Inject]
     private void Construct()
     {
         _audioSources[SoundType.Music] = new List<AudioSource>();
         _audioSources[SoundType.Sfx] = new List<AudioSource>();
         _audioSources[SoundType.UI] = new List<AudioSource>();
-        
+
         _volumes[SoundType.Music] = _settingsAccessor.Settings.muiscVolume;
         _volumes[SoundType.Sfx] = _settingsAccessor.Settings.sfxVolume;
         _volumes[SoundType.UI] = _settingsAccessor.Settings.uiVolume;
-        
+
         soundParent = _camera.transform;
 
         _settingsAccessor.Changed += ApplyVolumeChange;
@@ -62,6 +63,12 @@ public class SoundPlayer : ISoundPlayer
     public void ChangeVolume(SoundType soundType, float targetVolume)
     {
         _volumes[soundType] = targetVolume;
+
+        // TODO: this is a hack, fix it
+        _audioSources[soundType] = _audioSources[soundType]
+            .Where(x => x) // this checks is an object was destroyed
+            .ToList();
+
         foreach (var audioSource in _audioSources[soundType])
         {
             audioSource.volume = targetVolume;
@@ -85,7 +92,7 @@ public class SoundPlayer : ISoundPlayer
         audioSource.Play();
 
         _audioSources[soundType].Add(audioSource);
-        
+
         if (destroy)
             Object.Destroy(audioObject, clip.length + DelayToDestroyNonPlayingAudioSource);
 
