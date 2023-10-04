@@ -8,6 +8,6 @@ public class MainMenuSoundtrack : MonoBehaviour
 
     private void Start()
     {
-        _soundPlayer.PlaySound(_gameSounds.MenuMusic);
+        _soundPlayer.PlaySound(_gameSounds.MenuMusic, SoundType.Music);
     }
 }

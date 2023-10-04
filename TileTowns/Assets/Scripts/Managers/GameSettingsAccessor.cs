@@ -1,13 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using ModestTree.Util;
 using UnityEngine;
 
 public interface IGameSettingsAccessor
 {
+    event Action<GameSettings> Changed;
+
     GameSettings Settings { get; }
+    void Update();
+    void Save();
 }
 
 public class GameSettingsAccessor : IGameSettingsAccessor
 {
+    public event Action<GameSettings> Changed;
+
     public GameSettings Settings => GetSettings();
 
     private GameSettings _gameSettings;
@@ -37,8 +45,14 @@ public class GameSettingsAccessor : IGameSettingsAccessor
 
     public void Save()
     {
-        Debug.Log($"Saving game settings to {_settingsFilePath}...");
-        SaveObjectToJson(_gameSettings ?? new GameSettings(), _settingsFilePath);
+        SaveObjectToJson(_gameSettings ?? new GameSettings(), "GameSettings.json");
+
+        Changed?.Invoke(Settings);
+    }
+
+    public void Update()
+    {
+        Changed?.Invoke(Settings);
     }
 
     private void SaveObjectToJson<T>(T myObject, string fileName)

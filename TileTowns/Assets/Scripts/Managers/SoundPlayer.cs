@@ -21,6 +21,7 @@ public class SoundPlayer : ISoundPlayer
 
     private Transform soundParent;
 
+    // TODO - use pool instead of dictionary because it's faster
     private readonly Dictionary<SoundType, IList<AudioSource>> _audioSources = new();
     private readonly Dictionary<SoundType, float> _volumes = new();
 
@@ -32,14 +33,24 @@ public class SoundPlayer : ISoundPlayer
     {
         _audioSources[SoundType.Music] = new List<AudioSource>();
         _audioSources[SoundType.Sfx] = new List<AudioSource>();
+        _audioSources[SoundType.UI] = new List<AudioSource>();
         
         _volumes[SoundType.Music] = _settingsAccessor.Settings.muiscVolume;
         _volumes[SoundType.Sfx] = _settingsAccessor.Settings.sfxVolume;
         _volumes[SoundType.UI] = _settingsAccessor.Settings.uiVolume;
         
         soundParent = _camera.transform;
+
+        _settingsAccessor.Changed += ApplyVolumeChange;
     }
-    
+
+    private void ApplyVolumeChange(GameSettings gameSettings)
+    {
+        ChangeVolume(SoundType.Music, gameSettings.muiscVolume);
+        ChangeVolume(SoundType.Sfx, gameSettings.sfxVolume);
+        ChangeVolume(SoundType.UI, gameSettings.uiVolume);
+    }
+
     public void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx)
     {
         if (clip is null)
@@ -73,6 +84,8 @@ public class SoundPlayer : ISoundPlayer
         audioSource.volume = volume;
         audioSource.Play();
 
+        _audioSources[soundType].Add(audioSource);
+        
         if (destroy)
             Object.Destroy(audioObject, clip.length + DelayToDestroyNonPlayingAudioSource);
 
