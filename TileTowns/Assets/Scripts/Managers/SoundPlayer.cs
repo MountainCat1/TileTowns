@@ -66,7 +66,7 @@ public class SoundPlayer : ISoundPlayer
 
         // TODO: this is a hack, fix it
         _audioSources[soundType] = _audioSources[soundType]
-            .Where(x => x) // this checks is an object was destroyed
+            .Where(x => x) // this checks if an object was destroyed
             .ToList();
 
         foreach (var audioSource in _audioSources[soundType])
