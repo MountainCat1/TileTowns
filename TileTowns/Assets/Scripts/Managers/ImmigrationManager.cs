@@ -7,7 +7,7 @@ namespace DefaultNamespace
     public class ImmigrationManager : MonoBehaviour, IMutator
     {
         public event Action MutationChanged;
-        
+
         [Inject] private IGameState _gameState;
         [Inject] private IGameConfig _gameConfig;
         [Inject] private ITurnManager _turnManager;

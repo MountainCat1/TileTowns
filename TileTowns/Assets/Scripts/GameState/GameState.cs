@@ -37,7 +37,8 @@ public class GameState : IGameState
     // Events
     public event Action PersistentModifierChanged;
     public event Action Changed;
-
+    public event Action PopImmigrated;
+    public event Action PopEmimmigrated;
     public event Action MutationChanged;
     //
 
@@ -130,16 +131,28 @@ public class GameState : IGameState
 
         var immigrationSettings = _gameConfig.ImmigrationSettings;
 
+        // Migration
+        int migration = 0;
+        
         while (Immigration >= immigrationSettings.MaxImmigration)
         {
             Immigration -= immigrationSettings.ImmigrationPerPopulation;
-            Population++;
+            migration++;
         }
         while (Immigration <= 0)
         {
             Immigration += immigrationSettings.ImmigrationPerPopulation;
-            Population--;
+            migration--;
         }
+        
+        Population += migration;
+        
+        if(migration > 0)
+            PopImmigrated?.Invoke();
+        else if(migration < 0)
+            PopEmimmigrated?.Invoke();
+        
+        //
     }
 
     private void RoundFloatValues()
