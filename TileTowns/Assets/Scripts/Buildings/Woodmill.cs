@@ -19,10 +19,10 @@ namespace Buildings
         {
             int adjacentForests = CountAdjacentForestTiles(tileData);
             
-            float income = adjacentForests * MoneyPerAdjectedForest * tileData.WorkersAssigned;
-            float baseIncome = MoneyPerWorker * tileData.WorkersAssigned;
+            float baseIncome = adjacentForests * MoneyPerAdjectedForest * tileData.WorkersAssigned;
+            float bonusIncome = MoneyPerWorker * tileData.WorkersAssigned;
             
-            mutation.BuildingIncome = income + baseIncome;
+            mutation.BuildingIncome = baseIncome + bonusIncome;
         }
 
         private int CountAdjacentForestTiles(ITileData tileData)
