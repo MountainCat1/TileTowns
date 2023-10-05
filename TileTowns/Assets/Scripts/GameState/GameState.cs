@@ -8,7 +8,8 @@ public interface IGameState
     event Action MutationChanged;
     event Action PersistentModifierChanged;
     event Action Changed;
-
+    event Action PopImmigrated;
+    event Action PopEmimmigrated;
     //
     // Data
     float Money { get; }
