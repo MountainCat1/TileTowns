@@ -5,8 +5,6 @@ namespace Buildings
 {
     public class House : Building
     {
-        [Inject] private ITileMapData _mapData;
-
         [field: SerializeField] private int HousingProvided { get; set; }
         
         public override int WorkSlots => 0;
