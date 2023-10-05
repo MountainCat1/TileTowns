@@ -26,6 +26,8 @@ public class GameSounds : ScriptableObject, IGameSounds
     
     [field: SerializeField] public AudioClip WorkerAssigned { get; set; }
     [field: SerializeField] public AudioClip WorkerUndassigned { get; set; }
+    [field: SerializeField] public AudioClip PopImmigrated { get; set; }
+    [field: SerializeField] public AudioClip PopEmmigrated { get; set; }
     
     [field: SerializeField] public AudioClip GameMusic { get; set; }
     [field: SerializeField] public AudioClip MenuMusic { get; set; }
