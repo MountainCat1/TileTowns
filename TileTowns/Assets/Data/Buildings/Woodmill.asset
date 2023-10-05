@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Woodmill
   m_EditorClassIdentifier: 
   <Tile>k__BackingField: {fileID: 11400000, guid: de0020e9489fb8246a275a35820359cc, type: 2}
-  <Price>k__BackingField: 15
-  moneyPerWorker: 0
+  <Price>k__BackingField: 10
+  <MoneyPerWorker>k__BackingField: 0
+  <MoneyPerAdjectedForest>k__BackingField: 0.15
