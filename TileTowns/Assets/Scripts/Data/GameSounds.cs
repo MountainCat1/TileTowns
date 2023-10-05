@@ -15,6 +15,8 @@ public interface IGameSounds
     AudioClip Win { get; set; }
     AudioClip LoseMusic { get; set; }
     AudioClip WinMusic { get; set; }
+    AudioClip PopImmigrated { get; set; }
+    AudioClip PopEmmigrated { get; set; }
 }
 
 [CreateAssetMenu(menuName = "Data/Game Sounds")]
@@ -26,6 +28,8 @@ public class GameSounds : ScriptableObject, IGameSounds
     
     [field: SerializeField] public AudioClip WorkerAssigned { get; set; }
     [field: SerializeField] public AudioClip WorkerUndassigned { get; set; }
+    [field: SerializeField] public AudioClip PopImmigrated { get; set; }
+    [field: SerializeField] public AudioClip PopEmmigrated { get; set; }
     
     [field: SerializeField] public AudioClip GameMusic { get; set; }
     [field: SerializeField] public AudioClip MenuMusic { get; set; }
