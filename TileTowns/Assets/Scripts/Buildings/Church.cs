@@ -26,9 +26,9 @@ namespace Buildings
         private int CountAdjacentHouseTiles(ITileData tileData)
         {
             var adjacentTiles = GetAdjacentTiles(tileData.Position);
-            int amountOfAdjacentForests = adjacentTiles.Count(tile => tile.Building is House);
+            int houseCount = adjacentTiles.Count(tile => tile.Building is House);
 
-            return amountOfAdjacentForests;
+            return houseCount;
         }
     }
 }
