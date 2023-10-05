@@ -9,7 +9,7 @@ public interface IGameState
     event Action PersistentModifierChanged;
     event Action Changed;
     event Action PopImmigrated;
-    event Action PopEmimmigrated;
+    event Action PopEmmigrated;
     //
     // Data
     float Money { get; }
@@ -39,7 +39,7 @@ public class GameState : IGameState
     public event Action PersistentModifierChanged;
     public event Action Changed;
     public event Action PopImmigrated;
-    public event Action PopEmimmigrated;
+    public event Action PopEmmigrated;
     public event Action MutationChanged;
     //
 
@@ -151,7 +151,7 @@ public class GameState : IGameState
         if(migration > 0)
             PopImmigrated?.Invoke();
         else if(migration < 0)
-            PopEmimmigrated?.Invoke();
+            PopEmmigrated?.Invoke();
         
         //
     }

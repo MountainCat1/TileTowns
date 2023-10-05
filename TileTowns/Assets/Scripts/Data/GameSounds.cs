@@ -15,6 +15,8 @@ public interface IGameSounds
     AudioClip Win { get; set; }
     AudioClip LoseMusic { get; set; }
     AudioClip WinMusic { get; set; }
+    AudioClip PopImmigrated { get; set; }
+    AudioClip PopEmmigrated { get; set; }
 }
 
 [CreateAssetMenu(menuName = "Data/Game Sounds")]

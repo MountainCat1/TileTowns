@@ -11,6 +11,7 @@ public class SoundManager : ISoundManager
     [Inject] private ISoundPlayer _soundPlayer;
     
     [Inject] private IBuildingController _buildingController;
+    [Inject] private IGameState _gameState;
     [Inject] private ITurnManager _turnManager;
     [Inject] private IGameManager _gameManager;
     [Inject] private IPopulationController _populationController;
@@ -45,6 +46,9 @@ public class SoundManager : ISoundManager
                 SetSoundtrack(_gameSounds.LoseMusic);
             }
         };
+        
+        _gameState.PopImmigrated  += delegate { PlaySound(_gameSounds.PopImmigrated); };
+        _gameState.PopEmmigrated  += delegate { PlaySound(_gameSounds.PopEmmigrated); };
     }
 
     public void SetSoundtrack(AudioClip clip)
