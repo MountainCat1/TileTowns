@@ -19,6 +19,6 @@ MonoBehaviour:
   <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: fe30cab4bed9cd44198e9932c50c8b91, type: 3}
   <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
   <BuildingSet>k__BackingField: {fileID: 11400000, guid: 80fdac7cabcb3884786b4549afbe9975, type: 2}
-  <InitialPopulation>k__BackingField: 3
+  <InitialPopulation>k__BackingField: 5
   <InitialMoney>k__BackingField: 15
   <WinCondition>k__BackingField: {fileID: 11400000, guid: 892c48af35e3d5e4991484ca77f15a12, type: 2}
