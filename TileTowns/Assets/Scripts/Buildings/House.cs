@@ -7,10 +7,10 @@ namespace Buildings
     {
         [Inject] private ITileMapData _mapData;
 
-        [field: SerializeField] private int housingProvided;
+        [field: SerializeField] private int HousingProvided { get; set; }
         
         public override int WorkSlots => 0;
-        public override int Housing => housingProvided;
+        public override int Housing => HousingProvided;
         public override int ImmigrationChange => Housing / 2;
 
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
