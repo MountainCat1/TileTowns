@@ -14,6 +14,7 @@ public class SoundManager : ISoundManager
     [Inject] private ITurnManager _turnManager;
     [Inject] private IGameManager _gameManager;
     [Inject] private IPopulationController _populationController;
+    [Inject] private IGameSettingsAccessor _gameSettingsAccessor;
     
     [Inject] private Camera _camera;
      
