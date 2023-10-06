@@ -18,7 +18,7 @@ public class GameSettingsAccessor : IGameSettingsAccessor
 
     public GameSettings Settings => GetSettings();
 
-    private GameSettings _gameSettings;
+    private static GameSettings _gameSettings;
 
     private readonly string _settingsFilePath = Application.persistentDataPath;
 
