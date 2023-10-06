@@ -30,6 +30,9 @@ public class LevelManager : MonoBehaviour, ILevelManager
     {
         SceneManager.LoadSceneAsync(levelScene).completed += operation =>
         {
+            var gamemManager = FindObjectsOfType<GameManager>();
+            
+            gamemManager[0].LoadLevel(levelConfig);
         };
     }
 }

@@ -3317,8 +3317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0509eddaf7884badbf649f0b57e07ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <LevelSet>k__BackingField: {fileID: 0}
-  <LevelConfig>k__BackingField: {fileID: 11400000, guid: 9ea6e635e2411a641a8115badcaf7795, type: 2}
+  <LevelSet>k__BackingField: {fileID: 11400000, guid: 050c40a56be5ab5499b7fa877be67af2, type: 2}
+  <LevelConfig>k__BackingField: {fileID: 11400000, guid: 48847a9ae15586046a1c1f946abcc925, type: 2}
   <Grid>k__BackingField: {fileID: 1883418741}
   <GameStage>k__BackingField: 0
 --- !u!1 &599262585
