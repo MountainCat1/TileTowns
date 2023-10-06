@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public interface ITileMapData
 {
@@ -41,7 +42,7 @@ public class TileMapData : MonoBehaviour, ITileMapData
         _gameManager.LevelLoaded += GameManagerOnGameLoaded;
         _gameState.MutationChanged += OnMutationChanged;
     }
-
+    
     private void OnDisable()
     {
         _gameManager.LevelLoaded -= GameManagerOnGameLoaded;
