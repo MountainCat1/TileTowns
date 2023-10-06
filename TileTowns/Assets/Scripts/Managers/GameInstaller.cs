@@ -7,6 +7,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
     {
         Container.Bind<ILevelManager>().To<LevelManager>().FromComponentInHierarchy().AsSingle();
         
+        Container.Bind<IPopupManager>().To<PopupManager>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IInputManager>().To<InputManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IGameState>().To<GameState>().AsSingle();
         Container.Bind<IResourceManager>().To<ResourceManager>().FromComponentsInHierarchy().AsSingle();
