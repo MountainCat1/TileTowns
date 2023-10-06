@@ -26,6 +26,7 @@ public interface IGameState
     IEnumerable<IGameStateTurnMutation> Mutations { get; }
     int Population { get; }
     int WorkSlots { get; }
+    Dictionary<object, IGameStateTurnMutation> Mutators { get; }
     void SetMutation(object mutator, IGameStateTurnMutation mutation);
     void SetPersistentModifier(object modifierProvier, IPersistentModifier modifier);
     void ApplyTurnMutations();
@@ -62,16 +63,16 @@ public class GameState : IGameState
     
     [Inject] private IGameConfig _gameConfig;
     
-    public IEnumerable<IGameStateTurnMutation> Mutations => _mutations.Values;
-    private Dictionary<object, IGameStateTurnMutation> _mutations;
-    
+    public IEnumerable<IGameStateTurnMutation> Mutations => Mutators.Values;
+    public Dictionary<object, IGameStateTurnMutation> Mutators { get; private set; }
+
     private IEnumerable<IPersistentModifier> PersistentModifiers => _persistentModifiers.Values;
     private Dictionary<object, IPersistentModifier> _persistentModifiers;
 
     [Inject]
     public GameState(ITurnManager turnManager)
     {
-        _mutations = new Dictionary<object, IGameStateTurnMutation>();
+        Mutators = new Dictionary<object, IGameStateTurnMutation>();
         _persistentModifiers = new Dictionary<object, IPersistentModifier>();
 
         turnManager.TurnEnded += OnTurnEnded;
@@ -91,7 +92,7 @@ public class GameState : IGameState
     public void SetMutation(object mutator, IGameStateTurnMutation mutation)
     {
         // Adds new mutation, if exists mutation with specified mutator exists - overrides it 
-        _mutations[mutator] = mutation;
+        Mutators[mutator] = mutation;
         MutationChanged?.Invoke();
     }
     
