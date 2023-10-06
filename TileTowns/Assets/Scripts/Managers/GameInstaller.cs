@@ -7,6 +7,9 @@ public class GameInstaller : MonoInstaller<GameInstaller>
     {
         Container.Bind<ILevelManager>().To<LevelManager>().FromComponentInHierarchy().AsSingle();
         
+        Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().AsSingle().NonLazy();
+        Container.Bind<IGameProgressAccessor>().To<GameProgressAccessor>().AsSingle().NonLazy();
+        
         Container.Bind<IPopupManager>().To<PopupManager>().FromComponentsInHierarchy().AsSingle();
         Container.Bind<IInputManager>().To<InputManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IGameState>().To<GameState>().AsSingle();
@@ -21,9 +24,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<IPopulationController>().To<PopulationController>().FromComponentsInHierarchy().AsSingle();
 
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
-        
-        Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().AsSingle().NonLazy();
-        Container.Bind<IGameProgressAccessor>().To<GameProgressAccessor>().AsSingle().NonLazy();
+
         Container.Bind<ISoundPlayer>().To<SoundPlayer>().AsSingle().NonLazy();
         Container.Bind<ISoundManager>().To<SoundManager>().AsSingle().NonLazy();
     }      

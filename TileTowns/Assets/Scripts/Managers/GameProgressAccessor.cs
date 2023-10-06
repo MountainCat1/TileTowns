@@ -2,18 +2,19 @@
 using System.IO;
 using ModestTree.Util;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class GameProgress
 {
-    public int levelProgress = 0;
+    public int level = -1;
 }
 
 public interface IGameProgressAccessor
 {
     event Action<GameProgress> Changed;
 
-    GameProgress Settings { get; }
+    GameProgress Progress { get; }
     void Update();
     void Save();
 }
@@ -24,7 +25,7 @@ public class GameProgressAccessor : IGameProgressAccessor
     
     public event Action<GameProgress> Changed;
 
-    public GameProgress Settings => GetSettings();
+    public GameProgress Progress => GetSettings();
 
     private static GameProgress _gameProgress;
 
@@ -53,14 +54,16 @@ public class GameProgressAccessor : IGameProgressAccessor
 
     public void Save()
     {
+        Debug.Log("Saving game progress...");
+        
         SaveObjectToJson(_gameProgress ?? new GameProgress(), FileName);
 
-        Changed?.Invoke(Settings);
+        Changed?.Invoke(Progress);
     }
 
     public void Update()
     {
-        Changed?.Invoke(Settings);
+        Changed?.Invoke(Progress);
     }
 
     private void SaveObjectToJson<T>(T myObject, string fileName)
