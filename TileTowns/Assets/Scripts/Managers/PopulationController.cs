@@ -4,6 +4,7 @@ using System.Linq;
 using UI;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public interface IPopulationController
 {
@@ -28,6 +29,7 @@ public class PopulationController : MonoBehaviour, IPopulationController
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
     [Inject] private IGameState _gameState;
+    [Inject] private ITurnManager _turnManager;
     
     [SerializeField] private TilePopulationUI tilePopulationUIPrefab;
     [SerializeField] private Canvas tilePopulationUIContainer;
@@ -59,8 +61,25 @@ public class PopulationController : MonoBehaviour, IPopulationController
 
             RemoveWorker(data);
         };
+        
+        _turnManager.TurnStarted += OnTurnStarted;
     }
     
+    private void OnTurnStarted()
+    {
+        if(_gameState.Population >= _tileMapData.AssignedWorkers)
+            return;
+        
+        // Get random building to remove worker from it
+        // to adjuct for emmigration
+        var tile = _tileMapData.Data.Values
+            .Where(x => x.Building is not null)
+            .Where(x => x.WorkersAssigned > 0)
+            .OrderBy(x => Random.Range(0f, 1f))
+            .FirstOrDefault();
+        
+        RemoveWorker(tile);
+    }
 
     private bool RemoveWorker(TileData tileData)
     {
