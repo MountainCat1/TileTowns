@@ -23,6 +23,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         Container.Bind<Camera>().FromInstance(Camera.main).AsSingle();
         
         Container.Bind<IGameSettingsAccessor>().To<GameSettingsAccessor>().AsSingle().NonLazy();
+        Container.Bind<IGameProgressAccessor>().To<GameProgressAccessor>().AsSingle().NonLazy();
         Container.Bind<ISoundPlayer>().To<SoundPlayer>().AsSingle().NonLazy();
         Container.Bind<ISoundManager>().To<SoundManager>().AsSingle().NonLazy();
     }      
