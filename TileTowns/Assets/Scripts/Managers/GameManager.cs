@@ -20,6 +20,7 @@ public interface IGameManager
     GameStage GameStage { get; }
     void Restart();
     void LoadLevel(LevelConfig config);
+    void NextLevel();
 }
 
 public enum GameStage
@@ -52,9 +53,11 @@ public class GameManager : MonoBehaviour, IGameManager
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
     [field: SerializeField] public GameStage GameStage { get; private set; } = GameStage.Preloaded;
+
     private void Start()
     {
-        LoadLevel(LevelConfig);
+        if(LevelConfig is not null && GameStage == GameStage.Preloaded)
+            LoadLevel(LevelConfig);
     }
 
     public void Restart()
@@ -62,6 +65,21 @@ public class GameManager : MonoBehaviour, IGameManager
         _levelManager.LoadLevel(LevelConfig);
     }
 
+    public void NextLevel()
+    {
+        var presentLevelIndex = LevelSet.LevelConfigs.IndexOf(LevelConfig);
+
+        if (presentLevelIndex == LevelSet.LevelConfigs.Count - 1)
+        {
+            _levelManager.LoadMainMenu();
+            return;
+        }
+        
+        var nextLevel = LevelSet.LevelConfigs[presentLevelIndex + 1];
+        
+        _levelManager.LoadLevel(nextLevel);
+    }
+    
     private void OnEnable()
     {
         _gameState.Changed += CheckForEndGameCondition;
@@ -77,8 +95,9 @@ public class GameManager : MonoBehaviour, IGameManager
 
     public void LoadLevel(LevelConfig config)
     {
+        LevelConfig = config;
         Debug.Log("Instantiating level map...");
-        Tilemap = Instantiate(LevelConfig.LevelDescriptor.Map, Grid.transform, false);
+        Tilemap = Instantiate(config.LevelDescriptor.Map, Grid.transform, false);
 
         _gameState.ApplyMutation(new GameStateMutation()
         {

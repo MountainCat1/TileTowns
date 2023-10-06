@@ -39,6 +39,6 @@ public class GameEndScreenUI : MonoBehaviour
     
     public void Continue()
     {
-        _gameManager.Restart();
+        _gameManager.NextLevel();
     }
 }
