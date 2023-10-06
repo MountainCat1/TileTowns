@@ -17,7 +17,7 @@ public interface IGameManager
     Tilemap Tilemap { get; }
     LevelConfig LevelConfig { get; }
     Grid Grid { get; }
-    GameStage GameStage { get; }
+    GameStage GameStage { get; set; }
     void Restart();
     void LoadLevel(LevelConfig config);
     void NextLevel();
@@ -27,7 +27,8 @@ public enum GameStage
 {
     Preloaded,
     Playing,
-    Ended
+    Ended,
+    Pause
 }
 
 public class GameManager : MonoBehaviour, IGameManager
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour, IGameManager
     [field: SerializeField] public LevelSet LevelSet { get; private set; }
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
-    [field: SerializeField] public GameStage GameStage { get; private set; } = GameStage.Preloaded;
+    [field: SerializeField] public GameStage GameStage { get; set; } = GameStage.Preloaded;
 
     private void Start()
     {

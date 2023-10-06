@@ -15,6 +15,7 @@ public interface IInputManager
     event Action PlayerPressedSpaceBar;
     event Action PlayerPressedTab;
     event Action PlayerPressedBack;
+    event Action OnEscapePressed;
 }
 
 public class InputManager : MonoBehaviour, IInputManager
@@ -35,6 +36,7 @@ public class InputManager : MonoBehaviour, IInputManager
     public event Action PlayerPressedSpaceBar;
     public event Action PlayerPressedTab;
     public event Action PlayerPressedBack;
+    public event Action OnEscapePressed;
     
     // Dependencies
     
@@ -70,6 +72,7 @@ public class InputManager : MonoBehaviour, IInputManager
         _inputActions.Player.SpaceBar.performed += (_) => PlayerPressedSpaceBar?.Invoke();
         _inputActions.Player.Tab.performed += (context => PlayerPressedTab?.Invoke());
         _inputActions.Player.Back.performed += (context => PlayerPressedBack?.Invoke());
+        _inputActions.Player.Escape.performed += (context => OnEscapePressed?.Invoke());
     }
 
     private void OnEnable()
