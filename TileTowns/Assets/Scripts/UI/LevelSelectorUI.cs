@@ -13,8 +13,7 @@ namespace UI
         [Inject] private ILevelManager _levelManager;
         [Inject] private ILevelSet _levelSet;
         [Inject] private IGameProgressAccessor _gameProgressAccessor;
-
-
+        
         private void Start()
         {
             var progress = _gameProgressAccessor.Progress;
@@ -28,7 +27,7 @@ namespace UI
 
                 var entry = entryGo.GetComponent<LevelEntryUI>();
                 
-                var unlocked = progress.level + 1 > _levelSet.LevelConfigs.IndexOf(level);
+                var unlocked = progress.level + 1 >= _levelSet.LevelConfigs.IndexOf(level);
                 
                 entry.Initialize(level, unlocked);
                 
