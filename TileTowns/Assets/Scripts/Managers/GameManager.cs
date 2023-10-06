@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour, IGameManager
     [Inject] private ILevelManager _levelManager;
     [Inject] private ITurnManager _turnManager;
     [Inject] private DiContainer _container;
+    [Inject] private IGameProgressAccessor _gameProgressAccessor;
 
     public Tilemap Tilemap { get; private set; }
 
@@ -131,6 +132,14 @@ public class GameManager : MonoBehaviour, IGameManager
         
         if (result.Won)
         {
+            var progress = _gameProgressAccessor.Progress;
+            
+            if (progress.level < LevelSet.LevelConfigs.IndexOf(LevelConfig))
+            {
+                progress.level = LevelSet.LevelConfigs.IndexOf(LevelConfig);
+                _gameProgressAccessor.Save();
+            }
+
             GameStage = GameStage.Ended;
             LevelEnded?.Invoke(result);
             return;

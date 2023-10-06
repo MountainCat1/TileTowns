@@ -12,10 +12,13 @@ namespace UI
         [Inject] private DiContainer _container;
         [Inject] private ILevelManager _levelManager;
         [Inject] private ILevelSet _levelSet;
+        [Inject] private IGameProgressAccessor _gameProgressAccessor;
 
 
         private void Start()
         {
+            var progress = _gameProgressAccessor.Progress;
+            
             foreach (var level in _levelSet.LevelConfigs)
             {
                 // ReSharper disable once Unity.NoNullPropagation
@@ -25,7 +28,9 @@ namespace UI
 
                 var entry = entryGo.GetComponent<LevelEntryUI>();
                 
-                entry.Initialize(level);
+                var unlocked = progress.level + 1 > _levelSet.LevelConfigs.IndexOf(level);
+                
+                entry.Initialize(level, unlocked);
                 
                 entry.OnSelected += OnLevelSelected;
             }
