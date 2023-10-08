@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace MainMenu
@@ -10,18 +11,16 @@ namespace MainMenu
     {
         [Inject] private IInputManager _inputManager;
         
-        [SerializeField] private Transform viewsContainer;
         [SerializeField] private MenuViewUI defaultView;
+        [SerializeField] private List<MenuViewUI> views;
         
         private MenuViewUI _currentView;
-        private List<MenuViewUI> _views;
         private Stack<MenuViewUI> _viewStack = new Stack<MenuViewUI>();
 
         private void Start()
         {
             _inputManager.PlayerPressedBack += GoBack;
             
-            _views = viewsContainer.GetComponentsInChildren<MenuViewUI>().ToList();
             
             ShowPage(defaultView, false);
         }
@@ -31,7 +30,7 @@ namespace MainMenu
             if(addToStack)
                 _viewStack.Push(_currentView);
             
-            foreach (var page in _views)
+            foreach (var page in views)
             {
                 page.gameObject.SetActive(false);
             }
