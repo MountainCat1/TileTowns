@@ -15,6 +15,7 @@ public class LevelConfig : ScriptableObject
     [field: SerializeField] public LevelDescriptor LevelDescriptor { get; set; }
     [field: SerializeField] public AudioClip Soundtrack { get; set; }
     [field: SerializeField] public BuildingMetadataSet BuildingSet { get; set; }
+    [field: SerializeField] public Sprite Thumbnail { get; set; }
 
 
     [field: SerializeField] public int InitialPopulation { get; set; }
