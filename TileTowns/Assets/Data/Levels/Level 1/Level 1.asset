@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <LevelName>k__BackingField: Farmlands
   <LevelDescription>k__BackingField: A lot of space for a lot of farms!
-  <LevelImage>k__BackingField: {fileID: 21300000, guid: a985861b01c05fd45aefe9f18a8de3de, type: 3}
   <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: 91f8063f3d5884747b097536675c2469, type: 3}
   <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
   <BuildingSet>k__BackingField: {fileID: 11400000, guid: 6b522dd355b784c4a83a704c28b1c5e8, type: 2}
+  <Thumbnail>k__BackingField: {fileID: 21300000, guid: 2936b3a87d83a144aa7c1d46eb70ea4d, type: 3}
   <InitialPopulation>k__BackingField: 5
-  <InitialMoney>k__BackingField: 15
+  <InitialMoney>k__BackingField: 25
   <WinCondition>k__BackingField: {fileID: 11400000, guid: a7b45726e42ab5a45891bb31898524b0, type: 2}
+  <InitialBuildings>k__BackingField:
+  - position: {x: -1, y: -2}
+    building: {fileID: 11400000, guid: ad18ead4a59df5c4c99f2a83779a5444, type: 2}

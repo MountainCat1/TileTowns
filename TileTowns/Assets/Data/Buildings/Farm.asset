@@ -16,5 +16,7 @@ MonoBehaviour:
   <Price>k__BackingField: 10
   <MoneyPerWorker>k__BackingField: 0.2
   <ModifierPerAdjectedFarm>k__BackingField: 0.5
+  housing: 1
+  workSlots: 4
   description: Farm is a building that produces income based on an amount of adjected
     farms.

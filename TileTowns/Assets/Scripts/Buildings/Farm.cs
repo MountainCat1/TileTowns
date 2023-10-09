@@ -5,12 +5,15 @@ namespace Buildings
 {
     public class Farm : Building
     {
-        public override int WorkSlots => 4;
-        public override int Housing => WorkSlots / 2;
+        public override int WorkSlots => workSlots;
+        public override int Housing => housing;
 
 
         [field: SerializeField] public float MoneyPerWorker { get; set; }
         [field: SerializeField] public float ModifierPerAdjectedFarm { get; set; }
+        
+        [field: SerializeField] private int housing = 0;
+        [field: SerializeField] private int workSlots = 4;
 
         [TextArea]
         [field: SerializeField] private string description =

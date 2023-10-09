@@ -25,7 +25,7 @@ public class LevelEntryUI : MonoBehaviour
         
         levelNameText.text = levelConfig.LevelName;
         levelDescriptionText.text = levelConfig.LevelDescription;
-        levelImage.sprite = levelConfig.LevelImage;
+        levelImage.sprite = levelConfig.Thumbnail;
         
         lockImage.gameObject.SetActive(!unlocked);
         if(!unlocked)

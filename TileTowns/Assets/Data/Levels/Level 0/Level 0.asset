@@ -15,10 +15,13 @@ MonoBehaviour:
   <LevelName>k__BackingField: First Try
   <LevelDescription>k__BackingField: This is the first level of TileTowns. Really
     east so that you can learn the game!
-  <LevelImage>k__BackingField: {fileID: 21300000, guid: a985861b01c05fd45aefe9f18a8de3de, type: 3}
   <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: fe30cab4bed9cd44198e9932c50c8b91, type: 3}
   <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
   <BuildingSet>k__BackingField: {fileID: 11400000, guid: 80fdac7cabcb3884786b4549afbe9975, type: 2}
+  <Thumbnail>k__BackingField: {fileID: 21300000, guid: 7cce8582efe1a6046b011417193c42ce, type: 3}
   <InitialPopulation>k__BackingField: 5
   <InitialMoney>k__BackingField: 15
   <WinCondition>k__BackingField: {fileID: 11400000, guid: 892c48af35e3d5e4991484ca77f15a12, type: 2}
+  <InitialBuildings>k__BackingField:
+  - position: {x: 1, y: 1}
+    building: {fileID: 11400000, guid: ad18ead4a59df5c4c99f2a83779a5444, type: 2}

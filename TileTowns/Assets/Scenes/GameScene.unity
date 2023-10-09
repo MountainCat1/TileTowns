@@ -3543,9 +3543,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <LevelSet>k__BackingField: {fileID: 11400000, guid: 050c40a56be5ab5499b7fa877be67af2, type: 2}
-  <LevelConfig>k__BackingField: {fileID: 11400000, guid: 9ea6e635e2411a641a8115badcaf7795, type: 2}
+  <LevelConfig>k__BackingField: {fileID: 11400000, guid: 3d5d6366fc53d664db55929ee270b93a, type: 2}
   <Grid>k__BackingField: {fileID: 1883418741}
   <GameStage>k__BackingField: 0
+  disableWinCondition: 0
 --- !u!1 &599262585
 GameObject:
   m_ObjectHideFlags: 0
