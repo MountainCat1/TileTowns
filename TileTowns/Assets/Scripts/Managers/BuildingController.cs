@@ -38,6 +38,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private DiContainer _container;
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileSelector _tileSelector;
+    [Inject] private ITileMapData _tileMapData;
     [Inject] private IResourceManager _resourceManager;
     [Inject] private IPlayerController _playerController;
 
@@ -90,6 +91,14 @@ public class BuildingController : MonoBehaviour, IBuildingController
         {
             _container.Inject(building);
         }
+
+        foreach (var initialBuilding in _gameManager.LevelConfig.InitialBuildings)
+        {
+            var tile = _tileMapData.Data[initialBuilding.position];
+            var building = initialBuilding.building;
+            
+            PlaceBuilding(tile, building);
+        }
     }
 
     private void TileSelectorOnTilePointerEntered(Vector3Int cellPosition, TileData tileData)
@@ -109,20 +118,8 @@ public class BuildingController : MonoBehaviour, IBuildingController
             BuildBuilding(tileData, SelectedBuilding);
     }
 
-    public void BuildBuilding(TileData tileData, Building building)
+    public void PlaceBuilding(TileData tileData, Building building)
     {
-        if (!CanBuildOnTile(tileData))
-        {
-            PlaceBuildingFailed?.Invoke();
-            return;
-        }
-
-        if (!_resourceManager.SpendMoney(building.Price))
-        {
-            PlaceBuildingFailed?.Invoke();
-            return;
-        }
-
         var buildingCellPosition = new Vector3Int(tileData.Position.x, tileData.Position.y, BuildingZIndex);
 
         _tilemap.SetTile(buildingCellPosition, building.Tile);
@@ -131,6 +128,23 @@ public class BuildingController : MonoBehaviour, IBuildingController
         tileData.SetBuilding(building);
 
         PlacedBuilding?.Invoke(building, tileData);
+    }
+    
+    public void BuildBuilding(TileData tileData, Building building)
+    {
+        if (!CanBuildOnTile(tileData))
+        {
+            PlaceBuildingFailed?.Invoke();
+            return;
+        }
+        
+        if (!_resourceManager.SpendMoney(building.Price))
+        {
+            PlaceBuildingFailed?.Invoke();
+            return;
+        }
+        
+        PlaceBuilding(tileData, building);
     }
 
     public bool CanBuildOnTile(TileData tileData)

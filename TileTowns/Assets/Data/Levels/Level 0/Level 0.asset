@@ -22,3 +22,6 @@ MonoBehaviour:
   <InitialPopulation>k__BackingField: 5
   <InitialMoney>k__BackingField: 15
   <WinCondition>k__BackingField: {fileID: 11400000, guid: 892c48af35e3d5e4991484ca77f15a12, type: 2}
+  <InitialBuildings>k__BackingField:
+  - position: {x: 1, y: 1}
+    building: {fileID: 11400000, guid: ad18ead4a59df5c4c99f2a83779a5444, type: 2}

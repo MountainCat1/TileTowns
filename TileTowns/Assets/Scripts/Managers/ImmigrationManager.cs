@@ -50,13 +50,21 @@ namespace DefaultNamespace
             var immigrationConfig = _gameConfig.ImmigrationSettings;
             float immigrationDelta = 0f;
 
-            immigrationDelta += immigrationConfig.ImmigrationForPopulation * _gameState.Population;
-            immigrationDelta += immigrationConfig.ImmigrationForFreeHousing * (_gameState.Housing - _gameState.Population);
-            immigrationDelta += immigrationConfig.ImmigrationForFreeJob * (_gameState.WorkSlots - _gameState.Population);
+            immigrationDelta += ApplyModifier(immigrationConfig.ImmigrationForPopulation * _gameState.Population);
+            immigrationDelta += ApplyModifier(immigrationConfig.ImmigrationForFreeHousing * (_gameState.Housing - _gameState.Population));
+            immigrationDelta += ApplyModifier(immigrationConfig.ImmigrationForFreeJob * (_gameState.WorkSlots - _gameState.Population));
 
             Debug.Log($"Immigration manager calculated immigration change: {immigrationDelta}");
             
             return immigrationDelta;
+        }
+
+        private float ApplyModifier(float f)
+        {
+            if (f >= 0)
+                return f;
+            else
+                return f * _gameConfig.ImmigrationSettings.NegativeMultiplier;
         }
 
         private void UpdateMutation()

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14b4125b58ab429cb647487133d92481, type: 3}
-  m_Name: Level 1 WinCon
+  m_Name: Level 2 WinCon
   m_EditorClassIdentifier: 
-  <Goal>k__BackingField: 50
-  <TurnLimit>k__BackingField: 31
+  <Goal>k__BackingField: 60
+  <TurnLimit>k__BackingField: 50

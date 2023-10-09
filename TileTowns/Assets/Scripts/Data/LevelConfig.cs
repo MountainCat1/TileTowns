@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Data;
 using UnityEngine;
 
@@ -20,4 +21,13 @@ public class LevelConfig : ScriptableObject
     [field: SerializeField] public float InitialMoney { get; set; }
 
     [field: SerializeField] public WinCondition WinCondition { get; set; }
+    
+    [field: SerializeField] public List<InitialBuilding> InitialBuildings { get; set; }
+}
+
+[System.Serializable]
+public class InitialBuilding
+{
+    [SerializeField] public Vector2Int position;
+    [SerializeField] public Building building;
 }

@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour, IGameManager
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
     [field: SerializeField] public GameStage GameStage { get; set; } = GameStage.Preloaded;
+    [SerializeField] private bool disableWinCondition = false;
 
     private void Start()
     {
@@ -123,13 +124,18 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         if(GameStage != GameStage.Playing)
             return;
-        
+
         Debug.Log($"Checking end game condition... (Turn: { _gameState.Turn})");
 
         var result = LevelConfig.WinCondition.Check(_gameState);
 
         GameResultChanged?.Invoke(result);
         
+        if (disableWinCondition)
+        {
+            Debug.LogWarning("Game is running with win condition disabled");
+            return;
+        }
         
         if (result.Won)
         {

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ImmigrationSettings>k__BackingField:
     <InitialImmigration>k__BackingField: 50
+    <NegativeMultiplier>k__BackingField: 2
     <ImmigrationPerPopulation>k__BackingField: 50
-    <ImmigrationForPopulation>k__BackingField: -1
-    <ImmigrationForFreeHousing>k__BackingField: 2
+    <ImmigrationForPopulation>k__BackingField: 0
+    <ImmigrationForFreeHousing>k__BackingField: 2.5
     <ImmigrationForFreeJob>k__BackingField: 1
     <MaxImmigration>k__BackingField: 100
