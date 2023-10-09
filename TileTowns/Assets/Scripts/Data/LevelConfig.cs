@@ -10,7 +10,6 @@ public class LevelConfig : ScriptableObject
     [field: SerializeField]
     [field: TextArea]
     public string LevelDescription { get; set; }
-    [field: SerializeField] public Sprite LevelImage { get; set; }
 
     [field: SerializeField] public LevelDescriptor LevelDescriptor { get; set; }
     [field: SerializeField] public AudioClip Soundtrack { get; set; }
