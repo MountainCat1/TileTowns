@@ -22,5 +22,5 @@ MonoBehaviour:
   <Thumbnail>k__BackingField: {fileID: 21300000, guid: 4ccb3478323b6f74b887fd6b75132df9, type: 3}
   <InitialPopulation>k__BackingField: 5
   <InitialMoney>k__BackingField: 25
-  <WinCondition>k__BackingField: {fileID: 11400000, guid: f45532ea634296d4683277e92ed7a4c1, type: 2}
+  <WinCondition>k__BackingField: {fileID: 11400000, guid: c5ed6a765ff965143a367c1522ac74ee, type: 2}
   <InitialBuildings>k__BackingField: []

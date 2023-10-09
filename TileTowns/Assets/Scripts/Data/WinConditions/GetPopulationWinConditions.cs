@@ -8,7 +8,7 @@ namespace Data.WinConditions
         [field: SerializeField] public float Goal { get; set; }
         [field: SerializeField] public int TurnLimit { get; set; }
 
-        public override string WinDescription => $"Reach {Goal}$ population";
+        public override string WinDescription => $"Reach {Goal} population";
         public override string LoseDescription => $"Don't take more than {TurnLimit} turns";
 
         public override IGameResult Check(IGameState gameState)
@@ -22,7 +22,7 @@ namespace Data.WinConditions
             if (result.WinProgress > 1)
                 result.WinProgress = 1;
 
-            if (gameState.Money >= Goal)
+            if (gameState.Population >= Goal)
                 return result.Win();
 
             if (gameState.Turn > TurnLimit - 1) // we subtract 1 bcs check happens at the end of the turn which means
