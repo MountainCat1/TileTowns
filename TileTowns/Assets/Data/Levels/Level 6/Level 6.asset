@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96616cb01726f2d4c89c19224c383ec0, type: 3}
+  m_Name: Level 6
+  m_EditorClassIdentifier: 
+  <LevelName>k__BackingField: Mountain Pass
+  <LevelDescription>k__BackingField: Our scouts discovered a beautiful island with
+    a mouintain in a middle. Let's build a town over there!
+  <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: 8937e2cd8f1e21441a6cc3773c30b59b, type: 3}
+  <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
+  <BuildingSet>k__BackingField: {fileID: 11400000, guid: e682ff60ad5e47b41aec4c98332506d9, type: 2}
+  <Thumbnail>k__BackingField: {fileID: 21300000, guid: 658d5958e36539142bb8fc23890a2c7d, type: 3}
+  <InitialPopulation>k__BackingField: 1
+  <InitialMoney>k__BackingField: 40
+  <WinCondition>k__BackingField: {fileID: 11400000, guid: ba56e6149c55e3a4db5102dfd383c703, type: 2}
+  <InitialBuildings>k__BackingField: []

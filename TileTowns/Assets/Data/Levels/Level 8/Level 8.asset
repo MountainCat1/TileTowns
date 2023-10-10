@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96616cb01726f2d4c89c19224c383ec0, type: 3}
+  m_Name: Level 8
+  m_EditorClassIdentifier: 
+  <LevelName>k__BackingField: Great Investment
+  <LevelDescription>k__BackingField: We got so much money from our investors! Let's
+    put them to use
+  <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: 03e6776b79a14dc45b559dbbf5d04b97, type: 3}
+  <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
+  <BuildingSet>k__BackingField: {fileID: 11400000, guid: be0eacbd54459014c910ab0d88a33a9f, type: 2}
+  <Thumbnail>k__BackingField: {fileID: 21300000, guid: 7035e60a8127a19409b0592e8adb36c1, type: 3}
+  <InitialPopulation>k__BackingField: 0
+  <InitialMoney>k__BackingField: 100
+  <WinCondition>k__BackingField: {fileID: 11400000, guid: dff61d4857254d745a07a2a53017a6b9, type: 2}
+  <InitialBuildings>k__BackingField: []

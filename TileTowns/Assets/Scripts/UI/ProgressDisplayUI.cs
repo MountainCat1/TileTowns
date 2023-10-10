@@ -22,12 +22,17 @@ namespace UI
         private void Construct()
         {
             _gameManager.GameResultChanged += OnGameResultChanged;
+            _gameManager.LevelLoaded += OnLevelLoaded;
+        }
 
+        private void OnLevelLoaded()
+        {
             var winCondition = _gameManager.LevelConfig.WinCondition;
 
             winConditionText.text = winCondition.WinDescription;
             loseConditionText.text = winCondition.LoseDescription;
         }
+
 
         private void OnGameResultChanged(IGameResult gameResult)
         {

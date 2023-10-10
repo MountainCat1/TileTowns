@@ -924,7 +924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2495,7 +2495,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.13125
+  orthographic size: 2.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5906,7 +5906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6301,8 +6301,8 @@ MonoBehaviour:
 
     Music: Kevin MacLeod
 
-    License: CC BY
-    3.0 https://creativecommons.org/licenses/by/3.0/'
+    License: CC BY 3.0
+    https://creativecommons.org/licenses/by/3.0/'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7b9d343bf069944887066692fb0da76, type: 2}
   m_sharedMaterial: {fileID: 8698777829595484435, guid: f7b9d343bf069944887066692fb0da76, type: 2}
@@ -8681,7 +8681,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 3.5
   m_Viewport: {fileID: 2131783097}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1997387562}

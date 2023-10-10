@@ -1,16 +1,13 @@
 ﻿using System.Linq;
 using UnityEngine;
-using Zenject;
 
 namespace Buildings
 {
     public class Church : Building
     {
-        [Inject] private ITileMapData _mapData;
-
         public override int WorkSlots => 2;
-        public override int Housing => 2;
-        public override int ImmigrationChange => 10;
+        public override int Housing => 0;
+        public override int ImmigrationChange => 5;
         
         [field: SerializeField] public float MoneyPerHouse { get; set; }
         

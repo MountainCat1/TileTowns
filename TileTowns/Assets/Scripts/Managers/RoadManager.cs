@@ -43,7 +43,8 @@ public class RoadManager : MonoBehaviour, IRoadManager
     private Tilemap _tilemap;
     private Dictionary<Vector2Int, bool> _roadMap = new();
     
-    private void Start()
+    [Inject]
+    private void Construct()
     {
         _gameManager.LevelLoaded += InitializeRoadMap;
         _gameManager.LevelLoaded += OnGameLoaded;
@@ -84,98 +85,60 @@ public class RoadManager : MonoBehaviour, IRoadManager
         
         RoadPlaced?.Invoke(tileData);
     }
-
     private void UpdateRoad(Vector2Int position)
     {
+        if (_roadMap == null)
+        {
+            // Handle the case where _roadMap is null
+            return;
+        }
+
         bool hasRoadAbove = false;
         bool hasRoadBelow = false;
         bool hasRoadLeft = false;
         bool hasRoadRight = false;
 
-        if (_roadMap[position + new Vector2Int(0, 1)])
-        {
-            hasRoadAbove = true;
-        }
+        Vector2Int abovePosition = position + new Vector2Int(0, 1);
+        Vector2Int belowPosition = position + new Vector2Int(0, -1);
+        Vector2Int leftPosition = position + new Vector2Int(-1, 0);
+        Vector2Int rightPosition = position + new Vector2Int(1, 0);
 
-        if (_roadMap[position + new Vector2Int(0, -1)])
-        {
-            hasRoadBelow = true;
-        }
+        hasRoadAbove = HasRoad(abovePosition);
+        hasRoadBelow = HasRoad(belowPosition);
+        hasRoadLeft = HasRoad(leftPosition);
+        hasRoadRight = HasRoad(rightPosition);
 
-        if (_roadMap[position + new Vector2Int(1, 0)])
-        {
-            hasRoadRight = true;
-        }
+        int roadConfig = 0;
 
-        if (_roadMap[position + new Vector2Int(-1, 0)])
+        if (hasRoadAbove) roadConfig |= 1;
+        if (hasRoadBelow) roadConfig |= 2;
+        if (hasRoadLeft) roadConfig |= 4;
+        if (hasRoadRight) roadConfig |= 8;
+        switch (roadConfig)
         {
-            hasRoadLeft = true;
+            // case 0: SetRoad(position, noRoad); break;
+            case 1: SetRoad(position, upRoad); break;
+            case 2: SetRoad(position, downRoad); break;
+            case 4: SetRoad(position, leftRoad); break;
+            case 8: SetRoad(position, rightRoad); break;
+            case 3: SetRoad(position, upDownRoad); break;
+            case 5: SetRoad(position, upLeftRoad); break;
+            case 6: SetRoad(position, downLeftRoad); break;
+            case 9: SetRoad(position, upRightRoad); break;
+            case 10: SetRoad(position, downRightRoad); break;
+            case 12: SetRoad(position, leftRightRoad); break;
+            case 7: SetRoad(position, upDownLeftRoad); break;
+            case 11: SetRoad(position, upDownRightRoad); break;
+            case 13: SetRoad(position, upLeftRightRoad); break;
+            case 14: SetRoad(position, downLeftRightRoad); break;
+            case 15: SetRoad(position, upDownLeftRightRoad); break;
+            // default: SetRoad(position, noRoad); break;
         }
+    }
 
-        if (hasRoadAbove && hasRoadBelow && hasRoadLeft && hasRoadRight)
-        {
-            SetRoad(position, upDownLeftRightRoad);
-        }
-        else if (hasRoadAbove && hasRoadBelow && hasRoadLeft)
-        {
-            SetRoad(position, upDownLeftRoad);
-        }
-        else if (hasRoadAbove && hasRoadBelow && hasRoadRight)
-        {
-            SetRoad(position, upDownRightRoad);
-        }
-        else if (hasRoadAbove && hasRoadLeft && hasRoadRight)
-        {
-            SetRoad(position, upLeftRightRoad);
-        }
-        else if (hasRoadBelow && hasRoadLeft && hasRoadRight)
-        {
-            SetRoad(position, downLeftRightRoad);
-        }
-        else if (hasRoadAbove && hasRoadBelow)
-        {
-            SetRoad(position, upDownRoad);
-        }
-        else if (hasRoadAbove && hasRoadLeft)
-        {
-            SetRoad(position, upLeftRoad);
-        }
-        else if (hasRoadAbove && hasRoadRight)
-        {
-            SetRoad(position, upRightRoad);
-        }
-        else if (hasRoadBelow && hasRoadLeft)
-        {
-            SetRoad(position, downLeftRoad);
-        }
-        else if (hasRoadBelow && hasRoadRight)
-        {
-            SetRoad(position, downRightRoad);
-        }
-        else if (hasRoadLeft && hasRoadRight)
-        {
-            SetRoad(position, leftRightRoad);
-        }
-        else if (hasRoadAbove)
-        {
-            SetRoad(position, upRoad);
-        }
-        else if (hasRoadBelow)
-        {
-            SetRoad(position, downRoad);
-        }
-        else if (hasRoadLeft)
-        {
-            SetRoad(position, leftRoad);
-        }
-        else if (hasRoadRight)
-        {
-            SetRoad(position, rightRoad);
-        }
-        else
-        {
-            // No roads around
-        }
+    private bool HasRoad(Vector2Int position)
+    {
+        return _roadMap.ContainsKey(position) && _roadMap[position];
     }
 
     private IEnumerable<Vector2Int> GetAdjacentPositions(Vector2Int position)

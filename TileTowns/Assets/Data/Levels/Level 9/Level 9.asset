@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96616cb01726f2d4c89c19224c383ec0, type: 3}
+  m_Name: Level 9
+  m_EditorClassIdentifier: 
+  <LevelName>k__BackingField: Great Recession
+  <LevelDescription>k__BackingField: Gosh dang it! Market crashed... We need to rebuild
+    everything! (Those god damn investors...)
+  <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: ee46e0038145ba64d9eeef05e305ca8c, type: 3}
+  <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
+  <BuildingSet>k__BackingField: {fileID: 11400000, guid: 8885f7221f2e42d48b645067948f5d45, type: 2}
+  <Thumbnail>k__BackingField: {fileID: 21300000, guid: d5885754009098649b1bfb1518e63a89, type: 3}
+  <InitialPopulation>k__BackingField: 1
+  <InitialMoney>k__BackingField: 15
+  <WinCondition>k__BackingField: {fileID: 11400000, guid: 6980967d5a54b864abf4d58c34ccc65d, type: 2}
+  <InitialBuildings>k__BackingField: []
