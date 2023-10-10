@@ -47,10 +47,9 @@ public class CameraMovement : MonoBehaviour
         var position = _transform.position;
 
         var step = move * (speed * Time.deltaTime);
-        
+
         _transform.position = position + (Vector3)step;
-        
+
         Moved?.Invoke();
     }
-    
 }
