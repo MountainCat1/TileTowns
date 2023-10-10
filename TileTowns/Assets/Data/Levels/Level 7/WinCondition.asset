@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e3d4c6d226b471f8af09929ce378d1b, type: 3}
-  m_Name: Church
+  m_Script: {fileID: 11500000, guid: 14b4125b58ab429cb647487133d92481, type: 3}
+  m_Name: WinCondition
   m_EditorClassIdentifier: 
-  <Tile>k__BackingField: {fileID: 11400000, guid: 3422b68a7debe5f4ba66bd3f28157824, type: 2}
-  <Price>k__BackingField: 25
-  <MoneyPerHouse>k__BackingField: 0.3
+  <Goal>k__BackingField: 30
+  <TurnLimit>k__BackingField: 60

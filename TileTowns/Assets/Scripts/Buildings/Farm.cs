@@ -8,7 +8,6 @@ namespace Buildings
         public override int WorkSlots => workSlots;
         public override int Housing => housing;
 
-
         [field: SerializeField] public float MoneyPerWorker { get; set; }
         [field: SerializeField] public float ModifierPerAdjectedFarm { get; set; }
         
@@ -23,16 +22,7 @@ namespace Buildings
         {
             return description;
         }
-
-        public override void OnPlaced(ITileData tileData)
-        {
-            // Update all adjected tiles, because they might have farms that need to update their income
-            foreach (var adjacentTile in GetAdjacentTiles(tileData.Position))
-            {
-                adjacentTile.UpdateMutation();
-            }
-        }
-
+        
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             // Farm gets more income based on amount of adjected farms

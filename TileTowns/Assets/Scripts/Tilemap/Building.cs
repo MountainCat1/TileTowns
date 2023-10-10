@@ -30,6 +30,10 @@ public abstract class Building : ScriptableObject
 
     public virtual void OnPlaced(ITileData tileData)
     {
+        foreach (var adjacentTile in GetAdjacentTiles(tileData.Position))
+        {
+            adjacentTile.UpdateMutation();
+        }
     }
 
     protected TileData[] GetAdjacentTiles(Vector2Int position)
