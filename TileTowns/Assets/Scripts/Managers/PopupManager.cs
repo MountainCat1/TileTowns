@@ -29,8 +29,6 @@ public class PopupManager : MonoBehaviour, IPopupManager
     {
         DisplayTileMutations();
     }
-    
-
 
     private void DisplayTileMutations()
     {
