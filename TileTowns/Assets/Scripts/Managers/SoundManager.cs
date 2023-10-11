@@ -25,7 +25,7 @@ public class SoundManager : ISoundManager
     private void Construct()
     {
         _buildingController.PlaceBuildingFailed += delegate { PlaySound(_gameSounds.Error); };
-        _buildingController.PlacedBuilding += delegate { PlaySound(_gameSounds.Building); };
+        _buildingController.BuiltBuilding += delegate { PlaySound(_gameSounds.Building); };
         
         _turnManager.TurnEnded += delegate { PlaySound(_gameSounds.TurnEnded); };
         

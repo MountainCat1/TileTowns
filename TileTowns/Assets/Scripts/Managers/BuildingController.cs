@@ -9,7 +9,8 @@ public interface IBuildingController
     #region Events
 
     event Action PlaceBuildingFailed;
-    event Action<Building, TileData> PlacedBuilding;
+    event Action<Building, TileData> BuiltBuilding;
+    event Action<Building, TileData> BuildingPlaced;
     event Action<Building> BuildingSelected;
     event Action BuildingDeselected;
 
@@ -29,7 +30,8 @@ public class BuildingController : MonoBehaviour, IBuildingController
     #region Events
 
     public event Action PlaceBuildingFailed;
-    public event Action<Building, TileData> PlacedBuilding;
+    public event Action<Building, TileData> BuiltBuilding;
+    public event Action<Building, TileData> BuildingPlaced;
     public event Action<Building> BuildingSelected;
     public event Action BuildingDeselected;
 
@@ -125,7 +127,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
 
         tileData.SetBuilding(building);
 
-        PlacedBuilding?.Invoke(building, tileData);
+        BuildingPlaced?.Invoke(building, tileData);
     }
     
     public void BuildBuilding(TileData tileData, Building building)
@@ -143,6 +145,7 @@ public class BuildingController : MonoBehaviour, IBuildingController
         }
         
         PlaceBuilding(tileData, building);
+        BuiltBuilding?.Invoke(building, tileData);
     }
 
     public bool CanBuildOnTile(TileData tileData)

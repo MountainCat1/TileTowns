@@ -43,7 +43,7 @@ public class ImmigrationManager : MonoBehaviour, IMutator
         _gameManager.LevelLoaded += UpdateMutation;
 
         // TODO: This is a hack, we need to find a better way to update the mutation
-        _buildingController.PlacedBuilding += (_, _) => UpdateMutation();
+        _buildingController.BuiltBuilding += (_, _) => UpdateMutation();
         _turnManager.TurnEnded += UpdateMutation;
         _turnManager.TurnStarted += UpdateMutation;
         _populationController.WorkerAssigned += (_) => UpdateMutation();
