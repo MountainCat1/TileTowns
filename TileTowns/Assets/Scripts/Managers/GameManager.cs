@@ -11,7 +11,7 @@ public interface IGameManager
     event Action<IGameResult> GameResultChanged;
     event Action LevelLoaded;
     event Action<IGameResult> LevelEnded;
-
+    event Action<GameStage> GameStageChanged;
     #endregion
     
     Tilemap Tilemap { get; }
@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour, IGameManager
     public event Action<IGameResult> LevelEnded;
     public event Action<IGameResult> GameResultChanged;
     public event Action<IGameResult> GameEnded;
+    public event Action<GameStage> GameStageChanged;
 
     //
 
@@ -54,8 +55,20 @@ public class GameManager : MonoBehaviour, IGameManager
     [field: SerializeField] public LevelSet LevelSet { get; private set; }
     [field: SerializeField] public LevelConfig LevelConfig { get; private set; }
     [field: SerializeField] public Grid Grid { get; private set; }
-    [field: SerializeField] public GameStage GameStage { get; set; } = GameStage.Preloaded;
+
+    
+    public GameStage GameStage
+    {
+        get => gameStage;
+        set
+        {
+            GameStageChanged?.Invoke(value);
+            gameStage = value;
+        }
+    }
+
     [SerializeField] private bool disableWinCondition = false;
+    [SerializeField] private GameStage gameStage = GameStage.Preloaded;
 
     private void Start()
     {
