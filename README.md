@@ -25,4 +25,4 @@ Strategically plan and evolve your burgeoning settlement turn by turn. Encounter
 * Zenject
 
   
-![Screenshot of the game](/Screenshot.png)
+![Screenshot of the game](Screenshots/menu.png)
