@@ -49,7 +49,7 @@ public class RoadManager : MonoBehaviour, IRoadManager
         _gameManager.LevelLoaded += InitializeRoadMap;
         _gameManager.LevelLoaded += OnGameLoaded;
         
-        _buildingController.PlacedBuilding += (_, tileData) => CreateRoad(tileData);
+        _buildingController.BuildingPlaced += (_, tileData) => CreateRoad(tileData);
     }
     
     private void OnGameLoaded()
