@@ -40,6 +40,13 @@ public class TileSelector : MonoBehaviour, ITileSelector
         _inputManager.PointerSecondaryClicked += OnPointerSecondaryClicked;
         
         _gameManager.LevelEnded += OnLevelEnded;
+        _gameManager.GameStageChanged += OnGameStageChanged;
+    }
+
+    private void OnGameStageChanged(GameStage stage)
+    {
+        if(stage is GameStage.Ended or GameStage.Pause)
+            RemoveSelector();
     }
 
     private void OnLevelEnded(IGameResult gameResult)
@@ -92,6 +99,9 @@ public class TileSelector : MonoBehaviour, ITileSelector
 
     private void OnPointerMoved(Vector2 pointerPosition)
     {
+        if(_gameManager.GameStage is GameStage.Pause or GameStage.Ended)
+            return;
+        
         var cell = PointerPositionToCell(pointerPosition);
 
         if (cell == _lastCellSelected)
