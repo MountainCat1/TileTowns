@@ -42,8 +42,6 @@ public class BuildingController : MonoBehaviour, IBuildingController
     [Inject] private IResourceManager _resourceManager;
     [Inject] private IPlayerController _playerController;
 
-    [SerializeField] private Grid grid;
-
     private Tilemap _tilemap;
     public Building SelectedBuilding { get; private set; }
 
