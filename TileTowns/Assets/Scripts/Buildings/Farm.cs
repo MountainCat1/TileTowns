@@ -16,11 +16,11 @@ namespace Buildings
 
         [TextArea]
         [field: SerializeField] private string description =
-            @"Farm is a building that produces income based on an amount of adjected farms.";
+            @"Farm allows to produces workes $1 income per adjected farm.";
 
         public override string GetDescription()
         {
-            return description;
+            return description.Replace("$1", MoneyPerWorker.ToString("0.00") + "$");
         }
         
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)

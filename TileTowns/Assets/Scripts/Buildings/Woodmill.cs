@@ -15,6 +15,15 @@ namespace Buildings
         [field: SerializeField] public float MoneyPerWorker { get; set; }
         [field: SerializeField] public float MoneyPerAdjectedForest { get; set; }
         
+        [TextArea]
+        [field: SerializeField] private string description =
+            @"Woodmilll allows to produces workes $1 income per adjected forest.";
+
+        public override string GetDescription()
+        {
+            return description.Replace("$1", MoneyPerAdjectedForest.ToString("0.00") + "$");
+        }
+        
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             int adjacentForests = CountAdjacentForestTiles(tileData);

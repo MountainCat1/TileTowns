@@ -11,6 +11,15 @@ namespace Buildings
         
         [field: SerializeField] public float MoneyPerHouse { get; set; }
         
+        [TextArea]
+        [field: SerializeField] private string description =
+            @"Church provides $1 income per adjected house and some immigration.";
+
+        public override string GetDescription()
+        {
+            return description.Replace("$1", MoneyPerHouse.ToString("0.00") + "$");
+        }
+        
         public override void UpdateMutation(ITileData tileData, IGameStateTurnMutation mutation)
         {
             var adjectedTiles = CountAdjacentHouseTiles(tileData);
