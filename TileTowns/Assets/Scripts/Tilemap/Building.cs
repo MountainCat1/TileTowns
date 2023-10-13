@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
 
@@ -38,14 +39,26 @@ public abstract class Building : ScriptableObject
 
     protected TileData[] GetAdjacentTiles(Vector2Int position)
     {
-        TileData[] neighbours = new[]
+        List<TileData> neighbours = new List<TileData>();
+    
+        Vector2Int[] offsets = new[]
         {
-            TileMapData.Data[position + new Vector2Int(0, 1)],
-            TileMapData.Data[position + new Vector2Int(0, -1)],
-            TileMapData.Data[position + new Vector2Int(1, 0)],
-            TileMapData.Data[position + new Vector2Int(-1, 0)],
+            new Vector2Int(0, 1),
+            new Vector2Int(0, -1),
+            new Vector2Int(1, 0),
+            new Vector2Int(-1, 0)
         };
-        
-        return neighbours;
+
+        foreach (var offset in offsets)
+        {
+            Vector2Int adjacentPosition = position + offset;
+
+            if (TileMapData.Data.ContainsKey(adjacentPosition))
+            {
+                neighbours.Add(TileMapData.Data[adjacentPosition]);
+            }
+        }
+    
+        return neighbours.ToArray();
     }
 }
