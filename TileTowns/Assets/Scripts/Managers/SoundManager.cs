@@ -65,6 +65,8 @@ public class SoundManager : ISoundManager
             parent: _camera.transform,
             destroy: false
         );
+
+        _soundtrackAudioSource.loop = true;
     }
     
     private void PlaySound(AudioClip clip, SoundType soundType = SoundType.Sfx)

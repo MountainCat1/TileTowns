@@ -15,6 +15,7 @@ public class LevelEntryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelDescriptionText;
     [SerializeField] private Image levelImage;
     [SerializeField] private Image lockImage;
+    [SerializeField] private Button button;
     [SerializeField] private Color lockedColor;
 
     private LevelConfig _levelConfig;
@@ -22,6 +23,8 @@ public class LevelEntryUI : MonoBehaviour
     public void Initialize(LevelConfig levelConfig, bool unlocked)
     {
         _levelConfig = levelConfig;
+        
+        button.interactable = unlocked;
         
         levelNameText.text = levelConfig.LevelName;
         levelDescriptionText.text = levelConfig.LevelDescription;

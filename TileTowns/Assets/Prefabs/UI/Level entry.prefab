@@ -540,6 +540,7 @@ MonoBehaviour:
   levelDescriptionText: {fileID: 6766548186959108847}
   levelImage: {fileID: 6766548188190168979}
   lockImage: {fileID: 3454303556991317426}
+  button: {fileID: 6766548187759160353}
   lockedColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
 --- !u!114 &6766548187759160353
 MonoBehaviour:

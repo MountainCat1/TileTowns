@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Level 6
   m_EditorClassIdentifier: 
   <LevelName>k__BackingField: Mountain Pass
-  <LevelDescription>k__BackingField: Our scouts discovered a beautiful island with
-    a mouintain in a middle. Let's build a town over there!
+  <LevelDescription>k__BackingField: 'Nestled in the northern frontier of our kingdom,
+    a perilous mountain pass awaits our settlement. Our mission: secure provisions
+    for The Wall''s defense.'
   <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: 8937e2cd8f1e21441a6cc3773c30b59b, type: 3}
   <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
   <BuildingSet>k__BackingField: {fileID: 11400000, guid: e682ff60ad5e47b41aec4c98332506d9, type: 2}

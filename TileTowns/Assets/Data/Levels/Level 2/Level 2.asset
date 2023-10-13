@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   <LevelName>k__BackingField: Flood
-  <LevelDescription>k__BackingField: Flood has destroyed neraby village, we need
+  <LevelDescription>k__BackingField: Flood has destroyed nearby village, we need
     to gather funds to help them out! This time we probably will need some housing
     to attract more immigrants.
   <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: 00a56d82aefd2a2498d39cd2829c5daf, type: 3}
