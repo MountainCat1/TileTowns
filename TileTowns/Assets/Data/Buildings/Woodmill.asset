@@ -16,3 +16,4 @@ MonoBehaviour:
   <Price>k__BackingField: 10
   <MoneyPerWorker>k__BackingField: 0
   <MoneyPerAdjectedForest>k__BackingField: 0.15
+  description: Woodmilll allows workers to produces $1 income per adjacent forest.

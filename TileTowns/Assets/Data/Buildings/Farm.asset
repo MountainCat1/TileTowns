@@ -18,4 +18,4 @@ MonoBehaviour:
   <ModifierPerAdjectedFarm>k__BackingField: 0.5
   housing: 1
   workSlots: 4
-  description: Farm allows to produces workes $1 income per adjected farm.
+  description: Farm allows workers to produce $1 income per adjacent farm.
