@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <LevelName>k__BackingField: Mountain Island
   <LevelDescription>k__BackingField: Our scouts discovered a beautiful island with
-    a mouintain in a middle. Let's build a town over there!
+    a mountain in a middle. Let's build a town over there!
   <LevelDescriptor>k__BackingField: {fileID: 8592262904443075075, guid: 5ff0eb40bb79bd0428758884daa88341, type: 3}
   <Soundtrack>k__BackingField: {fileID: 8300000, guid: ceb5e0305b704fb42b866717c84812f4, type: 3}
   <BuildingSet>k__BackingField: {fileID: 11400000, guid: 8be1497967987c447bb0adb1acb75427, type: 2}
