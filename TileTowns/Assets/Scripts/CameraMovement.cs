@@ -2,18 +2,18 @@ using System;
 using UnityEngine;
 using Zenject;
 
-
 public class CameraMovement : MonoBehaviour
 {
     public event Action Zoomed;
     public event Action Moved;
-    
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float zoomSensitivity = 1f;
     [SerializeField] private float minZoom = 2;
     [SerializeField] private float maxZoom = 20;
-    
+
     [SerializeField] private Vector2 initialPositionOffset = new Vector2(1, -1);
+    [SerializeField] private Bounds cameraBounds;
 
     private IInputManager _inputManager;
     private IGameManager _gameManager;
@@ -27,8 +27,7 @@ public class CameraMovement : MonoBehaviour
         _gameManager = gameManager;
         _transform = transform;
         _camera = GetComponentInChildren<Camera>();
-        
-        
+
         _gameManager.LevelLoaded += OnLevelLoaded;
     }
 
@@ -43,8 +42,7 @@ public class CameraMovement : MonoBehaviour
 
         transform.position = centerPosition;
         
-        // Now you can use the 'centerPosition' for whatever you need
-        Debug.Log("Center position of the Tilemap is " + centerPosition);
+        Moved?.Invoke();
     }
 
     private void OnEnable()
@@ -56,21 +54,25 @@ public class CameraMovement : MonoBehaviour
     private void InputManagerOnOnScroll(float delta)
     {
         var orthographicSize = _camera.orthographicSize;
-        
+
         orthographicSize -= delta * zoomSensitivity; // Notice the minus sign to make it zoom in when delta is positive
-        _camera.orthographicSize = orthographicSize;
-        _camera.orthographicSize = Mathf.Clamp(orthographicSize, minZoom, maxZoom); // Optional, to limit zoom
-        
+        _camera.orthographicSize = Mathf.Clamp(orthographicSize, minZoom, maxZoom);
+
         Zoomed?.Invoke();
     }
 
     private void InputManagerOnPlayerMoved(Vector2 move)
     {
         var position = _transform.position;
-
         var step = move * (speed * Time.deltaTime);
 
-        _transform.position = position + (Vector3)step;
+        Vector3 newPosition = position + (Vector3)step;
+
+        // Apply camera bounds
+        newPosition.x = Mathf.Clamp(newPosition.x, cameraBounds.min.x, cameraBounds.max.x);
+        newPosition.y = Mathf.Clamp(newPosition.y, cameraBounds.min.y, cameraBounds.max.y);
+
+        _transform.position = newPosition;
 
         Moved?.Invoke();
     }

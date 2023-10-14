@@ -249,6 +249,9 @@ MonoBehaviour:
   minZoom: 3
   maxZoom: 20
   initialPositionOffset: {x: -0.5, y: 0}
+  cameraBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 10, y: 6, z: 10}
 --- !u!4 &49912099
 Transform:
   m_ObjectHideFlags: 0
