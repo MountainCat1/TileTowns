@@ -28,13 +28,13 @@ public class PopulationDisplayUI : MonoBehaviour
         populationTooltipSender.TooltipDataProvider = () => new TooltipData
         {
             Title = "Population",
-            Content = $"Housing: {_gameState.Housing}\nPopulation: {_gameState.Population}"
+            Content = $"Population: {_gameState.Population}\nHousing: {_gameState.Housing}"
         };
         
         workslotTooltipSender.TooltipDataProvider = () => new TooltipData
         {
             Title = "Work Slots",
-            Content = $"Work slots: {_gameState.WorkSlots}\nAssigned workers: {_tileMapData.AssignedWorkers}"
+            Content = $"Assigned workers: {_tileMapData.AssignedWorkers}\nWork slots: {_gameState.WorkSlots}"
         };
     }
 
