@@ -21,6 +21,7 @@ public class TileSelector : MonoBehaviour, ITileSelector
     [Inject] private IGameManager _gameManager;
     [Inject] private ITileMapData _tileMapData;
     [Inject] private IInputManager _inputManager;
+    [Inject] private ITileMapData tileMapData;
     
     [SerializeField] private Grid grid;
     [SerializeField] private TileBase highlightTile;
@@ -107,7 +108,17 @@ public class TileSelector : MonoBehaviour, ITileSelector
         if (cell == _lastCellSelected)
             return;
 
-        MoveTileHighlightTo(_lastCellSelected, cell);
+        // If the cell is not in the tilemap, don't show up the highlight
+        if (tileMapData.Data.TryGetValue((Vector2Int)cell, out var data))
+        {
+            MoveTileHighlightTo(_lastCellSelected, cell);
+            
+        }
+        else
+        {
+            RemoveSelector();
+        }
+        
         _lastCellSelected = cell;
 
         var cellData = _tileMapData.GetData((Vector2Int)cell);
