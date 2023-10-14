@@ -248,6 +248,7 @@ MonoBehaviour:
   zoomSensitivity: 0.005
   minZoom: 3
   maxZoom: 20
+  initialPositionOffset: {x: -0.5, y: 0}
 --- !u!4 &49912099
 Transform:
   m_ObjectHideFlags: 0

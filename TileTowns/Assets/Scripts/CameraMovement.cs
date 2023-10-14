@@ -12,19 +12,41 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float zoomSensitivity = 1f;
     [SerializeField] private float minZoom = 2;
     [SerializeField] private float maxZoom = 20;
+    
+    [SerializeField] private Vector2 initialPositionOffset = new Vector2(1, -1);
 
     private IInputManager _inputManager;
+    private IGameManager _gameManager;
     private Transform _transform;
     private Camera _camera;
 
     [Inject]
-    public void Construct(IInputManager inputManager)
+    public void Construct(IInputManager inputManager, IGameManager gameManager)
     {
         _inputManager = inputManager;
+        _gameManager = gameManager;
         _transform = transform;
         _camera = GetComponentInChildren<Camera>();
+        
+        
+        _gameManager.LevelLoaded += OnLevelLoaded;
     }
-    
+
+    private void OnLevelLoaded()
+    {
+        // Center camera when game starts
+        // Get the bounds of the Tilemap
+        BoundsInt bounds = _gameManager.Tilemap.cellBounds;
+
+        // Calculate the center position
+        Vector3 centerPosition = _gameManager.Tilemap.GetCellCenterWorld(new Vector3Int(bounds.x + bounds.size.x / 2, bounds.y + bounds.size.y / 2, 0)) + (Vector3)initialPositionOffset;
+
+        transform.position = centerPosition;
+        
+        // Now you can use the 'centerPosition' for whatever you need
+        Debug.Log("Center position of the Tilemap is " + centerPosition);
+    }
+
     private void OnEnable()
     {
         _inputManager.PlayerMoved += InputManagerOnPlayerMoved;
