@@ -9369,38 +9369,37 @@ MonoBehaviour:
     and lose conditions. Strategically decide on the placement of buildings to maximize
     efficiency and fulfill the objectives of each stage.
 
-    
+
 
     Building Mechanics:
     Each building has its unique function. For instance, a woodmill increases its
     income for every adjacent forest.
 
-    
+
 
     Population Management: Your buildings
     require workers to function. Unstaffed buildings remain non-operational. As your
     settlement grows, so will your population needs. For immigration to surge:
 
-    
+
 
     *
     Ensure available housing.
 
     * Keep work slots open.
 
-    
 
-    The more
-    work slots and homes you have, the faster your immigration grows. Every time
-    the immigration bar fills to 100%, you''ll receive a new worker/population, but
-    your immigration will drop by 50%. Conversely, a lack of housing or work slots
-    reduces immigration. If the bar depletes to 0%, you''ll lose a worker but regain
-    50% in your immigration bar.
 
-    
+    The more work slots
+    and homes you have, the faster your immigration grows. Every time the immigration
+    bar fills to 100%, you''ll receive a new worker/population, but your immigration
+    will drop by 50%. Conversely, a lack of housing or work slots reduces immigration.
+    If the bar depletes to 0%, you''ll lose a worker but regain 50% in your immigration
+    bar.
 
-    Plan wisely and lead your settlement
-    to prosperity!'
+
+
+    Plan wisely and lead your settlement to prosperity!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 175acb763e39de34faefbd054c75b751, type: 2}
   m_sharedMaterial: {fileID: -8043352978363579518, guid: 175acb763e39de34faefbd054c75b751, type: 2}
@@ -12204,7 +12203,7 @@ MonoBehaviour:
 
     Game design
 
-    Also being cool'
+    Being cool'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7b9d343bf069944887066692fb0da76, type: 2}
   m_sharedMaterial: {fileID: 8698777829595484435, guid: f7b9d343bf069944887066692fb0da76, type: 2}
@@ -13297,8 +13296,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1596871700}
   m_HandleRect: {fileID: 1596871699}
   m_Direction: 2
-  m_Value: 0.9999981
-  m_Size: 0.5766069
+  m_Value: 0.9999984
+  m_Size: 0.576607
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
