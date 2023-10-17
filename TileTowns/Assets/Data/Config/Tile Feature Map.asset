@@ -15,3 +15,7 @@ MonoBehaviour:
   <Mappings>k__BackingField:
   - Tile: {fileID: 11400000, guid: cd4d072fb265a6840bd7d01d687608a6, type: 2}
     Feature: 1
+  - Tile: {fileID: 11400000, guid: 9f28033b888d11849b28230cb436b703, type: 2}
+    Feature: 2
+  - Tile: {fileID: 11400000, guid: 7d78ed2efbb6f09439a1dbc2c57ce3bb, type: 2}
+    Feature: 2
