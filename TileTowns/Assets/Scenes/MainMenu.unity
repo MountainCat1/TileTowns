@@ -2831,7 +2831,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412795007}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -3714,7 +3714,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -7191,8 +7191,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 777998474}
   m_HandleRect: {fileID: 777998473}
   m_Direction: 2
-  m_Value: 0.9999996
-  m_Size: 0.2902581
+  m_Value: 0.99999964
+  m_Size: 0.26587212
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9408,7 +9408,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1011.1823, y: 1045.7195}
+  m_SizeDelta: {x: 1011.1823, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1474121317
 MonoBehaviour:
@@ -13636,8 +13636,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1596871700}
   m_HandleRect: {fileID: 1596871699}
   m_Direction: 2
-  m_Value: 0.99999887
-  m_Size: 0.5124226
+  m_Value: 0.9999986
+  m_Size: 0.5124225
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
